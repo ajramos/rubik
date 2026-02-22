@@ -4,146 +4,545 @@
     "set": "PLL",
     "name": "Ua-perm",
     "alg": "F2 [U' L R'] F2 [L' R U'] F2",
-    "thumb": "/thumbs/generated/pll_ua.svg?v5"
+    "thumb": "/thumbs/generated/pll_ua.svg?v11"
   },
   {
     "id": "pll_ub",
     "set": "PLL",
     "name": "Ub-perm",
     "alg": "F2 [U L R'] F2 [L' R U] F2",
-    "thumb": "/thumbs/generated/pll_ub.svg?v5"
+    "thumb": "/thumbs/generated/pll_ub.svg?v11"
   },
   {
     "id": "pll_z",
     "set": "PLL",
     "name": "Z-perm",
     "alg": "[M2 U M2 U] [M' U2] [M2 U2] [M' U2]",
-    "thumb": "/thumbs/generated/pll_z.svg?v5"
+    "thumb": "/thumbs/generated/pll_z.svg?v11"
   },
   {
     "id": "pll_h",
     "set": "PLL",
     "name": "H-perm",
     "alg": "[M2 U] [M2 U2] [M2 U] M2",
-    "thumb": "/thumbs/generated/pll_h.svg?v5"
+    "thumb": "/thumbs/generated/pll_h.svg?v11"
   },
   {
     "id": "pll_aa",
     "set": "PLL",
     "name": "Aa-perm",
     "alg": "[l' U R' D2] [R U' R' D2] R2",
-    "thumb": "/thumbs/generated/pll_aa.svg?v5"
+    "thumb": "/thumbs/generated/pll_aa.svg?v11"
   },
   {
     "id": "pll_ab",
     "set": "PLL",
     "name": "Ab-perm",
     "alg": "[l U' R D2] [R' U R D2] R2",
-    "thumb": "/thumbs/generated/pll_ab.svg?v5"
+    "thumb": "/thumbs/generated/pll_ab.svg?v11"
   },
   {
     "id": "pll_e",
     "set": "PLL",
     "name": "E-perm",
     "alg": "x' [R U' R' D ] [R U R' D' ] [R U R' D ] [R U' R' D']",
-    "thumb": "/thumbs/generated/pll_e.svg?v5"
+    "thumb": "/thumbs/generated/pll_e.svg?v11"
   },
   {
     "id": "pll_t",
     "set": "PLL",
     "name": "T-perm",
     "alg": "[SEXY] [R' F R2] [U' R' U' ] [R U R' F']",
-    "thumb": "/thumbs/generated/pll_t.svg?v5"
+    "thumb": "/thumbs/generated/pll_t.svg?v11"
   },
   {
     "id": "pll_ja",
     "set": "PLL",
     "name": "Ja-perm",
     "alg": "[R' U L'] U2 [R U' R' U2] [L R U']",
-    "thumb": "/thumbs/generated/pll_ja.svg?v5"
+    "thumb": "/thumbs/generated/pll_ja.svg?v11"
   },
   {
     "id": "pll_jb",
     "set": "PLL",
     "name": "Jb-perm",
     "alg": "[R U R' F'] [SEXY] [R' F R2] [U' R' U']",
-    "thumb": "/thumbs/generated/pll_jb.svg?v5"
+    "thumb": "/thumbs/generated/pll_jb.svg?v11"
   },
   {
     "id": "pll_ra",
     "set": "PLL",
     "name": "Ra-perm",
     "alg": "[L U2' L' U2'] [L F' L' U'] [L U L F ] [L2' U]",
-    "thumb": "/thumbs/generated/pll_ra.svg?v5"
+    "thumb": "/thumbs/generated/pll_ra.svg?v11"
   },
   {
     "id": "pll_rb",
     "set": "PLL",
     "name": "Rb-perm",
     "alg": "[R' U2 R U2] [R' F R U] [R' U' R' F'] [R2 U']",
-    "thumb": "/thumbs/generated/pll_rb.svg?v5"
+    "thumb": "/thumbs/generated/pll_rb.svg?v11"
   },
   {
     "id": "pll_na",
     "set": "PLL",
     "name": "Na-perm",
     "alg": "[L U' R U2 R']x2 L' U U",
-    "thumb": "/thumbs/generated/pll_na.svg?v5"
+    "thumb": "/thumbs/generated/pll_na.svg?v11"
   },
   {
     "id": "pll_nb",
     "set": "PLL",
     "name": "Nb-perm",
     "alg": "[R' U L' U2 L]x2 R U' U'",
-    "thumb": "/thumbs/generated/pll_nb.svg?v5"
+    "thumb": "/thumbs/generated/pll_nb.svg?v11"
   },
   {
     "id": "pll_f",
     "set": "PLL",
     "name": "F-perm",
     "alg": "[R' U R U'] R2 [F' U' F U] [R F R' F'] [R2 U']",
-    "thumb": "/thumbs/generated/pll_f.svg?v5"
+    "thumb": "/thumbs/generated/pll_f.svg?v11"
   },
   {
     "id": "pll_v",
     "set": "PLL",
     "name": "V-perm",
     "alg": "[R' U R' d'] [R' F' R2] [U' R' U] [R' F R F]",
-    "thumb": "/thumbs/generated/pll_v.svg?v5"
+    "thumb": "/thumbs/generated/pll_v.svg?v11"
   },
   {
     "id": "pll_y",
     "set": "PLL",
     "name": "Y-perm",
     "alg": "F [R U' R' U'] [R U R' F'] [SEXY] [SLEDGEHMR]",
-    "thumb": "/thumbs/generated/pll_y.svg?v5"
+    "thumb": "/thumbs/generated/pll_y.svg?v11"
   },
   {
     "id": "pll_ga",
     "set": "PLL",
     "name": "Ga-perm",
     "alg": "[R2 u] [R' U R' U'] [R u'] F] [R2 F' U",
-    "thumb": "/thumbs/generated/pll_ga.svg?v5"
+    "thumb": "/thumbs/generated/pll_ga.svg?v11"
   },
   {
     "id": "pll_gb",
     "set": "PLL",
     "name": "Gb-perm",
     "alg": "[L' U' L y' ] [R2 u R' U] [R U' R u' ] R2",
-    "thumb": "/thumbs/generated/pll_gb.svg?v5"
+    "thumb": "/thumbs/generated/pll_gb.svg?v11"
   },
   {
     "id": "pll_gc",
     "set": "PLL",
     "name": "Gc-perm",
     "alg": "[R2 u'] [R U' R U] [R' u R2 y] [R U' R']",
-    "thumb": "/thumbs/generated/pll_gc.svg?v5"
+    "thumb": "/thumbs/generated/pll_gc.svg?v11"
   },
   {
     "id": "pll_gd",
     "set": "PLL",
     "name": "Gd-perm",
     "alg": "[R U R' y'] [R2 u' R U'] [R' U R' u ] [R2]",
-    "thumb": "/thumbs/generated/pll_gd.svg?v5"
+    "thumb": "/thumbs/generated/pll_gd.svg?v11"
+  },
+  {
+    "id": "oll_5",
+    "set": "OLL",
+    "name": "OLL 5 (Square)",
+    "alg": "r' U2 R U R' U r",
+    "thumb": "/thumbs/generated/oll_5.svg?v11"
+  },
+  {
+    "id": "oll_6",
+    "set": "OLL",
+    "name": "OLL 6 (Square)",
+    "alg": "r U2 R' U' R U' r'",
+    "thumb": "/thumbs/generated/oll_6.svg?v11"
+  },
+  {
+    "id": "oll_7",
+    "set": "OLL",
+    "name": "OLL 7 (Lightning)",
+    "alg": "r U R' U R U2 r'",
+    "thumb": "/thumbs/generated/oll_7.svg?v11"
+  },
+  {
+    "id": "oll_8",
+    "set": "OLL",
+    "name": "OLL 8 (Lightning)",
+    "alg": "r' U' R U' R' U2 r",
+    "thumb": "/thumbs/generated/oll_8.svg?v11"
+  },
+  {
+    "id": "oll_9",
+    "set": "OLL",
+    "name": "OLL 9 (Fish)",
+    "alg": "R U R' U' R' F R2 U R' U' F'",
+    "thumb": "/thumbs/generated/oll_9.svg?v11"
+  },
+  {
+    "id": "oll_10",
+    "set": "OLL",
+    "name": "OLL 10 (Fish)",
+    "alg": "R U R' U R' F R F' R U2 R'",
+    "thumb": "/thumbs/generated/oll_10.svg?v11"
+  },
+  {
+    "id": "oll_11",
+    "set": "OLL",
+    "name": "OLL 11 (Lightning)",
+    "alg": "S R U R' U R U2 R' U2 S'",
+    "thumb": "/thumbs/generated/oll_11.svg?v11"
+  },
+  {
+    "id": "oll_12",
+    "set": "OLL",
+    "name": "OLL 12 (Lightning)",
+    "alg": "S R' U' R U' R' U2 R U2 S'",
+    "thumb": "/thumbs/generated/oll_12.svg?v11"
+  },
+  {
+    "id": "oll_22",
+    "set": "OLL",
+    "name": "OLL 22 (Edges Oriented)",
+    "alg": "R U2 R2 U' R2 U' R2 U2 R",
+    "thumb": "/thumbs/generated/oll_22.svg?v11"
+  },
+  {
+    "id": "oll_23",
+    "set": "OLL",
+    "name": "OLL 23 (Edges Oriented)",
+    "alg": "R2 D R' U2 R D' R' U2 R'",
+    "thumb": "/thumbs/generated/oll_23.svg?v11"
+  },
+  {
+    "id": "oll_25",
+    "set": "OLL",
+    "name": "OLL 25 (Edges Oriented)",
+    "alg": "F' r U R' U' r' F R",
+    "thumb": "/thumbs/generated/oll_25.svg?v11"
+  },
+  {
+    "id": "oll_28",
+    "set": "OLL",
+    "name": "OLL 28 (Corners Oriented)",
+    "alg": "M' U' M U2 M' U' M",
+    "thumb": "/thumbs/generated/oll_28.svg?v11"
+  },
+  {
+    "id": "oll_35",
+    "set": "OLL",
+    "name": "OLL 35 (Fish)",
+    "alg": "R U2 R2 F R F' R U2 R'",
+    "thumb": "/thumbs/generated/oll_35.svg?v11"
+  },
+  {
+    "id": "oll_37",
+    "set": "OLL",
+    "name": "OLL 37 (Fish)",
+    "alg": "F R U' R' U' R U R' F'",
+    "thumb": "/thumbs/generated/oll_37.svg?v11"
+  },
+  {
+    "id": "oll_39",
+    "set": "OLL",
+    "name": "OLL 39 (Lightning)",
+    "alg": "f' r U r' U' r' F r S",
+    "thumb": "/thumbs/generated/oll_39.svg?v11"
+  },
+  {
+    "id": "oll_40",
+    "set": "OLL",
+    "name": "OLL 40 (Lightning)",
+    "alg": "R' F R U R' U' F' U R",
+    "thumb": "/thumbs/generated/oll_40.svg?v11"
+  },
+  {
+    "id": "oll_51",
+    "set": "OLL",
+    "name": "OLL 51 (Line)",
+    "alg": "F U R U' R' U R U' R' F'",
+    "thumb": "/thumbs/generated/oll_51.svg?v11"
+  },
+  {
+    "id": "oll_52",
+    "set": "OLL",
+    "name": "OLL 52 (Line)",
+    "alg": "R' F' U' F U' R U R' U R",
+    "thumb": "/thumbs/generated/oll_52.svg?v11"
+  },
+  {
+    "id": "oll_55",
+    "set": "OLL",
+    "name": "OLL 55 (Line)",
+    "alg": "R U2 R2 U' R U' R' U2 F R F'",
+    "thumb": "/thumbs/generated/oll_55.svg?v11"
+  },
+  {
+    "id": "oll_56",
+    "set": "OLL",
+    "name": "OLL 56 (Line)",
+    "alg": "r U r' U R U' R' U R U' R' r U' r'",
+    "thumb": "/thumbs/generated/oll_56.svg?v11"
+  },
+  {
+    "id": "oll_57",
+    "set": "OLL",
+    "name": "OLL 57 (Corners Oriented)",
+    "alg": "R U R' U' M' U R U' r'",
+    "thumb": "/thumbs/generated/oll_57.svg?v11"
+  },
+  {
+    "id": "oll_24",
+    "set": "OLL",
+    "name": "OLL 24 (T)",
+    "alg": "r U R' U' r' F R F'",
+    "thumb": "/thumbs/generated/oll_24.svg?v11"
+  },
+  {
+    "id": "oll_1",
+    "set": "OLL",
+    "name": "OLL 1",
+    "alg": "R U2 R2' F R F' U2' R' F R F'",
+    "thumb": "/thumbs/generated/oll_1.svg?v11"
+  },
+  {
+    "id": "oll_2",
+    "set": "OLL",
+    "name": "OLL 2",
+    "alg": "F R U R' U' S R U R' U' B",
+    "thumb": "/thumbs/generated/oll_2.svg?v11"
+  },
+  {
+    "id": "oll_3",
+    "set": "OLL",
+    "name": "OLL 3",
+    "alg": "f R U R' U' f' U' F R U R' U' F'",
+    "thumb": "/thumbs/generated/oll_3.svg?v11"
+  },
+  {
+    "id": "oll_4",
+    "set": "OLL",
+    "name": "OLL 4",
+    "alg": "f R U R' U' f' U F R U R' U' F'",
+    "thumb": "/thumbs/generated/oll_4.svg?v11"
+  },
+  {
+    "id": "oll_13",
+    "set": "OLL",
+    "name": "OLL 13",
+    "alg": "r' U' r U' r' U r y' x' R U' R' F",
+    "thumb": "/thumbs/generated/oll_13.svg?v11"
+  },
+  {
+    "id": "oll_14",
+    "set": "OLL",
+    "name": "OLL 14",
+    "alg": "r U r' U r U' r' y x' R' U R F'",
+    "thumb": "/thumbs/generated/oll_14.svg?v11"
+  },
+  {
+    "id": "oll_15",
+    "set": "OLL",
+    "name": "OLL 15",
+    "alg": "r' U' r' D' r U' r' D r2",
+    "thumb": "/thumbs/generated/oll_15.svg?v11"
+  },
+  {
+    "id": "oll_16",
+    "set": "OLL",
+    "name": "OLL 16",
+    "alg": "r U r D r' U r D' r2'",
+    "thumb": "/thumbs/generated/oll_16.svg?v11"
+  },
+  {
+    "id": "oll_17",
+    "set": "OLL",
+    "name": "OLL 17",
+    "alg": "F R' F' R2 r' U R U' R' U' M'",
+    "thumb": "/thumbs/generated/oll_17.svg?v11"
+  },
+  {
+    "id": "oll_18",
+    "set": "OLL",
+    "name": "OLL 18",
+    "alg": "r U R' U R U2 r2' U' R U' R' U2 r",
+    "thumb": "/thumbs/generated/oll_18.svg?v11"
+  },
+  {
+    "id": "oll_19",
+    "set": "OLL",
+    "name": "OLL 19",
+    "alg": "M U R U R' U' M2 U R U' r'",
+    "thumb": "/thumbs/generated/oll_19.svg?v11"
+  },
+  {
+    "id": "oll_20",
+    "set": "OLL",
+    "name": "OLL 20",
+    "alg": "r U R' U' M2 U R U' R' U' M'",
+    "thumb": "/thumbs/generated/oll_20.svg?v11"
+  },
+  {
+    "id": "oll_21",
+    "set": "OLL",
+    "name": "OLL 21",
+    "alg": "R U2 R' U' R U R' U' R U' R'",
+    "thumb": "/thumbs/generated/oll_21.svg?v11"
+  },
+  {
+    "id": "oll_26",
+    "set": "OLL",
+    "name": "OLL 26",
+    "alg": "R U2' R2' U' R U' R' U2' F R F'",
+    "thumb": "/thumbs/generated/oll_26.svg?v11"
+  },
+  {
+    "id": "oll_27",
+    "set": "OLL",
+    "name": "OLL 27",
+    "alg": "R U R' U R U2 R'",
+    "thumb": "/thumbs/generated/oll_27.svg?v11"
+  },
+  {
+    "id": "oll_29",
+    "set": "OLL",
+    "name": "OLL 29",
+    "alg": "R U R' U' R U' R' F' U' F R U R'",
+    "thumb": "/thumbs/generated/oll_29.svg?v11"
+  },
+  {
+    "id": "oll_30",
+    "set": "OLL",
+    "name": "OLL 30",
+    "alg": "F R' F R2 U' R' U' R U R' F2",
+    "thumb": "/thumbs/generated/oll_30.svg?v11"
+  },
+  {
+    "id": "oll_31",
+    "set": "OLL",
+    "name": "OLL 31",
+    "alg": "R' U' F U R U' R' F' R",
+    "thumb": "/thumbs/generated/oll_31.svg?v11"
+  },
+  {
+    "id": "oll_32",
+    "set": "OLL",
+    "name": "OLL 32",
+    "alg": "L U F' U' L' U L F L'",
+    "thumb": "/thumbs/generated/oll_32.svg?v11"
+  },
+  {
+    "id": "oll_33",
+    "set": "OLL",
+    "name": "OLL 33",
+    "alg": "R U R' U' R' F R F'",
+    "thumb": "/thumbs/generated/oll_33.svg?v11"
+  },
+  {
+    "id": "oll_34",
+    "set": "OLL",
+    "name": "OLL 34",
+    "alg": "R U R2' U' R' F R U R U' F'",
+    "thumb": "/thumbs/generated/oll_34.svg?v11"
+  },
+  {
+    "id": "oll_36",
+    "set": "OLL",
+    "name": "OLL 36",
+    "alg": "R U R' F' R U R' U' R' F R2 U' R'",
+    "thumb": "/thumbs/generated/oll_36.svg?v11"
+  },
+  {
+    "id": "oll_38",
+    "set": "OLL",
+    "name": "OLL 38",
+    "alg": "R U R' U R U' R' U' R' F R F'",
+    "thumb": "/thumbs/generated/oll_38.svg?v11"
+  },
+  {
+    "id": "oll_41",
+    "set": "OLL",
+    "name": "OLL 41",
+    "alg": "R U R' U R U2 R' F R U R' U' F'",
+    "thumb": "/thumbs/generated/oll_41.svg?v11"
+  },
+  {
+    "id": "oll_42",
+    "set": "OLL",
+    "name": "OLL 42",
+    "alg": "R' U' R U' R' U2' R F R U R' U' F'",
+    "thumb": "/thumbs/generated/oll_42.svg?v11"
+  },
+  {
+    "id": "oll_43",
+    "set": "OLL",
+    "name": "OLL 43",
+    "alg": "f' L' U' L U f",
+    "thumb": "/thumbs/generated/oll_43.svg?v11"
+  },
+  {
+    "id": "oll_44",
+    "set": "OLL",
+    "name": "OLL 44",
+    "alg": "f R U R' U' f'",
+    "thumb": "/thumbs/generated/oll_44.svg?v11"
+  },
+  {
+    "id": "oll_45",
+    "set": "OLL",
+    "name": "OLL 45",
+    "alg": "F R U R' U' F'",
+    "thumb": "/thumbs/generated/oll_45.svg?v11"
+  },
+  {
+    "id": "oll_46",
+    "set": "OLL",
+    "name": "OLL 46",
+    "alg": "R' U' R' F R F' U R",
+    "thumb": "/thumbs/generated/oll_46.svg?v11"
+  },
+  {
+    "id": "oll_47",
+    "set": "OLL",
+    "name": "OLL 47",
+    "alg": "F' L' U' L U L' U' L U F",
+    "thumb": "/thumbs/generated/oll_47.svg?v11"
+  },
+  {
+    "id": "oll_48",
+    "set": "OLL",
+    "name": "OLL 48",
+    "alg": "F R U R' U' R U R' U' F'",
+    "thumb": "/thumbs/generated/oll_48.svg?v11"
+  },
+  {
+    "id": "oll_49",
+    "set": "OLL",
+    "name": "OLL 49",
+    "alg": "r U' r2' U r2 U r2' U' r",
+    "thumb": "/thumbs/generated/oll_49.svg?v11"
+  },
+  {
+    "id": "oll_50",
+    "set": "OLL",
+    "name": "OLL 50",
+    "alg": "r' U r2 U' r2' U' r2 U r'",
+    "thumb": "/thumbs/generated/oll_50.svg?v11"
+  },
+  {
+    "id": "oll_53",
+    "set": "OLL",
+    "name": "OLL 53",
+    "alg": "r' U2' R U R' U' r",
+    "thumb": "/thumbs/generated/oll_53.svg?v11"
+  },
+  {
+    "id": "oll_54",
+    "set": "OLL",
+    "name": "OLL 54",
+    "alg": "r U2 R' U' R U r'",
+    "thumb": "/thumbs/generated/oll_54.svg?v11"
   }
 ]

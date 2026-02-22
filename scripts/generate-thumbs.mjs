@@ -10,7 +10,7 @@ const ROOT = path.resolve(__dirname, "..");
 const DATA_PATH = path.join(ROOT, "src", "data", "algs.json");
 const OUT_DIR = path.join(ROOT, "public", "thumbs", "generated");
 const DISPLAY_ORIENTATION = "z2";
-const THUMB_URL_VERSION = "v5";
+const THUMB_URL_VERSION = "v11";
 
 const MACROS = {
   SEXY: "R U R' U'",
@@ -55,6 +55,25 @@ function replaceFillById(svg, id, fill) {
   return svg.replace(re, `$1${fill}$3`);
 }
 
+function sourceStickerIdForPattern(pattern, orbitName, idx, orientation) {
+  const orbit = pattern.kpuzzle.definition.orbits.find((o) => o.orbitName === orbitName);
+  if (!orbit) return null;
+  const orbitState = pattern.patternData[orbitName];
+  return `${orbitName}-l${orbitState.pieces[idx]}-o${
+    (orbit.numOrientations - orbitState.orientation[idx] + orientation) % orbit.numOrientations
+  }`;
+}
+
+function stickerIsYellow(pattern, originalColors, id) {
+  const m = id.match(/^([A-Z]+)-l(\d+)-o(\d+)$/);
+  if (!m) return false;
+  const [, orbitName, idxRaw, oriRaw] = m;
+  const sourceId = sourceStickerIdForPattern(pattern, orbitName, Number(idxRaw), Number(oriRaw));
+  if (!sourceId) return false;
+  const fill = (originalColors.get(sourceId) || "").trim().toLowerCase();
+  return fill === "yellow" || fill === "#ff0" || fill === "#ffff00";
+}
+
 function colorizeTemplate(templateSvg, pattern, originalColors) {
   let svg = templateSvg;
   for (const orbit of pattern.kpuzzle.definition.orbits) {
@@ -85,6 +104,68 @@ function flattenOLLColors(svg) {
   );
 }
 
+function addOLLPerimeterInfo(svg, pattern, originalColors) {
+  const slots = [
+    { id: "CORNERS-l2-o2", x: 46, y: 22, w: 36, h: 8 },  // top-left
+    { id: "EDGES-l2-o1", x: 110, y: 22, w: 36, h: 8 },   // top-mid
+    { id: "CORNERS-l1-o1", x: 174, y: 22, w: 36, h: 8 }, // top-right
+
+    { id: "CORNERS-l1-o2", x: 226, y: 46, w: 8, h: 36 }, // right-top
+    { id: "EDGES-l1-o1", x: 226, y: 110, w: 8, h: 36 },  // right-mid
+    { id: "CORNERS-l0-o1", x: 226, y: 174, w: 8, h: 36 }, // right-bottom
+
+    { id: "CORNERS-l0-o2", x: 174, y: 226, w: 36, h: 8 }, // bottom-right
+    { id: "EDGES-l0-o1", x: 110, y: 226, w: 36, h: 8 },   // bottom-mid
+    { id: "CORNERS-l3-o1", x: 46, y: 226, w: 36, h: 8 },  // bottom-left
+
+    { id: "CORNERS-l3-o2", x: 22, y: 174, w: 8, h: 36 }, // left-bottom
+    { id: "EDGES-l3-o1", x: 22, y: 110, w: 8, h: 36 },   // left-mid
+    { id: "CORNERS-l2-o1", x: 22, y: 46, w: 8, h: 36 },  // left-top
+  ];
+
+  const bars = slots.map((slot) => {
+    const isYellow = stickerIsYellow(pattern, originalColors, slot.id);
+    return `<rect x="${slot.x}" y="${slot.y}" width="${slot.w}" height="${slot.h}" rx="2" fill="${
+      isYellow ? "#f2e700" : "#e7e7e7"
+    }" stroke="#1e1e1e" stroke-width="1.5"/>`;
+  });
+
+  return svg.replace("</svg>", `<g id="oll-perimeter">${bars.join("")}</g>\n</svg>`);
+}
+
+function addPLLPerimeterInfo(svg, pattern, originalColors) {
+  const slots = [
+    { id: "CORNERS-l2-o2", x: 46, y: 22, w: 36, h: 8 },  // top-left
+    { id: "EDGES-l2-o1", x: 110, y: 22, w: 36, h: 8 },   // top-mid
+    { id: "CORNERS-l1-o1", x: 174, y: 22, w: 36, h: 8 }, // top-right
+
+    { id: "CORNERS-l1-o2", x: 226, y: 46, w: 8, h: 36 }, // right-top
+    { id: "EDGES-l1-o1", x: 226, y: 110, w: 8, h: 36 },  // right-mid
+    { id: "CORNERS-l0-o1", x: 226, y: 174, w: 8, h: 36 }, // right-bottom
+
+    { id: "CORNERS-l0-o2", x: 174, y: 226, w: 36, h: 8 }, // bottom-right
+    { id: "EDGES-l0-o1", x: 110, y: 226, w: 36, h: 8 },   // bottom-mid
+    { id: "CORNERS-l3-o1", x: 46, y: 226, w: 36, h: 8 },  // bottom-left
+
+    { id: "CORNERS-l3-o2", x: 22, y: 174, w: 8, h: 36 }, // left-bottom
+    { id: "EDGES-l3-o1", x: 22, y: 110, w: 8, h: 36 },   // left-mid
+    { id: "CORNERS-l2-o1", x: 22, y: 46, w: 8, h: 36 },  // left-top
+  ];
+
+  const bars = slots.map((slot) => {
+    const sourceId = sourceStickerIdForPattern(
+      pattern,
+      slot.id.split("-")[0],
+      Number(slot.id.match(/-l(\d+)-/)?.[1]),
+      Number(slot.id.match(/-o(\d+)$/)?.[1])
+    );
+    const fill = sourceId ? originalColors.get(sourceId) || "#e7e7e7" : "#e7e7e7";
+    return `<rect x="${slot.x}" y="${slot.y}" width="${slot.w}" height="${slot.h}" rx="2" fill="${fill}" stroke="#1e1e1e" stroke-width="1.5"/>`;
+  });
+
+  return svg.replace("</svg>", `<g id="pll-perimeter">${bars.join("")}</g>\n</svg>`);
+}
+
 function forcePLLYellowTop(svg) {
   const ids = [
     "CENTERS-l0-o0",
@@ -106,20 +187,18 @@ function forcePLLYellowTop(svg) {
   return svg;
 }
 
-function styleCommon(svg, setName) {
-  const a = setName === "OLL" ? "#f4b1b1" : "#b6d4f5";
-  const b = setName === "OLL" ? "#e6d69d" : "#b9e2b8";
-  const defs = `
-  <defs>
-    <linearGradient id="thumb-top-bar" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="${a}" />
-      <stop offset="100%" stop-color="${b}" />
-    </linearGradient>
-  </defs>
-  <rect x="30" y="30" width="196" height="10" rx="6" fill="url(#thumb-top-bar)" opacity="0.95"></rect>
+function styleCommon(svg) {
+  const frame = `
+  <rect x="16" y="16" width="224" height="224" rx="14" fill="#ffffff" stroke="#d8d8d8" stroke-width="1.5"></rect>
 `;
-  svg = svg.replace(/<svg([^>]*)>/, `<svg$1>${defs}`);
+  svg = svg.replace(/<svg([^>]*)>/, `<svg$1>${frame}`);
+  svg = svg.replace(/viewBox="30 30 196 196"/, 'viewBox="16 16 224 224"');
+  svg = svg.replace(/width="204px"/, 'width="224px"');
+  svg = svg.replace(/height="204px"/, 'height="224px"');
   svg = svg.replace(/<title>.*?<\/title>\s*/s, "");
+  svg = svg.replace(/stroke-width="16px"/g, 'stroke-width="6px"');
+  svg = svg.replace(/stroke="#000000"/g, 'stroke="#1e1e1e"');
+  svg = svg.replace(/stroke="black"/g, 'stroke="#1e1e1e"');
   return svg;
 }
 
@@ -135,18 +214,16 @@ const PLL_ARROW_OVERRIDES = {
     { from: [64, 192], to: [192, 64], color: "#d43b2d" },
   ],
   pll_e: [
-    { from: [64, 64], to: [64, 192], color: "#d43b2d" },
-    { from: [192, 64], to: [192, 192], color: "#d43b2d" },
-    { from: [96, 64], to: [160, 64], color: "#d43b2d" },
-    { from: [96, 192], to: [160, 192], color: "#d43b2d" },
+    { from: [64, 64], to: [64, 192], color: "#d43b2d", double: true },
+    { from: [192, 64], to: [192, 192], color: "#d43b2d", double: true },
   ],
   pll_na: [
     { from: [64, 64], to: [192, 192], color: "#d43b2d" },
-    { from: [128, 64], to: [128, 192], color: "#3a5fd8" },
+    { from: [128, 64], to: [128, 192], color: "#3a5fd8", double: true },
   ],
   pll_nb: [
     { from: [64, 192], to: [192, 64], color: "#d43b2d" },
-    { from: [128, 64], to: [128, 192], color: "#3a5fd8" },
+    { from: [128, 64], to: [128, 192], color: "#3a5fd8", double: true },
   ],
   pll_v: [
     { from: [64, 64], to: [192, 192], color: "#d43b2d" },
@@ -210,7 +287,12 @@ function injectPLLArrows(svg, pattern, solvedDisplayPattern, id) {
 
   const segments = [];
 
-  function addArrow(from, to, color, width) {
+  const mk = (seg, width) => ({
+    ...seg,
+    width,
+  });
+
+  function addArrow(from, to, color, width, double = false) {
     const [x1, y1] = from;
     const [x2, y2] = to;
     const dx = x2 - x1;
@@ -221,36 +303,68 @@ function injectPLLArrows(svg, pattern, solvedDisplayPattern, id) {
     const sy = y1 + (dy / len) * inset;
     const ex = x2 - (dx / len) * inset;
     const ey = y2 - (dy / len) * inset;
+    const kind = color === "#d43b2d" ? "r" : "b";
+    const markerAttrs = double
+      ? `marker-start="url(#arrow-${kind})" marker-end="url(#arrow-${kind})"`
+      : `marker-end="url(#arrow-${kind})"`;
     // Reverse visual direction so arrows match the training-sheet convention.
     segments.push(
-      `<line x1="${ex}" y1="${ey}" x2="${sx}" y2="${sy}" stroke="${color}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-${color === "#d43b2d" ? "r" : "b"})" opacity="0.95"/>`
+      `<line x1="${ex}" y1="${ey}" x2="${sx}" y2="${sy}" stroke="${color}" stroke-width="${width}" stroke-linecap="square" stroke-linejoin="round" vector-effect="non-scaling-stroke" ${markerAttrs} opacity="0.95"/>`
     );
+  }
+
+  function addArrowSet(rows) {
+    for (const seg of rows) {
+      addArrow(seg.from, seg.to, seg.color, seg.width, Boolean(seg.double));
+    }
+  }
+
+  function cycleArrows(points, mapping, color, width) {
+    const visited = new Set();
+    for (let i = 0; i < mapping.length; i++) {
+      if (visited.has(i) || mapping[i] == null || mapping[i] === i) continue;
+      const cycle = [];
+      let cur = i;
+      while (!visited.has(cur) && mapping[cur] != null) {
+        visited.add(cur);
+        cycle.push(cur);
+        cur = mapping[cur];
+      }
+
+      if (cycle.length === 2 && mapping[cycle[0]] === cycle[1] && mapping[cycle[1]] === cycle[0]) {
+        addArrow(points[cycle[0]], points[cycle[1]], color, width, true);
+        continue;
+      }
+
+      for (const fromIdx of cycle) {
+        const toIdx = mapping[fromIdx];
+        if (toIdx != null && toIdx !== fromIdx) {
+          addArrow(points[fromIdx], points[toIdx], color, width, false);
+        }
+      }
+    }
   }
 
   const override = PLL_ARROW_OVERRIDES[id];
   if (override) {
-    for (const seg of override) {
-      addArrow(seg.from, seg.to, seg.color, seg.color === "#d43b2d" ? 10 : 9);
-    }
+    addArrowSet(
+      override.map((seg) => mk(seg, seg.color === "#d43b2d" ? 10 : 9))
+    );
   } else {
-    for (let i = 0; i < 4; i++) {
-      const target = cornerTarget.get(curCorners[i]);
-      if (target != null && target !== i) addArrow(cornerPoints[i], cornerPoints[target], "#d43b2d", 10);
-    }
-    for (let i = 0; i < 4; i++) {
-      const target = edgeTarget.get(curEdges[i]);
-      if (target != null && target !== i) addArrow(edgePoints[i], edgePoints[target], "#3a5fd8", 9);
-    }
+    const cornerMapping = curCorners.map((piece) => cornerTarget.get(piece));
+    const edgeMapping = curEdges.map((piece) => edgeTarget.get(piece));
+    cycleArrows(cornerPoints, cornerMapping, "#d43b2d", 10);
+    cycleArrows(edgePoints, edgeMapping, "#3a5fd8", 9);
   }
 
   if (segments.length === 0) return svg;
 
   const overlay = `
   <defs>
-    <marker id="arrow-r" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto" markerUnits="userSpaceOnUse">
+    <marker id="arrow-r" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
       <path d="M0,0 L20,10 L0,20 z" fill="#d43b2d"/>
     </marker>
-    <marker id="arrow-b" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto" markerUnits="userSpaceOnUse">
+    <marker id="arrow-b" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
       <path d="M0,0 L20,10 L0,20 z" fill="#3a5fd8"/>
     </marker>
   </defs>
@@ -283,15 +397,13 @@ function errorThumb(id, setName, message) {
 async function main() {
   await fs.mkdir(OUT_DIR, { recursive: true });
 
-  const [rawJson, llTemplate, llFaceTemplate, kp] = await Promise.all([
+  const [rawJson, llFaceTemplate, kp] = await Promise.all([
     fs.readFile(DATA_PATH, "utf8"),
-    cube3x3x3.llSVG(),
     cube3x3x3.llFaceSVG(),
     cube3x3x3.kpuzzle(),
   ]);
 
   const algs = JSON.parse(rawJson);
-  const llColors = extractOriginalColors(llTemplate);
   const llFaceColors = extractOriginalColors(llFaceTemplate);
   const solvedDisplayPattern = kp.defaultPattern().applyAlg(DISPLAY_ORIENTATION);
 
@@ -309,12 +421,14 @@ async function main() {
       if (item.set === "PLL") {
         svg = colorizeTemplate(llFaceTemplate, casePattern, llFaceColors);
         svg = forcePLLYellowTop(svg);
-        svg = styleCommon(svg, item.set);
+        svg = styleCommon(svg);
+        svg = addPLLPerimeterInfo(svg, casePattern, llFaceColors);
         svg = injectPLLArrows(svg, casePattern, solvedDisplayPattern, item.id);
       } else {
-        svg = colorizeTemplate(llTemplate, casePattern, llColors);
+        svg = colorizeTemplate(llFaceTemplate, casePattern, llFaceColors);
         svg = flattenOLLColors(svg);
-        svg = styleCommon(svg, item.set);
+        svg = styleCommon(svg);
+        svg = addOLLPerimeterInfo(svg, casePattern, llFaceColors);
       }
 
       await fs.writeFile(outPath, svg, "utf8");

@@ -1,49 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="204px" height="204px" viewBox="30 30 196 196" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <linearGradient id="thumb-top-bar" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#b6d4f5" />
-      <stop offset="100%" stop-color="#b9e2b8" />
-    </linearGradient>
-  </defs>
-  <rect x="30" y="30" width="196" height="10" rx="6" fill="url(#thumb-top-bar)" opacity="0.95"></rect>
+<svg width="224px" height="224px" viewBox="16 16 224 224" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect x="16" y="16" width="224" height="224" rx="14" fill="#ffffff" stroke="#d8d8d8" stroke-width="1.5"></rect>
 
   <defs>
     <g id="sticker">
-        <rect x="-10" y="-10" width="1" height="1" stroke="black" stroke-width="0.04px" />
+        <rect x="-10" y="-10" width="1" height="1" stroke="#1e1e1e" stroke-width="0.04px" />
     </g>
   </defs>
   <g id="3x3x3-LL" stroke="none" stroke-width="4" style="none" stroke-linejoin="round">
-    <rect x="32" y="32" width="192" height="192" stroke="black" stroke-width="16px" />
-    <rect id="CENTERS-l0-o0" stroke="#000000" style="fill: #f2e700" x="96" y="96" width="64" height="64"></rect>
-    <rect id="CENTERS-l0-o1" stroke="#000000" style="fill: #f2e700" x="96" y="96" width="64" height="64"></rect>
-    <rect id="CENTERS-l0-o2" stroke="#000000" style="fill: #f2e700" x="96" y="96" width="64" height="64"></rect>
-    <rect id="CENTERS-l0-o3" stroke="#000000" style="fill: #f2e700" x="96" y="96" width="64" height="64"></rect>
+    <rect x="32" y="32" width="192" height="192" stroke="#1e1e1e" stroke-width="6px" />
+    <rect id="CENTERS-l0-o0" stroke="#1e1e1e" style="fill: #f2e700" x="96" y="96" width="64" height="64"></rect>
+    <rect id="CENTERS-l0-o1" stroke="#1e1e1e" style="fill: #f2e700" x="96" y="96" width="64" height="64"></rect>
+    <rect id="CENTERS-l0-o2" stroke="#1e1e1e" style="fill: #f2e700" x="96" y="96" width="64" height="64"></rect>
+    <rect id="CENTERS-l0-o3" stroke="#1e1e1e" style="fill: #f2e700" x="96" y="96" width="64" height="64"></rect>
 
-    <rect id="CORNERS-l0-o0" stroke="#000000" style="fill: #f2e700" x="160" y="160" width="64" height="64"></rect>
-    <rect id="CORNERS-l1-o0" stroke="#000000" style="fill: #f2e700" x="160" y="32" width="64" height="64"></rect>
-    <rect id="CORNERS-l2-o0" stroke="#000000" style="fill: #f2e700" x="32" y="32" width="64" height="64"></rect>
-    <rect id="CORNERS-l3-o0" stroke="#000000" style="fill: #f2e700" x="32" y="160" width="64" height="64"></rect>
+    <rect id="CORNERS-l0-o0" stroke="#1e1e1e" style="fill: #f2e700" x="160" y="160" width="64" height="64"></rect>
+    <rect id="CORNERS-l1-o0" stroke="#1e1e1e" style="fill: #f2e700" x="160" y="32" width="64" height="64"></rect>
+    <rect id="CORNERS-l2-o0" stroke="#1e1e1e" style="fill: #f2e700" x="32" y="32" width="64" height="64"></rect>
+    <rect id="CORNERS-l3-o0" stroke="#1e1e1e" style="fill: #f2e700" x="32" y="160" width="64" height="64"></rect>
 
-    <rect id="EDGES-l0-o0" stroke="#000000" style="fill: #f2e700" x="96" y="160" width="64" height="64"></rect>
-    <rect id="EDGES-l1-o0" stroke="#000000" style="fill: #f2e700" x="160" y="96" width="64" height="64"></rect>
-    <rect id="EDGES-l2-o0" stroke="#000000" style="fill: #f2e700" x="96" y="32" width="64" height="64"></rect>
-    <rect id="EDGES-l3-o0" stroke="#000000" style="fill: #f2e700" x="32" y="96" width="64" height="64"></rect>
+    <rect id="EDGES-l0-o0" stroke="#1e1e1e" style="fill: #f2e700" x="96" y="160" width="64" height="64"></rect>
+    <rect id="EDGES-l1-o0" stroke="#1e1e1e" style="fill: #f2e700" x="160" y="96" width="64" height="64"></rect>
+    <rect id="EDGES-l2-o0" stroke="#1e1e1e" style="fill: #f2e700" x="96" y="32" width="64" height="64"></rect>
+    <rect id="EDGES-l3-o0" stroke="#1e1e1e" style="fill: #f2e700" x="32" y="96" width="64" height="64"></rect>
   </g>
   <g style="opacity: 0">
-    <polygon id="CORNERS-l0-o1" stroke="#000000" style="fill: #26f" points="224 160 252 160 252 252 224 224"></polygon>
-    <polygon id="CORNERS-l0-o2" stroke="#000000" style="fill: orange" transform="translate(206, 238) scale(1, -1) rotate(-90) translate(-206, -238) " points="192 192 220 192 220 284 192 256"></polygon>
-    <polygon id="CORNERS-l1-o1" stroke="#000000" style="fill: orange" transform="translate(206, 18) rotate(-90) translate(-206, -18) " points="192 -28 220 -28 220 64 192 36"></polygon>
-    <polygon id="CORNERS-l1-o2" stroke="#000000" style="fill: limegreen" transform="translate(238, 50) scale(1, -1) translate(-238, -50) " points="224 4 252 4 252 96 224 68"></polygon>
-    <polygon id="CORNERS-l2-o1" stroke="#000000" style="fill: red" transform="translate(18, 50) scale(-1, -1) translate(-18, -50) " points="4 4 32 4 32 96 4 68"></polygon>
-    <polygon id="CORNERS-l2-o2" stroke="#000000" style="fill: #26f" transform="translate(50, 18) scale(1, -1) rotate(90) translate(-50, -18) " points="36 -28 64 -28 64 64 36 36"></polygon>
-    <polygon id="CORNERS-l3-o1" stroke="#000000" style="fill: limegreen" transform="translate(50, 238) rotate(90) translate(-50, -238) " points="36 192 64 192 64 284 36 256"></polygon>
-    <polygon id="CORNERS-l3-o2" stroke="#000000" style="fill: red" transform="translate(18, 206) scale(-1, 1) translate(-18, -206) " points="4 160 32 160 32 252 4 224"></polygon>
+    <polygon id="CORNERS-l0-o1" stroke="#1e1e1e" style="fill: #26f" points="224 160 252 160 252 252 224 224"></polygon>
+    <polygon id="CORNERS-l0-o2" stroke="#1e1e1e" style="fill: orange" transform="translate(206, 238) scale(1, -1) rotate(-90) translate(-206, -238) " points="192 192 220 192 220 284 192 256"></polygon>
+    <polygon id="CORNERS-l1-o1" stroke="#1e1e1e" style="fill: orange" transform="translate(206, 18) rotate(-90) translate(-206, -18) " points="192 -28 220 -28 220 64 192 36"></polygon>
+    <polygon id="CORNERS-l1-o2" stroke="#1e1e1e" style="fill: limegreen" transform="translate(238, 50) scale(1, -1) translate(-238, -50) " points="224 4 252 4 252 96 224 68"></polygon>
+    <polygon id="CORNERS-l2-o1" stroke="#1e1e1e" style="fill: red" transform="translate(18, 50) scale(-1, -1) translate(-18, -50) " points="4 4 32 4 32 96 4 68"></polygon>
+    <polygon id="CORNERS-l2-o2" stroke="#1e1e1e" style="fill: #26f" transform="translate(50, 18) scale(1, -1) rotate(90) translate(-50, -18) " points="36 -28 64 -28 64 64 36 36"></polygon>
+    <polygon id="CORNERS-l3-o1" stroke="#1e1e1e" style="fill: limegreen" transform="translate(50, 238) rotate(90) translate(-50, -238) " points="36 192 64 192 64 284 36 256"></polygon>
+    <polygon id="CORNERS-l3-o2" stroke="#1e1e1e" style="fill: red" transform="translate(18, 206) scale(-1, 1) translate(-18, -206) " points="4 160 32 160 32 252 4 224"></polygon>
 
-    <rect id="EDGES-l0-o1" stroke="#000000" style="fill: #26f" transform="translate(128, 238) scale(1, -1) rotate(90) translate(-128, -238) " x="114" y="206" width="28" height="64"></rect>
-    <rect id="EDGES-l1-o1" stroke="#000000" style="fill: red" x="224" y="96" width="28" height="64"></rect>
-    <rect id="EDGES-l2-o1" stroke="#000000" style="fill: orange" transform="translate(128, 18) scale(1, -1) rotate(90) translate(-128, -18) " x="114" y="-14" width="28" height="64"></rect>
-    <rect id="EDGES-l3-o1" stroke="#000000" style="fill: limegreen" x="4" y="96" width="28" height="64"></rect>
+    <rect id="EDGES-l0-o1" stroke="#1e1e1e" style="fill: #26f" transform="translate(128, 238) scale(1, -1) rotate(90) translate(-128, -238) " x="114" y="206" width="28" height="64"></rect>
+    <rect id="EDGES-l1-o1" stroke="#1e1e1e" style="fill: red" x="224" y="96" width="28" height="64"></rect>
+    <rect id="EDGES-l2-o1" stroke="#1e1e1e" style="fill: orange" transform="translate(128, 18) scale(1, -1) rotate(90) translate(-128, -18) " x="114" y="-14" width="28" height="64"></rect>
+    <rect id="EDGES-l3-o1" stroke="#1e1e1e" style="fill: limegreen" x="4" y="96" width="28" height="64"></rect>
 
     <!-- CORNERS -->
     <use id="CORNERS-l4-o0" href="#sticker" style="fill: white"/>
@@ -114,14 +108,15 @@
     <use id="CENTERS-l5-o2" href="#sticker" style="fill: white"/>
     <use id="CENTERS-l5-o3" href="#sticker" style="fill: white"/>
   </g>
+<g id="pll-perimeter"><rect x="46" y="22" width="36" height="8" rx="2" fill="#26f" stroke="#1e1e1e" stroke-width="1.5"/><rect x="110" y="22" width="36" height="8" rx="2" fill="orange" stroke="#1e1e1e" stroke-width="1.5"/><rect x="174" y="22" width="36" height="8" rx="2" fill="orange" stroke="#1e1e1e" stroke-width="1.5"/><rect x="226" y="46" width="8" height="36" rx="2" fill="limegreen" stroke="#1e1e1e" stroke-width="1.5"/><rect x="226" y="110" width="8" height="36" rx="2" fill="red" stroke="#1e1e1e" stroke-width="1.5"/><rect x="226" y="174" width="8" height="36" rx="2" fill="#26f" stroke="#1e1e1e" stroke-width="1.5"/><rect x="174" y="226" width="36" height="8" rx="2" fill="orange" stroke="#1e1e1e" stroke-width="1.5"/><rect x="110" y="226" width="36" height="8" rx="2" fill="#26f" stroke="#1e1e1e" stroke-width="1.5"/><rect x="46" y="226" width="36" height="8" rx="2" fill="limegreen" stroke="#1e1e1e" stroke-width="1.5"/><rect x="22" y="174" width="8" height="36" rx="2" fill="red" stroke="#1e1e1e" stroke-width="1.5"/><rect x="22" y="110" width="8" height="36" rx="2" fill="limegreen" stroke="#1e1e1e" stroke-width="1.5"/><rect x="22" y="46" width="8" height="36" rx="2" fill="red" stroke="#1e1e1e" stroke-width="1.5"/></g>
 
   <defs>
-    <marker id="arrow-r" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto" markerUnits="userSpaceOnUse">
+    <marker id="arrow-r" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
       <path d="M0,0 L20,10 L0,20 z" fill="#d43b2d"/>
     </marker>
-    <marker id="arrow-b" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto" markerUnits="userSpaceOnUse">
+    <marker id="arrow-b" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
       <path d="M0,0 L20,10 L0,20 z" fill="#3a5fd8"/>
     </marker>
   </defs>
-  <g id="pll-arrows"><line x1="64" y1="182" x2="64" y2="74" stroke="#d43b2d" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-r)" opacity="0.95"/><line x1="182" y1="192" x2="74" y2="192" stroke="#d43b2d" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-r)" opacity="0.95"/><line x1="71.07106781186548" y1="71.07106781186548" x2="184.92893218813452" y2="184.92893218813452" stroke="#d43b2d" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-r)" opacity="0.95"/><line x1="120.92893218813452" y1="184.92893218813452" x2="71.07106781186548" y2="135.07106781186548" stroke="#3a5fd8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-b)" opacity="0.95"/><line x1="184.92893218813452" y1="135.07106781186548" x2="135.07106781186548" y2="184.92893218813452" stroke="#3a5fd8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-b)" opacity="0.95"/><line x1="74" y1="128" x2="182" y2="128" stroke="#3a5fd8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-b)" opacity="0.95"/></g>
+  <g id="pll-arrows"><line x1="64" y1="182" x2="64" y2="74" stroke="#d43b2d" stroke-width="10" stroke-linecap="square" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-r)" opacity="0.95"/><line x1="182" y1="192" x2="74" y2="192" stroke="#d43b2d" stroke-width="10" stroke-linecap="square" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-r)" opacity="0.95"/><line x1="71.07106781186548" y1="71.07106781186548" x2="184.92893218813452" y2="184.92893218813452" stroke="#d43b2d" stroke-width="10" stroke-linecap="square" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-r)" opacity="0.95"/><line x1="120.92893218813452" y1="184.92893218813452" x2="71.07106781186548" y2="135.07106781186548" stroke="#3a5fd8" stroke-width="9" stroke-linecap="square" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-b)" opacity="0.95"/><line x1="184.92893218813452" y1="135.07106781186548" x2="135.07106781186548" y2="184.92893218813452" stroke="#3a5fd8" stroke-width="9" stroke-linecap="square" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-b)" opacity="0.95"/><line x1="74" y1="128" x2="182" y2="128" stroke="#3a5fd8" stroke-width="9" stroke-linecap="square" stroke-linejoin="round" vector-effect="non-scaling-stroke" marker-end="url(#arrow-b)" opacity="0.95"/></g>
 </svg>

@@ -6,14 +6,14 @@ import { Twisty } from "./components/Twisty";
 
 const algs = algsRaw as AlgItem[];
 
-type PllGroup = {
+type CatalogGroup = {
   key: string;
   title: string;
   tone: "sand" | "sage" | "rose" | "sky";
   ids: string[];
 };
 
-const PLL_GROUPS: PllGroup[] = [
+const PLL_GROUPS: CatalogGroup[] = [
   {
     key: "edge-only",
     title: "Edge Permutations Only",
@@ -37,6 +37,69 @@ const PLL_GROUPS: PllGroup[] = [
     title: "Corner & Edge Cycle Permutations (G perms)",
     tone: "sky",
     ids: ["pll_ga", "pll_gb", "pll_gc", "pll_gd"],
+  },
+];
+
+const OLL_GROUPS: CatalogGroup[] = [
+  {
+    key: "oll-no-edges",
+    title: "No Edges Solved",
+    tone: "rose",
+    ids: ["oll_1", "oll_2", "oll_3", "oll_4", "oll_18", "oll_19", "oll_17", "oll_20"],
+  },
+  {
+    key: "oll-l-no-corners",
+    title: "L-Shaped Edges Solved · No Corners Solved",
+    tone: "sky",
+    ids: ["oll_48", "oll_47", "oll_53", "oll_54", "oll_49", "oll_50"],
+  },
+  {
+    key: "oll-l-1-corner",
+    title: "L-Shaped Edges Solved · 1 Corner Solved",
+    tone: "sand",
+    ids: ["oll_5", "oll_6", "oll_7", "oll_8", "oll_11", "oll_12", "oll_9", "oll_10"],
+  },
+  {
+    key: "oll-l-2-corners",
+    title: "L-Shaped Edges Solved · 2 Corners Solved",
+    tone: "rose",
+    ids: ["oll_44", "oll_43", "oll_31", "oll_32", "oll_35", "oll_37", "oll_36", "oll_38", "oll_29", "oll_30", "oll_41", "oll_42"],
+  },
+  {
+    key: "oll-l-4-corners",
+    title: "L-Shaped Edges Solved · 4 Corners Solved",
+    tone: "sage",
+    ids: ["oll_28"],
+  },
+  {
+    key: "oll-bar-no-corners",
+    title: "Bar-Shaped Edges Solved · No Corners Solved",
+    tone: "sky",
+    ids: ["oll_51", "oll_56", "oll_52", "oll_55"],
+  },
+  {
+    key: "oll-bar-1-corner",
+    title: "Bar-Shaped Edges Solved · 1 Corner Solved",
+    tone: "sand",
+    ids: ["oll_15", "oll_16", "oll_13", "oll_14"],
+  },
+  {
+    key: "oll-bar-2-corners",
+    title: "Bar-Shaped Edges Solved · 2 Corners Solved",
+    tone: "rose",
+    ids: ["oll_33", "oll_45", "oll_34", "oll_46", "oll_40", "oll_39"],
+  },
+  {
+    key: "oll-bar-4-corners",
+    title: "Bar-Shaped Edges Solved · 4 Corners Solved",
+    tone: "sage",
+    ids: ["oll_57"],
+  },
+  {
+    key: "oll-4-edges",
+    title: "4 Edges Solved (2-Look OLL Corners)",
+    tone: "sage",
+    ids: ["oll_21", "oll_22", "oll_27", "oll_26", "oll_25", "oll_23", "oll_24"],
   },
 ];
 
@@ -76,6 +139,32 @@ export default function App() {
     return sections;
   }, [filtered, set]);
 
+  const ollSections = useMemo(() => {
+    if (set !== "OLL") return [];
+
+    const byId = new Map(filtered.map((a) => [a.id, a] as const));
+    const used = new Set<string>();
+    const sections = OLL_GROUPS.map((group) => {
+      const items = group.ids.map((id) => byId.get(id)).filter(Boolean) as AlgItem[];
+      items.forEach((item) => used.add(item.id));
+      return { ...group, items };
+    }).filter((group) => group.items.length > 0);
+
+    const remaining = filtered.filter((a) => !used.has(a.id));
+    if (remaining.length) {
+      sections.push({
+        key: "other-oll",
+        title: "Other OLL",
+        tone: "sand",
+        ids: [],
+        items: remaining,
+      });
+    }
+    return sections;
+  }, [filtered, set]);
+
+  const ollCount = useMemo(() => algs.filter((a) => a.set === "OLL").length, []);
+
   const renderCard = (a: AlgItem) => (
     <button key={a.id} className="card" onClick={() => setSelected(a)}>
       <div className="cardTop">
@@ -90,6 +179,7 @@ export default function App() {
     <div className="app">
       <header className="header">
         <h1>OLL / PLL Catalog</h1>
+        {set === "OLL" && <div className="subtleNote">OLL loaded: {ollCount}/57 cases</div>}
 
         <div className="controls">
           <div className="tabs">
@@ -119,6 +209,15 @@ export default function App() {
         {set === "PLL" ? (
           <div className="sections">
             {pllSections.map((section) => (
+              <section key={section.key} className={`section section--${section.tone}`}>
+                <div className="sectionHeader">{section.title}</div>
+                <div className="sectionGrid">{section.items.map(renderCard)}</div>
+              </section>
+            ))}
+          </div>
+        ) : set === "OLL" ? (
+          <div className="sections">
+            {ollSections.map((section) => (
               <section key={section.key} className={`section section--${section.tone}`}>
                 <div className="sectionHeader">{section.title}</div>
                 <div className="sectionGrid">{section.items.map(renderCard)}</div>
