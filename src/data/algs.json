@@ -1,0 +1,149 @@
+[
+  {
+    "id": "pll_ua",
+    "set": "PLL",
+    "name": "Ua-perm",
+    "alg": "F2 [U' L R'] F2 [L' R U'] F2",
+    "thumb": "/thumbs/generated/pll_ua.svg?v5"
+  },
+  {
+    "id": "pll_ub",
+    "set": "PLL",
+    "name": "Ub-perm",
+    "alg": "F2 [U L R'] F2 [L' R U] F2",
+    "thumb": "/thumbs/generated/pll_ub.svg?v5"
+  },
+  {
+    "id": "pll_z",
+    "set": "PLL",
+    "name": "Z-perm",
+    "alg": "[M2 U M2 U] [M' U2] [M2 U2] [M' U2]",
+    "thumb": "/thumbs/generated/pll_z.svg?v5"
+  },
+  {
+    "id": "pll_h",
+    "set": "PLL",
+    "name": "H-perm",
+    "alg": "[M2 U] [M2 U2] [M2 U] M2",
+    "thumb": "/thumbs/generated/pll_h.svg?v5"
+  },
+  {
+    "id": "pll_aa",
+    "set": "PLL",
+    "name": "Aa-perm",
+    "alg": "[l' U R' D2] [R U' R' D2] R2",
+    "thumb": "/thumbs/generated/pll_aa.svg?v5"
+  },
+  {
+    "id": "pll_ab",
+    "set": "PLL",
+    "name": "Ab-perm",
+    "alg": "[l U' R D2] [R' U R D2] R2",
+    "thumb": "/thumbs/generated/pll_ab.svg?v5"
+  },
+  {
+    "id": "pll_e",
+    "set": "PLL",
+    "name": "E-perm",
+    "alg": "x' [R U' R' D ] [R U R' D' ] [R U R' D ] [R U' R' D']",
+    "thumb": "/thumbs/generated/pll_e.svg?v5"
+  },
+  {
+    "id": "pll_t",
+    "set": "PLL",
+    "name": "T-perm",
+    "alg": "[SEXY] [R' F R2] [U' R' U' ] [R U R' F']",
+    "thumb": "/thumbs/generated/pll_t.svg?v5"
+  },
+  {
+    "id": "pll_ja",
+    "set": "PLL",
+    "name": "Ja-perm",
+    "alg": "[R' U L'] U2 [R U' R' U2] [L R U']",
+    "thumb": "/thumbs/generated/pll_ja.svg?v5"
+  },
+  {
+    "id": "pll_jb",
+    "set": "PLL",
+    "name": "Jb-perm",
+    "alg": "[R U R' F'] [SEXY] [R' F R2] [U' R' U']",
+    "thumb": "/thumbs/generated/pll_jb.svg?v5"
+  },
+  {
+    "id": "pll_ra",
+    "set": "PLL",
+    "name": "Ra-perm",
+    "alg": "[L U2' L' U2'] [L F' L' U'] [L U L F ] [L2' U]",
+    "thumb": "/thumbs/generated/pll_ra.svg?v5"
+  },
+  {
+    "id": "pll_rb",
+    "set": "PLL",
+    "name": "Rb-perm",
+    "alg": "[R' U2 R U2] [R' F R U] [R' U' R' F'] [R2 U']",
+    "thumb": "/thumbs/generated/pll_rb.svg?v5"
+  },
+  {
+    "id": "pll_na",
+    "set": "PLL",
+    "name": "Na-perm",
+    "alg": "[L U' R U2 R']x2 L' U U",
+    "thumb": "/thumbs/generated/pll_na.svg?v5"
+  },
+  {
+    "id": "pll_nb",
+    "set": "PLL",
+    "name": "Nb-perm",
+    "alg": "[R' U L' U2 L]x2 R U' U'",
+    "thumb": "/thumbs/generated/pll_nb.svg?v5"
+  },
+  {
+    "id": "pll_f",
+    "set": "PLL",
+    "name": "F-perm",
+    "alg": "[R' U R U'] R2 [F' U' F U] [R F R' F'] [R2 U']",
+    "thumb": "/thumbs/generated/pll_f.svg?v5"
+  },
+  {
+    "id": "pll_v",
+    "set": "PLL",
+    "name": "V-perm",
+    "alg": "[R' U R' d'] [R' F' R2] [U' R' U] [R' F R F]",
+    "thumb": "/thumbs/generated/pll_v.svg?v5"
+  },
+  {
+    "id": "pll_y",
+    "set": "PLL",
+    "name": "Y-perm",
+    "alg": "F [R U' R' U'] [R U R' F'] [SEXY] [SLEDGEHMR]",
+    "thumb": "/thumbs/generated/pll_y.svg?v5"
+  },
+  {
+    "id": "pll_ga",
+    "set": "PLL",
+    "name": "Ga-perm",
+    "alg": "[R2 u] [R' U R' U'] [R u'] F] [R2 F' U",
+    "thumb": "/thumbs/generated/pll_ga.svg?v5"
+  },
+  {
+    "id": "pll_gb",
+    "set": "PLL",
+    "name": "Gb-perm",
+    "alg": "[L' U' L y' ] [R2 u R' U] [R U' R u' ] R2",
+    "thumb": "/thumbs/generated/pll_gb.svg?v5"
+  },
+  {
+    "id": "pll_gc",
+    "set": "PLL",
+    "name": "Gc-perm",
+    "alg": "[R2 u'] [R U' R U] [R' u R2 y] [R U' R']",
+    "thumb": "/thumbs/generated/pll_gc.svg?v5"
+  },
+  {
+    "id": "pll_gd",
+    "set": "PLL",
+    "name": "Gd-perm",
+    "alg": "[R U R' y'] [R2 u' R U'] [R' U R' u ] [R2]",
+    "thumb": "/thumbs/generated/pll_gd.svg?v5"
+  }
+]
