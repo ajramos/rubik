@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import algsRaw from "./data/algs.json";
 import type { AlgItem, AlgSet } from "./types";
 import { MiniTwisty } from "./components/MiniTwisty";
@@ -12,6 +12,102 @@ type CatalogGroup = {
   tone: "sand" | "sage" | "rose" | "sky";
   ids: string[];
 };
+
+const LEARNING_TRACKS = [
+  {
+    title: "Last Layer (CFOP)",
+    state: "Active",
+    detail: "OLL + PLL catalog, recognition thumbnails and play-through viewer.",
+  },
+  {
+    title: "F2L Cases",
+    state: "Planned",
+    detail: "Case library with inserts, mirrors and intuitive triggers.",
+  },
+  {
+    title: "One-Handed (OH)",
+    state: "Planned",
+    detail: "Ergonomic alg variants, regrips and fingertrick notes.",
+  },
+  {
+    title: "Blindfolded (BLD)",
+    state: "Backlog",
+    detail: "Letter pairs, memo systems and execution drills.",
+  },
+] as const;
+
+const PRACTICE_MODULES = [
+  { name: "SRS Review", state: "Soon" },
+  { name: "Recognition Drills", state: "Soon" },
+  { name: "Timed Sessions", state: "Planned" },
+  { name: "Progress Notes", state: "Planned" },
+] as const;
+
+const SET_META: Record<AlgSet, { short: string; long: string; description: string }> = {
+  OLL: {
+    short: "OLL",
+    long: "Orientation of Last Layer",
+    description: "Recognition patterns and algorithms for orienting the last layer.",
+  },
+  PLL: {
+    short: "PLL",
+    long: "Permutation of Last Layer",
+    description: "Recognition patterns and algorithms for permuting the last layer.",
+  },
+};
+
+function formatAlgForDisplay(alg: string, set?: AlgSet) {
+  const cleaned = alg.trim().replace(/\s+/g, " ");
+  if (!cleaned) return "";
+
+  if (cleaned.includes("[")) {
+    return cleaned
+      .replace(/\]\s*\[/g, "]\n[")
+      .replace(/\]\s+/g, "]\n")
+      .replace(/\s+\[/g, "\n[");
+  }
+
+  const tokens = cleaned.split(" ");
+  const chunkSize =
+    set === "OLL"
+      ? tokens.length <= 8
+        ? 4
+        : tokens.length <= 12
+          ? 4
+          : 5
+      : 6;
+  const lines: string[] = [];
+  for (let i = 0; i < tokens.length; i += chunkSize) {
+    lines.push(tokens.slice(i, i + chunkSize).join(" "));
+  }
+  return lines.join("\n");
+}
+
+function formatCaseNameForDisplay(item: AlgItem) {
+  const name = item.name.trim();
+
+  if (item.set === "OLL") {
+    const m = name.match(/^OLL\s+(\d+)(?:\s+\((.+)\))?$/i);
+    if (m) {
+      const num = Number(m[1]);
+      const tag = m[2]?.trim();
+      return tag ? `OLL ${num} · ${tag}` : `OLL ${num}`;
+    }
+  }
+
+  if (item.set === "PLL") {
+    const m = name.match(/^([A-Za-z]+)-perm$/i);
+    if (m) {
+      const raw = m[1];
+      const normalized = raw.length > 1
+        ? raw[0].toUpperCase() + raw.slice(1).toLowerCase()
+        : raw.toUpperCase();
+      return `${normalized} Perm`;
+    }
+  }
+
+  return name;
+}
 
 const PLL_GROUPS: CatalogGroup[] = [
   {
@@ -104,9 +200,10 @@ const OLL_GROUPS: CatalogGroup[] = [
 ];
 
 export default function App() {
-  const [set, setSet] = useState<AlgSet>("PLL");
+  const [set, setSet] = useState<AlgSet>("OLL");
   const [q, setQ] = useState("");
   const [selected, setSelected] = useState<AlgItem | null>(null);
+  const [activeSectionAnchor, setActiveSectionAnchor] = useState<string>("all");
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -164,89 +261,362 @@ export default function App() {
   }, [filtered, set]);
 
   const ollCount = useMemo(() => algs.filter((a) => a.set === "OLL").length, []);
+  const pllCount = useMemo(() => algs.filter((a) => a.set === "PLL").length, []);
+  const visibleCount = filtered.length;
+  const selectedSetTotal = set === "OLL" ? ollCount : pllCount;
+  const currentSections = set === "OLL" ? ollSections : pllSections;
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    setActiveSectionAnchor(id === "catalog-top" ? "all" : id);
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  useEffect(() => {
+    setActiveSectionAnchor("all");
+  }, [set, q]);
+
+  useEffect(() => {
+    if (!currentSections.length) return;
+
+    const sectionIds = currentSections.map((section) => `${set.toLowerCase()}-${section.key}`);
+
+    const updateActiveSection = () => {
+      const sticky = document.querySelector(".catalogSticky") as HTMLElement | null;
+      const stickyHeight = sticky?.getBoundingClientRect().height ?? 0;
+      const threshold = Math.max(100, Math.min(window.innerHeight * 0.45, stickyHeight + 28));
+
+      const catalogTop = document.getElementById("catalog-top");
+      if (catalogTop && catalogTop.getBoundingClientRect().top > threshold) {
+        setActiveSectionAnchor((prev) => (prev === "all" ? prev : "all"));
+        return;
+      }
+
+      let active = "all";
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+
+        if (rect.top <= threshold) {
+          active = id;
+          continue;
+        }
+
+        if (active === "all" && rect.top < window.innerHeight) {
+          active = id;
+        }
+        break;
+      }
+
+      setActiveSectionAnchor((prev) => (prev === active ? prev : active));
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", updateActiveSection);
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", updateActiveSection);
+    };
+  }, [currentSections, set]);
 
   const renderCard = (a: AlgItem) => (
-    <button key={a.id} className="card" onClick={() => setSelected(a)}>
+    <button key={a.id} className="card" type="button" onClick={() => setSelected(a)}>
       <div className="cardTop">
-        <div className="cardTitle">{a.name}</div>
-        <MiniTwisty set={a.set} size={140} thumb={a.thumb} />
+        <div className="cardTitle">{formatCaseNameForDisplay(a)}</div>
+        <MiniTwisty set={a.set} size={176} thumb={a.thumb} />
       </div>
-      <div className="cardAlg">{a.alg}</div>
+      <pre className="cardAlg">{formatAlgForDisplay(a.alg, a.set)}</pre>
     </button>
   );
 
   return (
     <div className="app">
-      <header className="header">
-        <h1>OLL / PLL Catalog</h1>
-        {set === "OLL" && <div className="subtleNote">OLL loaded: {ollCount}/57 cases</div>}
+      <div className="appGlow appGlow--a" aria-hidden="true" />
+      <div className="appGlow appGlow--b" aria-hidden="true" />
+      <div className="appGridNoise" aria-hidden="true" />
 
-        <div className="controls">
-          <div className="tabs">
-            <button
-              className={set === "PLL" ? "active" : ""}
-              onClick={() => setSet("PLL")}
-            >
-              PLL
-            </button>
-            <button
-              className={set === "OLL" ? "active" : ""}
-              onClick={() => setSet("OLL")}
-            >
-              OLL
-            </button>
+      <main className="shell">
+        <header className="hero">
+          <div className="heroMain">
+            <div className="heroEyebrow">3x3x3 Study System</div>
+            <h1 className="heroTitle">Rubik Knowledge Atlas</h1>
+            <p className="heroLead">
+              A living study base for reviewing algorithms, recognition, and training. OLL/PLL
+              today; SRS, OH, BLD, and the rest of your practice workflow next.
+            </p>
+
+            <div className="heroStats">
+              <div className="statCard">
+                <div className="statLabel">OLL Cases</div>
+                <div className="statValue">{ollCount}</div>
+              </div>
+              <div className="statCard">
+                <div className="statLabel">PLL Cases</div>
+                <div className="statValue">{pllCount}</div>
+              </div>
+              <div className="statCard">
+                <div className="statLabel">Current View</div>
+                <div className="statValue">{set}</div>
+              </div>
+              <div className="statCard">
+                <div className="statLabel">Visible</div>
+                <div className="statValue">
+                  {visibleCount}/{selectedSetTotal}
+                </div>
+              </div>
+            </div>
           </div>
 
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Search (e.g. Ga, T-perm, Sune)..."
-          />
+          <div className="heroPanels">
+            <section className="heroPanel heroPanel--warm">
+              <div className="panelKicker">Roadmap</div>
+              <h2 className="panelTitle">Next Training Blocks</h2>
+              <ul className="panelList">
+                <li>SRS to space out OLL/PLL reviews and future sections.</li>
+                <li>Case recognition drills and timed practice sessions.</li>
+                <li>New sections: F2L, OH, BLD, and personal notes.</li>
+              </ul>
+            </section>
+
+            <section className="heroPanel heroPanel--cool">
+              <div className="panelKicker">Practice Focus</div>
+              <div className="chipRow">
+                <span className="chip chip--active">Recognition</span>
+                <span className="chip">Execution</span>
+                <span className="chip">Fingertricks</span>
+                <span className="chip">Consistency</span>
+              </div>
+              <p className="panelText">
+                Use the catalog as a quick visual reference and open any case to play the algorithm
+                in the viewer.
+              </p>
+            </section>
+          </div>
+        </header>
+
+        <div className="workspace">
+          <aside className="rail" aria-label="Learning modules">
+            <section className="railPanel">
+              <div className="railHeader">
+                <div className="railTitle">Learning Tracks</div>
+                <div className="railBadge">3x3x3</div>
+              </div>
+              <div className="trackList">
+                {LEARNING_TRACKS.map((track) => (
+                  <article key={track.title} className="trackCard">
+                    <div className="trackTop">
+                      <h3>{track.title}</h3>
+                      <span
+                        className={`pill ${
+                          track.state === "Active"
+                            ? "pill--active"
+                            : track.state === "Planned"
+                              ? "pill--planned"
+                              : "pill--backlog"
+                        }`}
+                      >
+                        {track.state}
+                      </span>
+                    </div>
+                    <p>{track.detail}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="railPanel railPanel--compact">
+              <div className="railTitle">Practice Modules</div>
+              <div className="moduleList">
+                {PRACTICE_MODULES.map((mod) => (
+                  <div key={mod.name} className="moduleRow">
+                    <span>{mod.name}</span>
+                    <span className="moduleState">{mod.state}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </aside>
+
+          <section className="catalogPanel" aria-label="Algorithm catalog">
+            <div className="catalogSticky">
+              <header className="catalogHeader">
+                <div className="catalogHeaderTop">
+                  <div>
+                    <div className="catalogEyebrow">Catalog</div>
+                    <h2 className="catalogTitle">{SET_META[set].long}</h2>
+                    <p className="catalogDescription">{SET_META[set].description}</p>
+                  </div>
+                  <div className="catalogMeta">
+                    <span className="metaPill">{SET_META[set].short}</span>
+                    <span className="metaPill">Top color: Yellow</span>
+                    <span className="metaPill">SVG thumbnails</span>
+                  </div>
+                </div>
+
+                <div className="controls">
+                  <div className="tabs" role="tablist" aria-label="Algorithm set">
+                    <button
+                      type="button"
+                      className={set === "OLL" ? "active" : ""}
+                      aria-pressed={set === "OLL"}
+                      onClick={() => setSet("OLL")}
+                    >
+                      <span className="tabLong">Orientation of Last Layer</span>
+                      <span className="tabShort">(OLL)</span>
+                    </button>
+                    <button
+                      type="button"
+                      className={set === "PLL" ? "active" : ""}
+                      aria-pressed={set === "PLL"}
+                      onClick={() => setSet("PLL")}
+                    >
+                      <span className="tabLong">Permutation of Last Layer</span>
+                      <span className="tabShort">(PLL)</span>
+                    </button>
+                  </div>
+
+                  <input
+                    value={q}
+                    onChange={(e) => setQ(e.target.value)}
+                    placeholder={`Search ${set} (e.g. ${set === "PLL" ? "Ga, T-perm" : "OLL 27, Sune"})...`}
+                  />
+                </div>
+
+                <div className="catalogSubRow">
+                  {set === "OLL" ? (
+                    <div className="subtleNote">OLL loaded: {ollCount}/57 cases</div>
+                  ) : (
+                    <div className="subtleNote">PLL loaded: {pllCount}/21 cases</div>
+                  )}
+                  {!!q.trim() && <div className="searchEcho">Filter: “{q.trim()}”</div>}
+                </div>
+              </header>
+
+              {!!currentSections.length && (
+                <nav className="sectionNav" aria-label={`${SET_META[set].short} categories`}>
+                <button
+                  type="button"
+                  className={`sectionNavChip sectionNavChip--all ${
+                    activeSectionAnchor === "all" ? "isActive" : ""
+                  }`}
+                  onClick={() => scrollToSection("catalog-top")}
+                  aria-pressed={activeSectionAnchor === "all"}
+                >
+                  All
+                </button>
+                {currentSections.map((section) => {
+                  const sectionId = `${set.toLowerCase()}-${section.key}`;
+                    return (
+                      <button
+                      key={section.key}
+                      type="button"
+                      className={`sectionNavChip sectionNavChip--${section.tone} ${
+                        activeSectionAnchor === sectionId ? "isActive" : ""
+                      }`}
+                      onClick={() => scrollToSection(sectionId)}
+                      title={section.title}
+                      aria-pressed={activeSectionAnchor === sectionId}
+                    >
+                        <span className="sectionNavChipLabel">{section.title}</span>
+                        <span className="sectionNavChipCount">{section.items.length}</span>
+                      </button>
+                    );
+                  })}
+                </nav>
+              )}
+            </div>
+
+            {set === "PLL" ? (
+              <div className="sections" id="catalog-top">
+                {pllSections.map((section) => (
+                  <section
+                    key={section.key}
+                    id={`pll-${section.key}`}
+                    className={`section section--${section.tone}`}
+                  >
+                    <div className="sectionHeader">
+                      <span>{section.title}</span>
+                      <span className="sectionCount">{section.items.length}</span>
+                    </div>
+                    <div className="sectionGrid">{section.items.map(renderCard)}</div>
+                  </section>
+                ))}
+              </div>
+            ) : set === "OLL" ? (
+              <div className="sections" id="catalog-top">
+                {ollSections.map((section) => (
+                  <section
+                    key={section.key}
+                    id={`oll-${section.key}`}
+                    className={`section section--${section.tone}`}
+                  >
+                    <div className="sectionHeader">
+                      <span>{section.title}</span>
+                      <span className="sectionCount">{section.items.length}</span>
+                    </div>
+                    <div className="sectionGrid">{section.items.map(renderCard)}</div>
+                  </section>
+                ))}
+              </div>
+            ) : (
+              <div className="grid">{filtered.map(renderCard)}</div>
+            )}
+          </section>
         </div>
-      </header>
-
-      <main>
-        {set === "PLL" ? (
-          <div className="sections">
-            {pllSections.map((section) => (
-              <section key={section.key} className={`section section--${section.tone}`}>
-                <div className="sectionHeader">{section.title}</div>
-                <div className="sectionGrid">{section.items.map(renderCard)}</div>
-              </section>
-            ))}
-          </div>
-        ) : set === "OLL" ? (
-          <div className="sections">
-            {ollSections.map((section) => (
-              <section key={section.key} className={`section section--${section.tone}`}>
-                <div className="sectionHeader">{section.title}</div>
-                <div className="sectionGrid">{section.items.map(renderCard)}</div>
-              </section>
-            ))}
-          </div>
-        ) : (
-          <div className="grid">{filtered.map(renderCard)}</div>
-        )}
       </main>
 
       {selected && (
         <div className="modalOverlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modalHeader">
-              <div>
-                <div className="modalTitle">{selected.name}</div>
-                <div className="modalSubtitle">{selected.set}</div>
+              <div className="modalTitleWrap">
+                <div className="modalTagRow">
+                  <span className="modalSetTag">{selected.set}</span>
+                  <span className="modalCaseTag">{selected.id.replace(/^pll_|^oll_/, "").toUpperCase()}</span>
+                </div>
+                <div className="modalTitle">{formatCaseNameForDisplay(selected)}</div>
+                <div className="modalSubtitle">Recognition + execution viewer</div>
               </div>
-              <button className="close" onClick={() => setSelected(null)}>
+              <button className="close" type="button" onClick={() => setSelected(null)}>
                 ✕
               </button>
             </div>
 
-            <Twisty alg={selected.alg} />
+            <div className="modalLayout">
+              <section className="viewerPanel">
+                <div className="viewerPanelBar">
+                  <span>Case Viewer</span>
+                  <span className="viewerPanelHint">Yellow top · z2</span>
+                </div>
+                <div className="viewerPanelStage">
+                  <Twisty alg={selected.alg} />
+                </div>
+              </section>
 
-            <div className="algBlock">
-              <div className="label">Algorithm</div>
-              <code>{selected.alg}</code>
+              <aside className="modalSide">
+                <section className="recognitionPanel">
+                  <div className="label">Recognition</div>
+                  <div className="recognitionThumbWrap">
+                    <MiniTwisty set={selected.set} size={210} thumb={selected.thumb} />
+                  </div>
+                </section>
+
+                <section className="algBlock">
+                  <div className="label">Algorithm</div>
+                  <code>{formatAlgForDisplay(selected.alg, selected.set)}</code>
+                </section>
+
+                <section className="modalNoteCard">
+                  <div className="modalNoteTitle">Study Notes (next)</div>
+                  <p>
+                    This is where OH variants, fingertricks, triggers, and per-case SRS scoring
+                    will fit next.
+                  </p>
+                </section>
+              </aside>
             </div>
           </div>
         </div>

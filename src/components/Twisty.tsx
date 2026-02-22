@@ -21,8 +21,8 @@ export function Twisty({ alg }: Props) {
       background="none"
       hint-facelets="none"
       style={{
-        width: "min(100%, 620px)",
-        height: "420px",
+        width: "min(100%, 700px)",
+        height: "480px",
         margin: "0 auto",
         display: "block",
       }}
