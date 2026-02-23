@@ -5,10 +5,16 @@ const DISPLAY_ORIENTATION = "z2";
 
 type Props = {
   alg: string;
+  setupAlg?: string;
 };
 
-export function Twisty({ alg }: Props) {
+export function Twisty({ alg, setupAlg }: Props) {
   const cleaned = useMemo(() => normalizeAlg(alg), [alg]);
+  const cleanedSetup = useMemo(() => (setupAlg ? normalizeAlg(setupAlg) : undefined), [setupAlg]);
+  const setupWithOrientation = useMemo(
+    () => (cleanedSetup ? `${DISPLAY_ORIENTATION} ${cleanedSetup}` : DISPLAY_ORIENTATION),
+    [cleanedSetup]
+  );
 
   // "experimental-setup-anchor=end" makes the viewer start from the case
   // and end solved after playing the algorithm.
@@ -16,8 +22,8 @@ export function Twisty({ alg }: Props) {
     <twisty-player
       puzzle="3x3x3"
       alg={cleaned}
-      experimental-setup-alg={DISPLAY_ORIENTATION}
-      experimental-setup-anchor="end"
+      experimental-setup-alg={setupWithOrientation}
+      experimental-setup-anchor={cleanedSetup ? "start" : "end"}
       background="none"
       hint-facelets="none"
       style={{

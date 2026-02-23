@@ -1,4 +1,4 @@
-export type AlgSet = "OLL" | "PLL";
+export type AlgSet = "OLL" | "PLL" | "F2L";
 
 export type AlgItem = {
   id: string;
