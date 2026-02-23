@@ -23,10 +23,9 @@ export function MiniTwisty({ set, size = 140, thumb }: Props) {
         />
       ) : (
         <div className="miniPlaceholder">
-          <span className="miniPlaceholderLabel">Sin imagen</span>
+          <span className="miniPlaceholderLabel">No image</span>
         </div>
       )}
     </div>
   );
 }
-

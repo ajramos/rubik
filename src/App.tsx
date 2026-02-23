@@ -13,6 +13,29 @@ type CatalogGroup = {
   ids: string[];
 };
 
+type WorkspaceMode = "full-ll" | "4lll";
+
+type MethodCase = {
+  name: string;
+  alg: string;
+  set: AlgSet;
+  note?: string;
+  canonicalCaseId?: string;
+};
+
+type MethodStage = {
+  key: string;
+  title: string;
+  subtitle: string;
+  tone: "sand" | "sage" | "rose" | "sky";
+  cases: MethodCase[];
+};
+
+type SelectedCase = AlgItem & {
+  sourceMethod?: "4LLL";
+  canonicalCaseId?: string;
+};
+
 const LEARNING_TRACKS = [
   {
     title: "Last Layer (CFOP)",
@@ -55,6 +78,140 @@ const SET_META: Record<AlgSet, { short: string; long: string; description: strin
     description: "Recognition patterns and algorithms for permuting the last layer.",
   },
 };
+
+const FOUR_LOOK_STAGES: MethodStage[] = [
+  {
+    key: "4lll-oll-edges",
+    title: "OLL Cross Stage",
+    subtitle: "Orient the last-layer edges first (2-Look OLL step 1).",
+    tone: "sand",
+    cases: [
+      {
+        name: "Horizontal Bar",
+        set: "OLL",
+        alg: "F R U R' U' F'",
+        note: "Line case to build the yellow cross.",
+        canonicalCaseId: "oll_45",
+      },
+      {
+        name: "L Shape (Top-Left)",
+        set: "OLL",
+        alg: "F U R U' R' F'",
+        note: "Rotate so the L sits on the top-left before executing.",
+        canonicalCaseId: "oll_48",
+      },
+      {
+        name: "Dot (No Solved Edges)",
+        set: "OLL",
+        alg: "F R U R' U' S R U R' U' f'",
+        note: "No edges oriented on top.",
+        canonicalCaseId: "oll_1",
+      },
+    ],
+  },
+  {
+    key: "4lll-oll-corners",
+    title: "OLL Corner Stage",
+    subtitle: "Finish orientation of last-layer corners (2-Look OLL step 2).",
+    tone: "rose",
+    cases: [
+      {
+        name: "Headlights on Both Sides",
+        set: "OLL",
+        alg: "F R U R' U' R U R' U' R U R' U' F'",
+        canonicalCaseId: "oll_21",
+      },
+      {
+        name: "Headlights on Left",
+        set: "OLL",
+        alg: "R U2 R2 U' R2 U' R2 U2 R",
+        canonicalCaseId: "oll_22",
+      },
+      {
+        name: "Sune (Right)",
+        set: "OLL",
+        alg: "R U R' U R U2 R'",
+        canonicalCaseId: "oll_27",
+      },
+      {
+        name: "Anti-Sune / Left Sune",
+        set: "OLL",
+        alg: "L' U' L U' L' U2 L",
+        canonicalCaseId: "oll_26",
+      },
+      {
+        name: "Headlights in Front",
+        set: "OLL",
+        alg: "R2 D R' U2 R D' R' U2 R'",
+        canonicalCaseId: "oll_23",
+      },
+      {
+        name: "Hammerhead (Left)",
+        set: "OLL",
+        alg: "r U R' U' r' F R F'",
+        canonicalCaseId: "oll_24",
+      },
+      {
+        name: "Opposite Corners",
+        set: "OLL",
+        alg: "R' F R B' R' F' R B",
+        canonicalCaseId: "oll_25",
+      },
+    ],
+  },
+  {
+    key: "4lll-pll-corners",
+    title: "PLL Corner Stage",
+    subtitle: "Permute corners only (2-Look PLL step 1).",
+    tone: "sage",
+    cases: [
+      {
+        name: "A-Perm (Headlights in Back)",
+        set: "PLL",
+        alg: "R' F R' B2 R F' R' B2 R2",
+        canonicalCaseId: "pll_aa",
+      },
+      {
+        name: "N-Perm (No Headlights)",
+        set: "PLL",
+        alg: "R' U L' U2 R U' L R' U L' U2 R U' L",
+        canonicalCaseId: "pll_na",
+      },
+    ],
+  },
+  {
+    key: "4lll-pll-edges",
+    title: "PLL Edge Stage",
+    subtitle: "Finish by permuting last-layer edges (2-Look PLL step 2).",
+    tone: "sky",
+    cases: [
+      {
+        name: "U-Perm (Counterclockwise)",
+        set: "PLL",
+        alg: "R U' R U R U R U' R' U' R2",
+        canonicalCaseId: "pll_ua",
+      },
+      {
+        name: "U-Perm (Clockwise)",
+        set: "PLL",
+        alg: "L' U L' U' L' U' L' U L U L2",
+        canonicalCaseId: "pll_ub",
+      },
+      {
+        name: "H-Perm",
+        set: "PLL",
+        alg: "M2 U M2 U2 M2 U M2",
+        canonicalCaseId: "pll_h",
+      },
+      {
+        name: "Z-Perm",
+        set: "PLL",
+        alg: "M2 U M2 U M' U2 M2 U2 M' U2",
+        canonicalCaseId: "pll_z",
+      },
+    ],
+  },
+];
 
 function formatAlgForDisplay(alg: string, set?: AlgSet) {
   const cleaned = alg.trim().replace(/\s+/g, " ");
@@ -200,9 +357,10 @@ const OLL_GROUPS: CatalogGroup[] = [
 ];
 
 export default function App() {
+  const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>("full-ll");
   const [set, setSet] = useState<AlgSet>("OLL");
   const [q, setQ] = useState("");
-  const [selected, setSelected] = useState<AlgItem | null>(null);
+  const [selected, setSelected] = useState<SelectedCase | null>(null);
   const [activeSectionAnchor, setActiveSectionAnchor] = useState<string>("all");
 
   const filtered = useMemo(() => {
@@ -265,6 +423,17 @@ export default function App() {
   const visibleCount = filtered.length;
   const selectedSetTotal = set === "OLL" ? ollCount : pllCount;
   const currentSections = set === "OLL" ? ollSections : pllSections;
+  const fourLookSections = useMemo(() => FOUR_LOOK_STAGES, []);
+  const fourLookCaseCount = useMemo(
+    () => FOUR_LOOK_STAGES.reduce((sum, stage) => sum + stage.cases.length, 0),
+    []
+  );
+  const algById = useMemo(() => {
+    const byId = new Map<string, AlgItem>();
+    for (const item of algs) byId.set(item.id, item);
+    return byId;
+  }, []);
+  const navSections = workspaceMode === "full-ll" ? currentSections : fourLookSections;
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -275,9 +444,10 @@ export default function App() {
 
   useEffect(() => {
     setActiveSectionAnchor("all");
-  }, [set, q]);
+  }, [workspaceMode, set, q]);
 
   useEffect(() => {
+    if (workspaceMode !== "full-ll") return;
     if (!currentSections.length) return;
 
     const sectionIds = currentSections.map((section) => `${set.toLowerCase()}-${section.key}`);
@@ -320,7 +490,30 @@ export default function App() {
       window.removeEventListener("scroll", updateActiveSection);
       window.removeEventListener("resize", updateActiveSection);
     };
-  }, [currentSections, set]);
+  }, [workspaceMode, currentSections, set]);
+
+  const getCanonicalCase = (c: MethodCase) =>
+    c.canonicalCaseId ? algById.get(c.canonicalCaseId) : undefined;
+
+  const openMethodCase = (stage: MethodStage, c: MethodCase, index: number) => {
+    const canonical = getCanonicalCase(c);
+    setSelected({
+      id: `method_${stage.key}_${index}`,
+      set: c.set,
+      name: c.name,
+      alg: c.alg,
+      thumb: canonical?.thumb,
+      sourceMethod: "4LLL",
+      canonicalCaseId: c.canonicalCaseId,
+    });
+  };
+
+  const openCanonicalCase = (item: AlgItem) => {
+    setWorkspaceMode("full-ll");
+    setSet(item.set);
+    setQ("");
+    setSelected(item);
+  };
 
   const renderCard = (a: AlgItem) => (
     <button key={a.id} className="card" type="button" onClick={() => setSelected(a)}>
@@ -331,6 +524,51 @@ export default function App() {
       <pre className="cardAlg">{formatAlgForDisplay(a.alg, a.set)}</pre>
     </button>
   );
+
+  const renderMethodStage = (stage: MethodStage) => (
+    <section key={stage.key} id={stage.key} className={`section methodSection section--${stage.tone}`}>
+      <div className="sectionHeader">
+        <span>{stage.title}</span>
+        <span className="sectionCount">{stage.cases.length}</span>
+      </div>
+      <div className="methodStageIntro">{stage.subtitle}</div>
+      <div className="methodGrid">
+        {stage.cases.map((c, index) => {
+          const canonical = getCanonicalCase(c);
+          const canonicalThumb = canonical?.thumb;
+          return (
+            <button
+              key={`${stage.key}-${c.name}`}
+              type="button"
+              className="methodCard"
+              onClick={() => openMethodCase(stage, c, index)}
+            >
+              <div className="methodCardTop">
+                <div className="methodCardTitle">{c.name}</div>
+                <span className={`methodTag methodTag--${c.set.toLowerCase()}`}>{c.set}</span>
+              </div>
+              <div className="methodThumb">
+                <MiniTwisty set={c.set} size={176} thumb={canonicalThumb} />
+              </div>
+              {canonical && (
+                <div className="methodCardMap">
+                  Maps to <strong>{formatCaseNameForDisplay(canonical)}</strong>
+                </div>
+              )}
+              {!canonicalThumb && (
+                <div className="methodCardHint">No canonical thumbnail mapped yet</div>
+              )}
+              {c.note && <div className="methodCardNote">{c.note}</div>}
+              <pre className="methodCardAlg">{formatAlgForDisplay(c.alg, c.set)}</pre>
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+
+  const selectedCanonical =
+    selected?.canonicalCaseId ? algById.get(selected.canonicalCaseId) : undefined;
 
   return (
     <div className="app">
@@ -358,13 +596,15 @@ export default function App() {
                 <div className="statValue">{pllCount}</div>
               </div>
               <div className="statCard">
-                <div className="statLabel">Current View</div>
-                <div className="statValue">{set}</div>
+                <div className="statLabel">Method</div>
+                <div className="statValue">CFOP</div>
               </div>
               <div className="statCard">
-                <div className="statLabel">Visible</div>
+                <div className="statLabel">{workspaceMode === "full-ll" ? "Path" : "Path"}</div>
                 <div className="statValue">
-                  {visibleCount}/{selectedSetTotal}
+                  {workspaceMode === "full-ll"
+                    ? `Full (${set})`
+                    : `4LLL (${fourLookCaseCount})`}
                 </div>
               </div>
             </div>
@@ -442,61 +682,130 @@ export default function App() {
 
           <section className="catalogPanel" aria-label="Algorithm catalog">
             <div className="catalogSticky">
+              <div className="pathControls">
+                <div className="pathControlsLabel">CFOP › Last Layer Path</div>
+                <div className="workspaceTabs" role="tablist" aria-label="Last layer path">
+                  <button
+                    type="button"
+                    className={workspaceMode === "full-ll" ? "active" : ""}
+                    aria-pressed={workspaceMode === "full-ll"}
+                    onClick={() => setWorkspaceMode("full-ll")}
+                  >
+                    Full OLL + PLL
+                  </button>
+                  <button
+                    type="button"
+                    className={workspaceMode === "4lll" ? "active" : ""}
+                    aria-pressed={workspaceMode === "4lll"}
+                    onClick={() => setWorkspaceMode("4lll")}
+                  >
+                    4LLL Guided Path
+                  </button>
+                </div>
+              </div>
+
               <header className="catalogHeader">
                 <div className="catalogHeaderTop">
                   <div>
-                    <div className="catalogEyebrow">Catalog</div>
-                    <h2 className="catalogTitle">{SET_META[set].long}</h2>
-                    <p className="catalogDescription">{SET_META[set].description}</p>
+                    <div className="catalogEyebrow">CFOP · Last Layer</div>
+                    <h2 className="catalogTitle">
+                      {workspaceMode === "full-ll"
+                        ? "Full Last Layer Library (OLL + PLL)"
+                        : "4-Look Last Layer (4LLL) · Guided Simplification"}
+                    </h2>
+                    <p className="catalogDescription">
+                      {workspaceMode === "full-ll"
+                        ? "Canonical OLL and PLL case library inside CFOP. Browse recognition categories and drill exact cases."
+                        : "A simplified path for the same CFOP last-layer concepts: 2-Look OLL + 2-Look PLL in four total looks."}
+                    </p>
                   </div>
                   <div className="catalogMeta">
-                    <span className="metaPill">{SET_META[set].short}</span>
+                    <span className="metaPill">Method: CFOP</span>
+                    <span className="metaPill">Phase: Last Layer</span>
+                    <span className="metaPill">
+                      Path: {workspaceMode === "full-ll" ? `Full ${SET_META[set].short}` : "4LLL"}
+                    </span>
                     <span className="metaPill">Top color: Yellow</span>
-                    <span className="metaPill">SVG thumbnails</span>
                   </div>
                 </div>
 
-                <div className="controls">
-                  <div className="tabs" role="tablist" aria-label="Algorithm set">
-                    <button
-                      type="button"
-                      className={set === "OLL" ? "active" : ""}
-                      aria-pressed={set === "OLL"}
-                      onClick={() => setSet("OLL")}
-                    >
-                      <span className="tabLong">Orientation of Last Layer</span>
-                      <span className="tabShort">(OLL)</span>
-                    </button>
-                    <button
-                      type="button"
-                      className={set === "PLL" ? "active" : ""}
-                      aria-pressed={set === "PLL"}
-                      onClick={() => setSet("PLL")}
-                    >
-                      <span className="tabLong">Permutation of Last Layer</span>
-                      <span className="tabShort">(PLL)</span>
-                    </button>
-                  </div>
+                {workspaceMode === "full-ll" ? (
+                  <div className="controls">
+                    <div className="tabs" role="tablist" aria-label="Algorithm set">
+                      <button
+                        type="button"
+                        className={set === "OLL" ? "active" : ""}
+                        aria-pressed={set === "OLL"}
+                        onClick={() => setSet("OLL")}
+                      >
+                        <span className="tabLong">Orientation of Last Layer</span>
+                        <span className="tabShort">(OLL)</span>
+                      </button>
+                      <button
+                        type="button"
+                        className={set === "PLL" ? "active" : ""}
+                        aria-pressed={set === "PLL"}
+                        onClick={() => setSet("PLL")}
+                      >
+                        <span className="tabLong">Permutation of Last Layer</span>
+                        <span className="tabShort">(PLL)</span>
+                      </button>
+                    </div>
 
-                  <input
-                    value={q}
-                    onChange={(e) => setQ(e.target.value)}
-                    placeholder={`Search ${set} (e.g. ${set === "PLL" ? "Ga, T-perm" : "OLL 27, Sune"})...`}
-                  />
-                </div>
+                    <input
+                      value={q}
+                      onChange={(e) => setQ(e.target.value)}
+                      placeholder={`Search ${set} (e.g. ${set === "PLL" ? "Ga, T-perm" : "OLL 27, Sune"})...`}
+                    />
+                  </div>
+                ) : (
+                  <div className="methodSummaryRow">
+                    <div className="methodSummaryCard">
+                      <span className="methodSummaryLabel">Stage 1</span>
+                      <strong>OLL Edges</strong>
+                    </div>
+                    <div className="methodSummaryCard">
+                      <span className="methodSummaryLabel">Stage 2</span>
+                      <strong>OLL Corners</strong>
+                    </div>
+                    <div className="methodSummaryCard">
+                      <span className="methodSummaryLabel">Stage 3</span>
+                      <strong>PLL Corners</strong>
+                    </div>
+                    <div className="methodSummaryCard">
+                      <span className="methodSummaryLabel">Stage 4</span>
+                      <strong>PLL Edges</strong>
+                    </div>
+                  </div>
+                )}
 
                 <div className="catalogSubRow">
-                  {set === "OLL" ? (
-                    <div className="subtleNote">OLL loaded: {ollCount}/57 cases</div>
+                  {workspaceMode === "full-ll" ? (
+                    set === "OLL" ? (
+                      <div className="subtleNote">OLL loaded: {ollCount}/57 cases</div>
+                    ) : (
+                      <div className="subtleNote">PLL loaded: {pllCount}/21 cases</div>
+                    )
                   ) : (
-                    <div className="subtleNote">PLL loaded: {pllCount}/21 cases</div>
+                    <div className="subtleNote">
+                      4LLL is a simplified route through CFOP last layer concepts (OLL + PLL subset)
+                    </div>
                   )}
-                  {!!q.trim() && <div className="searchEcho">Filter: “{q.trim()}”</div>}
+                  {workspaceMode === "full-ll" && !!q.trim() && (
+                    <div className="searchEcho">Filter: “{q.trim()}”</div>
+                  )}
                 </div>
               </header>
 
-              {!!currentSections.length && (
-                <nav className="sectionNav" aria-label={`${SET_META[set].short} categories`}>
+              {!!navSections.length && (
+                <nav
+                  className="sectionNav"
+                  aria-label={
+                    workspaceMode === "full-ll"
+                      ? `${SET_META[set].short} categories`
+                      : "4-Look stages"
+                  }
+                >
                 <button
                   type="button"
                   className={`sectionNavChip sectionNavChip--all ${
@@ -507,8 +816,13 @@ export default function App() {
                 >
                   All
                 </button>
-                {currentSections.map((section) => {
-                  const sectionId = `${set.toLowerCase()}-${section.key}`;
+                  {navSections.map((section) => {
+                    const sectionId =
+                    workspaceMode === "full-ll"
+                      ? `${set.toLowerCase()}-${section.key}`
+                      : section.key;
+                  const count =
+                    "items" in section ? section.items.length : section.cases.length;
                     return (
                       <button
                       key={section.key}
@@ -521,7 +835,7 @@ export default function App() {
                       aria-pressed={activeSectionAnchor === sectionId}
                     >
                         <span className="sectionNavChipLabel">{section.title}</span>
-                        <span className="sectionNavChipCount">{section.items.length}</span>
+                        <span className="sectionNavChipCount">{count}</span>
                       </button>
                     );
                   })}
@@ -529,7 +843,11 @@ export default function App() {
               )}
             </div>
 
-            {set === "PLL" ? (
+            {workspaceMode === "4lll" ? (
+              <div className="sections methodSections" id="catalog-top">
+                {fourLookSections.map(renderMethodStage)}
+              </div>
+            ) : set === "PLL" ? (
               <div className="sections" id="catalog-top">
                 {pllSections.map((section) => (
                   <section
@@ -578,7 +896,11 @@ export default function App() {
                   <span className="modalCaseTag">{selected.id.replace(/^pll_|^oll_/, "").toUpperCase()}</span>
                 </div>
                 <div className="modalTitle">{formatCaseNameForDisplay(selected)}</div>
-                <div className="modalSubtitle">Recognition + execution viewer</div>
+                <div className="modalSubtitle">
+                  {selected.sourceMethod === "4LLL" && selectedCanonical
+                    ? `4LLL method case · maps to ${formatCaseNameForDisplay(selectedCanonical)}`
+                    : "Recognition + execution viewer"}
+                </div>
               </div>
               <button className="close" type="button" onClick={() => setSelected(null)}>
                 ✕
@@ -608,6 +930,27 @@ export default function App() {
                   <div className="label">Algorithm</div>
                   <code>{formatAlgForDisplay(selected.alg, selected.set)}</code>
                 </section>
+
+                {selected.sourceMethod === "4LLL" && selectedCanonical && (
+                  <section className="canonicalPanel">
+                    <div className="label">Canonical CFOP Case</div>
+                    <div className="canonicalPanelRow">
+                      <div className="canonicalPanelText">
+                        <div className="canonicalPanelTitle">
+                          {formatCaseNameForDisplay(selectedCanonical)}
+                        </div>
+                        <div className="canonicalPanelMeta">{selectedCanonical.set}</div>
+                      </div>
+                      <button
+                        type="button"
+                        className="canonicalOpenButton"
+                        onClick={() => openCanonicalCase(selectedCanonical)}
+                      >
+                        Open Case
+                      </button>
+                    </div>
+                  </section>
+                )}
 
                 <section className="modalNoteCard">
                   <div className="modalNoteTitle">Study Notes (next)</div>
