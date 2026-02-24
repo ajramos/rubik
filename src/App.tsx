@@ -16,6 +16,7 @@ type CatalogGroup = {
 
 type WorkspaceMode = "full-ll" | "4lll";
 type CfopPhase = "f2l" | "last-layer";
+type AppSection = "study" | "practice" | "progress" | "reference";
 
 type MethodCase = {
   name: string;
@@ -111,6 +112,13 @@ const PRACTICE_MODULES = [
   { name: "Timed Sessions", state: "Planned" },
   { name: "Progress Notes", state: "Planned" },
 ] as const;
+
+const PRIMARY_MENU_ITEMS: Array<{ key: AppSection; label: string; status?: "beta" }> = [
+  { key: "study", label: "Study" },
+  { key: "practice", label: "Practice", status: "beta" },
+  { key: "progress", label: "Progress", status: "beta" },
+  { key: "reference", label: "Reference", status: "beta" },
+];
 
 const SET_META: Record<Exclude<AlgSet, "F2L">, { short: string; long: string; description: string }> = {
   OLL: {
@@ -1039,6 +1047,7 @@ function matchesF2LFilter(c: F2LCase, filter: F2LFilterKey) {
 }
 
 export default function App() {
+  const [appSection, setAppSection] = useState<AppSection>("study");
   const [cfopPhase, setCfopPhase] = useState<CfopPhase>("last-layer");
   const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>("full-ll");
   const [set, setSet] = useState<AlgSet>("OLL");
@@ -1360,8 +1369,155 @@ export default function App() {
     </section>
   );
 
+  const renderSecondaryWorkspace = () => {
+    if (appSection === "practice") {
+      return (
+        <div className="workspaceSectionShell">
+          <section className="workspaceSectionCard workspaceSectionCard--warm">
+            <div className="workspaceSectionKicker">Practice</div>
+            <h2 className="workspaceSectionTitle">Session Modes (v1 scaffold)</h2>
+            <p className="workspaceSectionLead">
+              Keep practice flows separate from the canonical library. Start here once the SRS and
+              drill engines are wired.
+            </p>
+            <div className="workspaceSectionGrid">
+              <article className="workspaceTile">
+                <h3>Today Queue</h3>
+                <p>Daily SRS cases due across F2L, OLL, and PLL.</p>
+                <span className="workspaceTileMeta">Next: localStorage queue</span>
+              </article>
+              <article className="workspaceTile">
+                <h3>Recognition Drills</h3>
+                <p>Case-only identification with reveal and confidence rating.</p>
+                <span className="workspaceTileMeta">Uses existing thumbnails</span>
+              </article>
+              <article className="workspaceTile">
+                <h3>Execution Drills</h3>
+                <p>Algorithm playback, timer, and fingertrick notes by case.</p>
+                <span className="workspaceTileMeta">Twisty viewer ready</span>
+              </article>
+              <article className="workspaceTile">
+                <h3>Timed Blocks</h3>
+                <p>Short sessions (5/10/15 min) focused on weak subsets.</p>
+                <span className="workspaceTileMeta">Planned</span>
+              </article>
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    if (appSection === "progress") {
+      return (
+        <div className="workspaceSectionShell">
+          <section className="workspaceSectionCard workspaceSectionCard--cool">
+            <div className="workspaceSectionKicker">Progress</div>
+            <h2 className="workspaceSectionTitle">Coverage & Confidence (v1 scaffold)</h2>
+            <p className="workspaceSectionLead">
+              A dedicated view for what is learned, what is weak, and what should be reviewed next.
+            </p>
+            <div className="workspaceSectionGrid">
+              <article className="workspaceTile">
+                <h3>Coverage</h3>
+                <p>F2L canonical loaded: {totalF2LCaseCount}/{F2L_CANONICAL_TOTAL}</p>
+                <p>OLL: {ollCount}/57 · PLL: {pllCount}/21</p>
+              </article>
+              <article className="workspaceTile">
+                <h3>Weak Cases</h3>
+                <p>Future list ranked by misses, hesitation, or SRS difficulty.</p>
+                <span className="workspaceTileMeta">Derived from Practice</span>
+              </article>
+              <article className="workspaceTile">
+                <h3>Phase Snapshot</h3>
+                <p>Cross / F2L / LL readiness indicators and consistency trends.</p>
+                <span className="workspaceTileMeta">Planned</span>
+              </article>
+              <article className="workspaceTile">
+                <h3>Streaks</h3>
+                <p>Practice streaks, review completion, and recovery after breaks.</p>
+                <span className="workspaceTileMeta">Planned</span>
+              </article>
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    return (
+      <div className="workspaceSectionShell">
+        <section className="workspaceSectionCard workspaceSectionCard--neutral">
+          <div className="workspaceSectionKicker">Reference</div>
+          <h2 className="workspaceSectionTitle">Notes & Quick Reference (v1 scaffold)</h2>
+          <p className="workspaceSectionLead">
+            Keep durable reference material here so the Study catalog stays focused on cases.
+          </p>
+          <div className="workspaceSectionGrid">
+            <article className="workspaceTile">
+              <h3>Notation & Rotations</h3>
+              <p>Standard move notation, wide turns, slices, and cube rotations.</p>
+            </article>
+            <article className="workspaceTile">
+              <h3>Trigger Library</h3>
+              <p>Sexy, sledge, hedge, antisune families and when they appear.</p>
+            </article>
+            <article className="workspaceTile">
+              <h3>Fingertricks</h3>
+              <p>OH and two-handed execution notes by trigger/case family.</p>
+            </article>
+            <article className="workspaceTile">
+              <h3>Method Notes</h3>
+              <p>CFOP heuristics now, plus room for OH/BLD/other methods later.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+    );
+  };
+
   const selectedCanonical =
     selected?.canonicalCaseId ? algById.get(selected.canonicalCaseId) : undefined;
+
+  const activePrimaryLabel = PRIMARY_MENU_ITEMS.find((item) => item.key === appSection)?.label ?? "Study";
+  const heroEyebrow =
+    appSection === "study"
+      ? "3x3x3 Study System"
+      : appSection === "practice"
+        ? "3x3x3 Practice Workspace"
+        : appSection === "progress"
+          ? "3x3x3 Progress Tracking"
+          : "3x3x3 Reference Desk";
+  const heroLeadText =
+    appSection === "study"
+      ? "A living study base for reviewing algorithms, recognition, and training. OLL/PLL today; SRS, OH, BLD, and the rest of your practice workflow next."
+      : appSection === "practice"
+        ? "Run review queues, recognition drills, and execution sessions without mixing them into the case library."
+        : appSection === "progress"
+          ? "Track coverage, confidence, and weak spots across CFOP phases so your practice stays focused."
+          : "Keep notation, triggers, fingertricks, and method notes in one place for quick lookup while studying.";
+  const primaryPanelModeLabel =
+    appSection === "study"
+      ? cfopPhase === "f2l"
+        ? `F2L (${visibleF2LCaseCount})`
+        : workspaceMode === "full-ll"
+          ? `Full (${set})`
+          : `4LLL (${fourLookCaseCount})`
+      : activePrimaryLabel;
+
+  const breadcrumbParts = [
+    appSection === "study" ? "Study" : activePrimaryLabel,
+    ...(appSection === "study"
+      ? [
+          "3x3",
+          "CFOP",
+          cfopPhase === "f2l" ? "F2L" : "Last Layer",
+          ...(cfopPhase === "f2l"
+            ? ["Canonical Cases"]
+            : workspaceMode === "4lll"
+              ? ["Guided Paths", "4LLL"]
+              : ["Canonical Library", set]),
+        ]
+      : []),
+  ];
 
   return (
     <div className="app">
@@ -1372,12 +1528,9 @@ export default function App() {
       <main className="shell">
         <header className="hero">
           <div className="heroMain">
-            <div className="heroEyebrow">3x3x3 Study System</div>
+            <div className="heroEyebrow">{heroEyebrow}</div>
             <h1 className="heroTitle">Rubik Knowledge Atlas</h1>
-            <p className="heroLead">
-              A living study base for reviewing algorithms, recognition, and training. OLL/PLL
-              today; SRS, OH, BLD, and the rest of your practice workflow next.
-            </p>
+            <p className="heroLead">{heroLeadText}</p>
 
             <div className="heroStats">
               <div className="statCard">
@@ -1394,13 +1547,7 @@ export default function App() {
               </div>
               <div className="statCard">
                 <div className="statLabel">{workspaceMode === "full-ll" ? "Path" : "Path"}</div>
-                <div className="statValue">
-                  {cfopPhase === "f2l"
-                    ? `F2L (${visibleF2LCaseCount})`
-                    : workspaceMode === "full-ll"
-                      ? `Full (${set})`
-                      : `4LLL (${fourLookCaseCount})`}
-                </div>
+                <div className="statValue">{primaryPanelModeLabel}</div>
               </div>
             </div>
           </div>
@@ -1434,10 +1581,130 @@ export default function App() {
 
         <div className="workspace">
           <aside className="rail" aria-label="Learning modules">
+            <section className="railPanel railPanel--nav">
+              <div className="railHeader">
+                <div className="railTitle">Navigation</div>
+                <div className="railBadge">IA v1</div>
+              </div>
+
+              <nav className="mainMenu" aria-label="Primary navigation">
+                {PRIMARY_MENU_ITEMS.map((item) => (
+                  <button
+                    key={item.key}
+                    type="button"
+                    className={`mainMenuItem ${appSection === item.key ? "isActive" : ""}`}
+                    aria-current={appSection === item.key ? "page" : undefined}
+                    onClick={() => setAppSection(item.key)}
+                    title={item.label}
+                  >
+                    <span className="mainMenuLabel">{item.label}</span>
+                    <span
+                      className={`mainMenuState mainMenuState--${appSection === item.key ? "active" : "soon"}`}
+                    >
+                      {appSection === item.key ? "Now" : item.status === "beta" ? "Beta" : "Soon"}
+                    </span>
+                  </button>
+                ))}
+              </nav>
+
+              <div className={`studyMap ${appSection !== "study" ? "isMuted" : ""}`}>
+                <div className="studyMapHeader">
+                  <span className="studyMapTitle">Study Map</span>
+                  <span className="studyMapMeta">3x3 › CFOP</span>
+                </div>
+
+                <div className="studyTree">
+                  <div className="treeLine">
+                    <span className="treeNode treeNode--root">3x3</span>
+                  </div>
+                  <div className="treeLine treeLine--indent">
+                    <span className="treeNode treeNode--branch isActive">CFOP</span>
+                  </div>
+                  <div className="treeLine treeLine--indent2">
+                    <button
+                      type="button"
+                      className={`treeButton ${cfopPhase === "f2l" ? "isActive" : ""}`}
+                      onClick={() => setCfopPhase("f2l")}
+                      aria-pressed={cfopPhase === "f2l"}
+                      disabled={appSection !== "study"}
+                    >
+                      F2L
+                      <span className="treeButtonMeta">Canonical Cases</span>
+                    </button>
+                  </div>
+                  <div className="treeLine treeLine--indent2">
+                    <button
+                      type="button"
+                      className={`treeButton ${cfopPhase === "last-layer" ? "isActive" : ""}`}
+                      onClick={() => setCfopPhase("last-layer")}
+                      aria-pressed={cfopPhase === "last-layer"}
+                      disabled={appSection !== "study"}
+                    >
+                      Last Layer
+                      <span className="treeButtonMeta">Paths + Canonical Library</span>
+                    </button>
+                  </div>
+
+                  {cfopPhase === "last-layer" && (
+                    <>
+                      <div className="treeLine treeLine--indent3">
+                        <button
+                          type="button"
+                          className={`treeButton treeButton--small ${
+                            workspaceMode === "4lll" ? "isActive" : ""
+                          }`}
+                          onClick={() => setWorkspaceMode("4lll")}
+                          aria-pressed={workspaceMode === "4lll"}
+                          disabled={appSection !== "study"}
+                        >
+                          4LLL Guided Path
+                        </button>
+                      </div>
+                      <div className="treeLine treeLine--indent3">
+                        <button
+                          type="button"
+                          className={`treeButton treeButton--small ${
+                            workspaceMode === "full-ll" ? "isActive" : ""
+                          }`}
+                          onClick={() => setWorkspaceMode("full-ll")}
+                          aria-pressed={workspaceMode === "full-ll"}
+                          disabled={appSection !== "study"}
+                        >
+                          Full OLL + PLL
+                        </button>
+                      </div>
+                      {workspaceMode === "full-ll" && (
+                        <div className="treeInlineTabs" role="tablist" aria-label="Last layer set">
+                          <button
+                            type="button"
+                            className={set === "OLL" ? "isActive" : ""}
+                            onClick={() => setSet("OLL")}
+                            aria-pressed={set === "OLL"}
+                            disabled={appSection !== "study"}
+                          >
+                            OLL
+                          </button>
+                          <button
+                            type="button"
+                            className={set === "PLL" ? "isActive" : ""}
+                            onClick={() => setSet("PLL")}
+                            aria-pressed={set === "PLL"}
+                            disabled={appSection !== "study"}
+                          >
+                            PLL
+                          </button>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            </section>
+
             <section className="railPanel">
               <div className="railHeader">
-                <div className="railTitle">Learning Tracks</div>
-                <div className="railBadge">3x3x3</div>
+                <div className="railTitle">Roadmap</div>
+                <div className="railBadge">Planning</div>
               </div>
               <div className="trackList">
                 {LEARNING_TRACKS.map((track) => (
@@ -1475,7 +1742,14 @@ export default function App() {
             </section>
           </aside>
 
-          <section className="catalogPanel" aria-label="Algorithm catalog">
+          <section
+            className="catalogPanel"
+            aria-label={appSection === "study" ? "Algorithm catalog" : `${activePrimaryLabel} workspace`}
+          >
+            {appSection !== "study" ? (
+              renderSecondaryWorkspace()
+            ) : (
+            <>
             <div className="catalogSticky">
               <div className="pathControls">
                 <div className="pathControlsLabel">CFOP › Phase</div>
@@ -1526,6 +1800,20 @@ export default function App() {
               <header className="catalogHeader">
                 <div className="catalogHeaderTop">
                   <div>
+                    <div className="catalogBreadcrumb" aria-label="Current location">
+                      {breadcrumbParts.map((part, index) => (
+                        <React.Fragment key={`${part}-${index}`}>
+                          {index > 0 && <span className="catalogBreadcrumbSep">›</span>}
+                          <span
+                            className={`catalogBreadcrumbItem ${
+                              index === breadcrumbParts.length - 1 ? "isCurrent" : ""
+                            }`}
+                          >
+                            {part}
+                          </span>
+                        </React.Fragment>
+                      ))}
+                    </div>
                     <div className="catalogEyebrow">CFOP · {cfopPhase === "f2l" ? "F2L" : "Last Layer"}</div>
                     <h2 className="catalogTitle">
                       {cfopPhase === "f2l"
@@ -1789,6 +2077,8 @@ export default function App() {
               </div>
             ) : (
               <div className="grid">{filtered.map((item) => renderCard(item))}</div>
+            )}
+            </>
             )}
           </section>
         </div>

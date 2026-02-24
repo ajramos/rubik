@@ -287,6 +287,12 @@ body {
   padding: 14px;
 }
 
+.railPanel--nav {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.7)),
+    linear-gradient(145deg, rgba(248, 233, 203, 0.16), rgba(178, 217, 255, 0.14));
+}
+
 .railPanel--compact {
   padding-top: 12px;
 }
@@ -314,6 +320,222 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 999px;
   padding: 4px 8px;
+}
+
+.mainMenu {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.mainMenuItem {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 14px;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.mainMenuItem.isActive {
+  background:
+    linear-gradient(135deg, rgba(255, 229, 144, 0.6), rgba(173, 214, 255, 0.58)),
+    rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.mainMenuItem:disabled {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.mainMenuLabel {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  color: #22211e;
+}
+
+.mainMenuState {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 999px;
+  padding: 4px 7px;
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  background: rgba(255, 255, 255, 0.85);
+  color: #56534c;
+  white-space: nowrap;
+}
+
+.mainMenuState--active {
+  background: rgba(184, 235, 174, 0.78);
+  color: #21341f;
+}
+
+.mainMenuState--soon {
+  background: rgba(238, 232, 220, 0.85);
+}
+
+.studyMap {
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.66);
+  padding: 10px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.studyMap.isMuted {
+  opacity: 0.72;
+}
+
+.studyMapHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.studyMapTitle {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.studyMapMeta {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  color: #5c5a55;
+}
+
+.studyTree {
+  display: grid;
+  gap: 6px;
+}
+
+.treeLine {
+  display: flex;
+  align-items: center;
+}
+
+.treeLine--indent {
+  padding-left: 10px;
+}
+
+.treeLine--indent2 {
+  padding-left: 20px;
+}
+
+.treeLine--indent3 {
+  padding-left: 30px;
+}
+
+.treeNode {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  background: rgba(255, 255, 255, 0.65);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.treeNode--root {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #4f4d48;
+}
+
+.treeNode--branch.isActive {
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.treeButton {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 8px 10px;
+  display: grid;
+  gap: 2px;
+  text-align: left;
+  cursor: pointer;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #24231f;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.treeButton:hover {
+  background: rgba(255, 255, 255, 0.84);
+}
+
+.treeButton:disabled,
+.treeInlineTabs button:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.treeButton:disabled:hover {
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.treeButton.isActive {
+  background:
+    linear-gradient(135deg, rgba(255, 227, 132, 0.58), rgba(184, 221, 255, 0.52)),
+    rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.treeButtonMeta {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  color: #5f5b55;
+  font-weight: 500;
+}
+
+.treeButton--small {
+  padding: 7px 10px;
+  font-size: 12px;
+  font-family: "Manrope", sans-serif;
+}
+
+.treeInlineTabs {
+  margin: 2px 0 0 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.treeInlineTabs button {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 7px 8px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.treeInlineTabs button.isActive {
+  background: rgba(255, 243, 186, 0.88);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 .trackList {
@@ -410,6 +632,102 @@ body {
   padding: 12px;
 }
 
+.workspaceSectionShell {
+  padding: 2px;
+}
+
+.workspaceSectionCard {
+  border-radius: 18px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.72)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(236, 244, 255, 0.16));
+  padding: 16px;
+}
+
+.workspaceSectionCard--warm {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.72)),
+    linear-gradient(135deg, rgba(247, 206, 165, 0.2), rgba(255, 242, 214, 0.14));
+}
+
+.workspaceSectionCard--cool {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.72)),
+    linear-gradient(135deg, rgba(167, 207, 255, 0.2), rgba(203, 233, 215, 0.14));
+}
+
+.workspaceSectionCard--neutral {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.72)),
+    linear-gradient(135deg, rgba(229, 228, 222, 0.22), rgba(238, 237, 231, 0.12));
+}
+
+.workspaceSectionKicker {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5b5952;
+}
+
+.workspaceSectionTitle {
+  margin: 8px 0 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(22px, 2.2vw, 30px);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.workspaceSectionLead {
+  margin: 8px 0 0;
+  max-width: 70ch;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #5c5a55;
+}
+
+.workspaceSectionGrid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.workspaceTile {
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.74);
+  padding: 12px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.workspaceTile h3 {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+}
+
+.workspaceTile p {
+  margin: 8px 0 0;
+  color: #56544e;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.workspaceTileMeta {
+  margin-top: 8px;
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 4px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  background: rgba(255, 255, 255, 0.78);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  color: #595751;
+}
+
 .catalogSticky {
   position: sticky;
   top: 12px;
@@ -489,6 +807,40 @@ body {
   letter-spacing: 0.08em;
   font-size: 11px;
   color: #5f5d59;
+}
+
+.catalogBreadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.catalogBreadcrumbSep {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  color: #85827b;
+}
+
+.catalogBreadcrumbItem {
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 4px 8px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  color: #5f5c55;
+  letter-spacing: 0.03em;
+}
+
+.catalogBreadcrumbItem.isCurrent {
+  background:
+    linear-gradient(135deg, rgba(255, 226, 141, 0.65), rgba(175, 216, 255, 0.52)),
+    rgba(255, 255, 255, 0.9);
+  color: #2a2926;
+  border-color: rgba(0, 0, 0, 0.11);
+  font-weight: 700;
 }
 
 .catalogTitle {
@@ -1731,6 +2083,14 @@ code {
     align-items: start;
   }
 
+  .treeInlineTabs {
+    margin-left: 0;
+  }
+
+  .workspaceSectionGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .modal {
     width: min(1040px, 97vw);
   }
@@ -1775,6 +2135,25 @@ code {
 
   .rail {
     grid-template-columns: 1fr;
+  }
+
+  .mainMenu {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .studyMapHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .treeLine--indent,
+  .treeLine--indent2,
+  .treeLine--indent3 {
+    padding-left: 0;
+  }
+
+  .treeInlineTabs {
+    margin: 0;
   }
 
   .sectionGrid {
@@ -1846,6 +2225,15 @@ code {
     padding: 7px 9px;
   }
 
+  .catalogBreadcrumb {
+    gap: 4px;
+  }
+
+  .catalogBreadcrumbItem {
+    font-size: 9px;
+    padding: 4px 7px;
+  }
+
   .sectionNavChipLabel {
     font-size: 11px;
   }
@@ -1906,6 +2294,10 @@ code {
   code {
     font-size: 14px;
     line-height: 1.5;
+  }
+
+  .workspaceSectionGrid {
+    grid-template-columns: 1fr;
   }
 }
 
