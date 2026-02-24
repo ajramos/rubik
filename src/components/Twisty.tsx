@@ -6,14 +6,19 @@ const DISPLAY_ORIENTATION = "z2";
 type Props = {
   alg: string;
   setupAlg?: string;
+  experimentalStickering?: string;
 };
 
-export function Twisty({ alg, setupAlg }: Props) {
+export function Twisty({ alg, setupAlg, experimentalStickering }: Props) {
   const cleaned = useMemo(() => normalizeAlg(alg), [alg]);
   const cleanedSetup = useMemo(() => (setupAlg ? normalizeAlg(setupAlg) : undefined), [setupAlg]);
+  const displayOrientation = useMemo(
+    () => (experimentalStickering === "F2L" ? undefined : DISPLAY_ORIENTATION),
+    [experimentalStickering]
+  );
   const setupWithOrientation = useMemo(
-    () => (cleanedSetup ? `${DISPLAY_ORIENTATION} ${cleanedSetup}` : DISPLAY_ORIENTATION),
-    [cleanedSetup]
+    () => [displayOrientation, cleanedSetup].filter(Boolean).join(" ") || undefined,
+    [cleanedSetup, displayOrientation]
   );
 
   // "experimental-setup-anchor=end" makes the viewer start from the case
@@ -24,6 +29,7 @@ export function Twisty({ alg, setupAlg }: Props) {
       alg={cleaned}
       experimental-setup-alg={setupWithOrientation}
       experimental-setup-anchor={cleanedSetup ? "start" : "end"}
+      experimental-stickering={experimentalStickering}
       background="none"
       hint-facelets="none"
       style={{

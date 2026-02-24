@@ -12,31 +12,45 @@ type Props = {
   alg?: string;
   setupAlg?: string;
   exactF2L?: boolean;
+  experimentalStickering?: string;
 };
 
-export function MiniTwisty({ set, size = 140, thumb, alg, setupAlg, exactF2L = false }: Props) {
+export function MiniTwisty({
+  set,
+  size = 140,
+  thumb,
+  alg,
+  setupAlg,
+  exactF2L = false,
+  experimentalStickering: experimentalStickeringOverride,
+}: Props) {
   const cleanedAlg = useMemo(() => (alg ? normalizeAlg(alg) : undefined), [alg]);
   const cleanedSetupAlg = useMemo(
     () => (setupAlg ? normalizeAlg(setupAlg) : undefined),
     [setupAlg]
   );
+  const displayOrientation = useMemo(
+    () => (experimentalStickeringOverride === "F2L" ? undefined : DISPLAY_ORIENTATION),
+    [experimentalStickeringOverride]
+  );
   const setupWithOrientation = useMemo(
-    () => (cleanedSetupAlg ? `${DISPLAY_ORIENTATION} ${cleanedSetupAlg}` : DISPLAY_ORIENTATION),
-    [cleanedSetupAlg]
+    () => [displayOrientation, cleanedSetupAlg].filter(Boolean).join(" ") || undefined,
+    [cleanedSetupAlg, displayOrientation]
   );
   const f2lStylized = set === "F2L" && !exactF2L;
   const captureSize = set === "F2L" && exactF2L ? 240 : size;
-  const experimentalStickering = f2lStylized ? "LS" : undefined;
+  const experimentalStickering = experimentalStickeringOverride ?? (f2lStylized ? "LS" : undefined);
   const visualization = f2lStylized ? "2D" : undefined;
   const foundationDisplay = f2lStylized ? "none" : undefined;
   const cacheKey = useMemo(
     () =>
       cleanedAlg
-        ? `runtime-thumb:v5:${set}:${captureSize}:${exactF2L ? "exact" : "styled"}:${visualization ?? ""}:${experimentalStickering ?? ""}:${foundationDisplay ?? ""}:${cleanedAlg}:${cleanedSetupAlg ?? ""}`
+        ? `runtime-thumb:v7:${set}:${captureSize}:${exactF2L ? "exact" : "styled"}:${visualization ?? ""}:${experimentalStickering ?? ""}:${foundationDisplay ?? ""}:${displayOrientation ?? ""}:${cleanedAlg}:${cleanedSetupAlg ?? ""}`
         : null,
     [
       cleanedAlg,
       cleanedSetupAlg,
+      displayOrientation,
       experimentalStickering,
       visualization,
       foundationDisplay,
@@ -90,7 +104,11 @@ export function MiniTwisty({ set, size = 140, thumb, alg, setupAlg, exactF2L = f
         const applyPlayerAttrs = () => {
           player.setAttribute("puzzle", "3x3x3");
           player.setAttribute("alg", cleanedAlg);
-          player.setAttribute("experimental-setup-alg", setupWithOrientation);
+          if (setupWithOrientation) {
+            player.setAttribute("experimental-setup-alg", setupWithOrientation);
+          } else {
+            player.removeAttribute("experimental-setup-alg");
+          }
           player.setAttribute("experimental-setup-anchor", cleanedSetupAlg ? "start" : "end");
           player.setAttribute("control-panel", "none");
           player.setAttribute("background", "none");

@@ -1340,6 +1340,7 @@ export default function App() {
                   alg={c.alg}
                   setupAlg={c.caseSetupAlg}
                   exactF2L
+                  experimentalStickering="F2L"
                 />
               </div>
               <div className="f2lCardNote">{c.note}</div>
@@ -1818,10 +1819,16 @@ export default function App() {
               <section className="viewerPanel">
                 <div className="viewerPanelBar">
                   <span>Case Viewer</span>
-                  <span className="viewerPanelHint">Yellow top · z2</span>
+                  <span className="viewerPanelHint">
+                    {selected.set === "F2L" ? "CFOP F2L stickering · U-top" : "Yellow top · z2"}
+                  </span>
                 </div>
                 <div className="viewerPanelStage">
-                  <Twisty alg={selected.alg} setupAlg={selected.set === "F2L" ? selected.f2lMeta?.caseSetupAlg : undefined} />
+                  <Twisty
+                    alg={selected.alg}
+                    setupAlg={selected.set === "F2L" ? selected.f2lMeta?.caseSetupAlg : undefined}
+                    experimentalStickering={selected.set === "F2L" ? "F2L" : undefined}
+                  />
                 </div>
               </section>
 
@@ -1836,6 +1843,7 @@ export default function App() {
                         alg={selected.alg}
                         setupAlg={selected.f2lMeta.caseSetupAlg}
                         exactF2L
+                        experimentalStickering="F2L"
                       />
                     ) : (
                       <MiniTwisty set={selected.set} size={210} thumb={selected.thumb} />
