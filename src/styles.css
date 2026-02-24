@@ -1,38 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700&family=IBM+Plex+Mono:wght@400;600&display=swap");
 
 :root {
-  /* backgrounds */
-  --bg: #0b0b0e;
-  --bg-2: #0f0f13;
+  /* backgrounds — Arctic Frost: cool off-white with blue-grey cast */
+  --bg: #eef1f5;
+  --bg-2: #e8ecf1;
 
   /* surfaces */
-  --surface-1: #131318;
-  --surface-2: #18181f;
-  --surface-3: #1e1e27;
+  --surface-1: #f4f6f9;
+  --surface-2: #eceef3;
+  --surface-3: #e2e6ed;
 
   /* text */
-  --ink: #e4e0da;
-  --muted: #6a6762;
-  --muted-2: #48454f;
+  --ink: #1a1d24;
+  --muted: #6b7280;
+  --muted-2: #9ca3af;
 
   /* borders */
-  --line: rgba(255, 255, 255, 0.07);
-  --line-2: rgba(255, 255, 255, 0.12);
+  --line: rgba(30, 40, 60, 0.10);
+  --line-2: rgba(30, 40, 60, 0.16);
 
   /* legacy aliases */
-  --card: rgba(19, 19, 24, 0.96);
-  --card-strong: rgba(22, 22, 28, 0.99);
+  --card: rgba(244, 246, 249, 0.97);
+  --card-strong: rgba(240, 243, 247, 0.99);
 
-  /* accent palette — cube face colors */
-  --accent-oll: #f5d000;      /* yellow  — OLL  */
-  --accent-pll: #4db3f5;      /* blue    — PLL  */
-  --accent-f2l: #f08240;      /* orange  — F2L  */
-  --accent-4lll: #9b8af5;     /* violet  — 4LLL */
-  --accent-green: #4ade80;    /* active/success  */
+  /* accent palette — cube face colors, deepened for light-bg contrast */
+  --accent-oll: #d4aa00;      /* yellow  — OLL  */
+  --accent-pll: #2e8fd4;      /* blue    — PLL  */
+  --accent-f2l: #d96b20;      /* orange  — F2L  */
+  --accent-4lll: #7c63e0;     /* violet  — 4LLL */
+  --accent-green: #16a34a;    /* active/success  */
 
   /* shadows */
-  --shadow-lg: 0 28px 70px rgba(0, 0, 0, 0.8);
-  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 28px 70px rgba(20, 30, 50, 0.14);
+  --shadow-md: 0 12px 32px rgba(20, 30, 50, 0.09);
 
   /* radii */
   --radius-lg: 18px;
@@ -76,7 +76,7 @@ body {
   border-radius: 999px;
   filter: blur(60px);
   pointer-events: none;
-  opacity: 0.35;
+  opacity: 0.12;
   z-index: 0;
 }
 
@@ -97,10 +97,10 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.18;
+  opacity: 0.5;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(30, 40, 60, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 40, 60, 0.035) 1px, transparent 1px);
   background-size: 32px 32px;
   mask-image: radial-gradient(ellipse 80% 80% at center, black 30%, transparent 100%);
 }
@@ -702,9 +702,9 @@ body {
   background:
     linear-gradient(
       180deg,
-      rgba(13, 13, 18, 0.96) 0%,
-      rgba(13, 13, 18, 0.96) 75%,
-      rgba(13, 13, 18, 0) 100%
+      rgba(238, 241, 245, 0.96) 0%,
+      rgba(238, 241, 245, 0.96) 75%,
+      rgba(238, 241, 245, 0) 100%
     );
   backdrop-filter: blur(8px);
 }
@@ -1255,7 +1255,7 @@ body {
 .methodCard:hover {
   transform: translateY(-2px);
   border-color: rgba(245, 208, 0, 0.2);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-md);
   background: var(--surface-3);
 }
 
@@ -1377,7 +1377,7 @@ body {
 .f2lCard:hover {
   transform: translateY(-2px);
   border-color: rgba(240, 130, 64, 0.22);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-md);
   background: var(--surface-3);
 }
 
@@ -1577,7 +1577,7 @@ body {
 .card:hover {
   transform: translateY(-2px);
   border-color: rgba(245, 208, 0, 0.2);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-md);
   background: var(--surface-3);
 }
 
@@ -1687,8 +1687,8 @@ body {
   background:
     radial-gradient(circle at 20% 20%, rgba(245, 208, 0, 0.06), transparent 40%),
     radial-gradient(circle at 80% 10%, rgba(77, 179, 245, 0.06), transparent 44%),
-    rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px) saturate(0.8);
+    rgba(30, 35, 50, 0.55);
+  backdrop-filter: blur(12px) saturate(0.7);
   display: grid;
   place-items: center;
   padding: 16px;
@@ -1704,8 +1704,8 @@ body {
   border-radius: 20px;
   border: 1px solid var(--line-2);
   box-shadow:
-    0 40px 100px rgba(0, 0, 0, 0.9),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    var(--shadow-lg),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   padding: 18px;
 }
 
@@ -1882,9 +1882,9 @@ body {
 code {
   display: block;
   padding: 14px;
-  background: var(--bg);
-  color: var(--accent-oll);
-  border: 1px solid rgba(245, 208, 0, 0.14);
+  background: #1e2330;
+  color: #f5d000;
+  border: 1px solid rgba(245, 208, 0, 0.2);
   border-radius: var(--radius-sm);
   white-space: pre-wrap;
   word-break: break-word;
@@ -1892,7 +1892,7 @@ code {
   font-size: 16px;
   line-height: 1.65;
   letter-spacing: -0.01em;
-  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.4);
 }
 
 .modalNoteCard {

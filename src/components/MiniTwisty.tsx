@@ -135,10 +135,14 @@ export function MiniTwisty({
         document.body.appendChild(host);
 
         // Give the custom element time to upgrade and render before screenshotting.
+        // 3D mode (exactF2L) needs more time than 2D mode.
+        const renderWait = exactF2L ? 200 : 80;
         await raf();
-        await wait(80);
+        await wait(renderWait);
         await raf();
         applyPlayerAttrs();
+        await raf();
+        await wait(renderWait);
         await raf();
 
         if (cleanedSetupAlg && typeof player.jumpToStart === "function") {
@@ -148,7 +152,7 @@ export function MiniTwisty({
             // best effort
           }
           await raf();
-          await wait(80);
+          await wait(renderWait * 2);
           await raf();
         }
 

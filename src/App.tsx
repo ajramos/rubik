@@ -1616,11 +1616,6 @@ export default function App() {
                       onChange={(e) => setQ(e.target.value)}
                       placeholder="Search canonical F2L (e.g. F2L 1, free pairs, U R U' R')..."
                     />
-                    {!SHOW_F2L_DRILLS && (
-                      <div className="f2lCanonicalBanner">
-                        <strong>All 41 canonical cases loaded:</strong> Free Pairs · Disconnected · Connected · Corner-in-Slot · Edge-in-Slot · Both-in-Slot.
-                      </div>
-                    )}
                     {SHOW_F2L_DRILLS && (
                       <div className="f2lFilterRow" role="toolbar" aria-label="F2L quick filters">
                         {F2L_FILTERS.map((filter) => (
@@ -1646,23 +1641,12 @@ export default function App() {
                     />
                   </div>
                 ) : (
-                  <div className="controls controls--stack">
+                  <div className="controls">
                     <input
                       value={q}
                       onChange={(e) => setQ(e.target.value)}
                       placeholder="Search 4LLL (e.g. Sune, H-perm, OLL corners)..."
                     />
-                    <div className="methodSummaryRow">
-                      {fourLookSections.map((stage, index) => (
-                        <div key={`summary-${stage.key}`} className="methodSummaryCard">
-                          <span className="methodSummaryLabel">Stage {index + 1}</span>
-                          <strong>{stage.title.replace(/\s+Stage$/, "")}</strong>
-                          <span className="methodSummaryMeta">
-                            {stage.cases.length} {stage.cases.length === 1 ? "case" : "cases"}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
                   </div>
                 )}
 
