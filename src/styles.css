@@ -2038,6 +2038,168 @@ code {
   background: var(--surface-2);
 }
 
+/* ── Named trigger token chips (hover tooltip shows expanded moves) ──── */
+.algNamedToken {
+  display: inline;
+  border-radius: 3px;
+  padding: 1px 4px;
+  cursor: default;
+  position: relative;
+  font-style: normal;
+}
+
+.algNamedToken::after {
+  content: attr(data-moves);
+  position: absolute;
+  bottom: calc(100% + 7px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  transform-origin: bottom center;
+  background: var(--ink);
+  color: #e8f4f4;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 400;
+  padding: 4px 9px;
+  border-radius: 5px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+  z-index: 20;
+}
+.algNamedToken:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Dark context (modal algDisplay — dark bg) */
+.algNamedToken--teal   { color: #7dddd8; background: rgba(45,180,175,0.22); border-bottom: 2px solid #2d8b8b; }
+.algNamedToken--indigo { color: #b8a8ff; background: rgba(112,90,220,0.22); border-bottom: 2px solid #7055cc; }
+
+/* Light context (card alg blocks — light bg) */
+.cardAlg       .algNamedToken--teal,
+.methodCardAlg .algNamedToken--teal,
+.f2lCardAlg    .algNamedToken--teal   { color: #0a6560; background: rgba(0,130,125,0.13); border-bottom-color: #0a8880; }
+
+.cardAlg       .algNamedToken--indigo,
+.methodCardAlg .algNamedToken--indigo,
+.f2lCardAlg    .algNamedToken--indigo { color: #3d28b8; background: rgba(75,55,200,0.12); border-bottom-color: #5040d0; }
+
+/* ── Inline trigger highlights (inside dark alg code block) ─────────── */
+.algDisplay {
+  /* inherits from code {} — display:block, dark bg, monospace, pre-wrap */
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.algTriggerMark {
+  display: inline;
+  border-radius: 3px;
+  padding: 1px 0;
+  border-bottom: 2px solid transparent;
+  cursor: default;
+  /* Remove browser default mark yellow */
+  background-color: transparent;
+}
+
+.algTriggerMark--teal   {
+  color: #7dddd8;
+  background: rgba(45, 180, 175, 0.18);
+  border-bottom-color: #2d8b8b;
+}
+.algTriggerMark--indigo {
+  color: #b8a8ff;
+  background: rgba(112, 90, 220, 0.18);
+  border-bottom-color: #7055cc;
+}
+.algTriggerMark--amber  {
+  color: #ffb740;
+  background: rgba(210, 140, 0, 0.18);
+  border-bottom-color: #c08000;
+}
+.algTriggerMark--rose   {
+  color: #ff9975;
+  background: rgba(210, 90, 55, 0.18);
+  border-bottom-color: #c05535;
+}
+
+/* ── Triggers panel ─────────────────────────────────────────────────── */
+.triggersPanel { margin-top: 0; }
+
+.triggerChipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.triggerChip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: default;
+  border: 1px solid transparent;
+  transition: opacity 0.15s, transform 0.1s;
+  position: relative;
+}
+
+/* Tooltip on hover — shows the canonical move sequence */
+.triggerChip:hover { opacity: 0.85; transform: translateY(-1px); }
+
+.triggerChip::after {
+  content: attr(data-moves);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.85);
+  transform-origin: bottom center;
+  background: var(--ink);
+  color: #e8f4f4;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 400;
+  padding: 4px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+  z-index: 10;
+}
+
+.triggerChip:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Color variants */
+.triggerChip--teal {
+  background: rgba(45, 139, 139, 0.14);
+  border-color: rgba(45, 139, 139, 0.30);
+  color: #1e5252;
+}
+.triggerChip--indigo {
+  background: rgba(88, 64, 176, 0.11);
+  border-color: rgba(88, 64, 176, 0.25);
+  color: #3a2a7a;
+}
+.triggerChip--amber {
+  background: rgba(160, 120, 0, 0.11);
+  border-color: rgba(160, 120, 0, 0.25);
+  color: #7a5500;
+}
+.triggerChip--rose {
+  background: rgba(176, 76, 16, 0.10);
+  border-color: rgba(176, 76, 16, 0.22);
+  color: #8a3a00;
+}
+
 .canonicalPanel {
   background:
     linear-gradient(135deg, rgba(77, 179, 245, 0.04), transparent 50%),

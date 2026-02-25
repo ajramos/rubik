@@ -961,6 +961,91 @@ const F2L_TAG_LABELS: Record<
   connected: "Connected",
 };
 
+const KNOWN_TRIGGERS: Array<{ name: string; color: string; moves: string; patterns: string[] }> = [
+  { name: "Sexy Move",    color: "teal",   moves: "R U R' U'",          patterns: ["R U R' U'", "L' U' L U"] },
+  { name: "Sledgehammer", color: "indigo", moves: "R' F R F'",          patterns: ["R' F R F'", "L F' L' F"] },
+  { name: "Sune",         color: "amber",  moves: "R U R' U R U2 R'",   patterns: ["R U R' U R U2 R'", "L U L' U L U2 L'"] },
+  { name: "Anti-Sune",    color: "amber",  moves: "R' U' R U' R' U2 R", patterns: ["R' U' R U' R' U2 R", "L' U' L U' L' U2 L"] },
+  { name: "Niklas",       color: "rose",   moves: "R U' L' U R' U' L",  patterns: ["R U' L' U R' U' L", "L' U R U' L U R'"] },
+];
+
+// Expand shorthand tokens (e.g. [SEXY] → moves) before pattern matching
+function expandNamedTokens(alg: string): string {
+  return alg
+    .replace(/\[SEXY\]/gi, "R U R' U'")
+    .replace(/\[SLEDGEHMR\]/gi, "R' F R F'")
+    .replace(/\[SLEDGEHAMMER\]/gi, "R' F R F'");
+}
+
+function detectTriggers(alg: string): typeof KNOWN_TRIGGERS {
+  const clean = expandNamedTokens(alg).replace(/[\[\]]/g, "").replace(/\s+/g, " ").trim();
+  return KNOWN_TRIGGERS.filter((t) => t.patterns.some((p) => clean.includes(p)));
+}
+
+const NAMED_TOKEN_MAP: Record<string, { name: string; moves: string; color: string }> = {
+  "SEXY":        { name: "Sexy Move",    moves: "R U R' U'", color: "teal"   },
+  "SLEDGEHMR":   { name: "Sledgehammer", moves: "R' F R F'", color: "indigo" },
+  "SLEDGEHAMMER":{ name: "Sledgehammer", moves: "R' F R F'", color: "indigo" },
+};
+
+// Inject named tokens into plain-move algorithms (no existing bracket notation)
+function injectNamedTokens(alg: string): string {
+  if (alg.includes("[")) return alg; // already uses bracket notation — leave as-is
+  return alg
+    .replace(/R U R' U'/g, "[SEXY]")
+    .replace(/R' F R F'/g, "[SLEDGEHMR]");
+}
+
+function renderAlgLine(line: string): React.ReactNode {
+  const parts = line.split(/(\[[A-Z]+\])/g);
+  return parts.map((part, i) => {
+    const match = part.match(/^\[([A-Z]+)\]$/);
+    if (match) {
+      const info = NAMED_TOKEN_MAP[match[1]];
+      if (info) {
+        return (
+          <span
+            key={i}
+            className={`algNamedToken algNamedToken--${info.color}`}
+            data-moves={info.moves}
+          >
+            {part}
+          </span>
+        );
+      }
+    }
+    return <React.Fragment key={i}>{part}</React.Fragment>;
+  });
+}
+
+function renderAlgBlock(alg: string, set?: AlgSet, compact = false): React.ReactNode {
+  const processed = injectNamedTokens(alg);
+  let formatted: string;
+
+  if (compact && !alg.includes("[")) {
+    // Card context with plain-move alg: chunk-based, treating [NAMEDTOKEN] as a single token
+    // so triggers don't get split across line breaks
+    const tokens = processed.match(/\[[A-Z]+\]|[^\s]+/g) ?? [];
+    const chunkSize =
+      set === "OLL"
+        ? tokens.length <= 12 ? 4 : 5
+        : 6;
+    const lines: string[] = [];
+    for (let i = 0; i < tokens.length; i += chunkSize)
+      lines.push(tokens.slice(i, i + chunkSize).join(" "));
+    formatted = lines.join("\n");
+  } else {
+    formatted = formatAlgForDisplay(processed, set);
+  }
+
+  return formatted.split("\n").map((line, i, arr) => (
+    <React.Fragment key={i}>
+      {renderAlgLine(line)}
+      {i < arr.length - 1 ? "\n" : ""}
+    </React.Fragment>
+  ));
+}
+
 function formatAlgForDisplay(alg: string, set?: AlgSet) {
   const cleaned = alg.trim().replace(/\s+/g, " ");
   if (!cleaned) return "";
@@ -1385,7 +1470,7 @@ export default function App() {
         <MiniTwisty set={a.set} size={176} thumb={a.thumb} />
       </div>
       <div className="cardHint">{getCatalogCardHint(a, sectionTitle)}</div>
-      <pre className="cardAlg">{formatAlgForDisplay(a.alg, a.set)}</pre>
+      <pre className="cardAlg">{renderAlgBlock(a.alg, a.set, true)}</pre>
     </button>
   );
 
@@ -1423,7 +1508,7 @@ export default function App() {
                 <div className="methodCardHint">No canonical thumbnail mapped yet</div>
               )}
               {c.note && <div className="methodCardNote">{c.note}</div>}
-              <pre className="methodCardAlg">{formatAlgForDisplay(c.alg, c.set)}</pre>
+              <pre className="methodCardAlg">{renderAlgBlock(c.alg, c.set, true)}</pre>
             </button>
           );
         })}
@@ -1467,7 +1552,7 @@ export default function App() {
                 ))}
               </div>
               {c.setup && <div className="f2lCardSetup">Setup: {c.setup}</div>}
-              <pre className="f2lCardAlg">{formatAlgForDisplay(c.alg, "F2L")}</pre>
+              <pre className="f2lCardAlg">{renderAlgBlock(c.alg, "F2L", true)}</pre>
             </button>
           );
         })}
@@ -1884,8 +1969,27 @@ export default function App() {
 
                 <section className="algBlock">
                   <div className="label">Algorithm</div>
-                  <code>{formatAlgForDisplay(selected.alg, selected.set)}</code>
+                  <code className="algDisplay">
+                    {renderAlgBlock(selected.alg, selected.set)}
+                  </code>
                 </section>
+
+                {detectTriggers(selected.alg).length > 0 && (
+                  <section className="triggersPanel">
+                    <div className="label">Triggers</div>
+                    <div className="triggerChipRow">
+                      {detectTriggers(selected.alg).map((t) => (
+                        <span
+                          key={t.name}
+                          className={`triggerChip triggerChip--${t.color}`}
+                          data-moves={t.moves}
+                        >
+                          {t.name}
+                        </span>
+                      ))}
+                    </div>
+                  </section>
+                )}
 
                 {selected.sourceMethod === "4LLL" && selectedCanonical && (
                   <section className="canonicalPanel">

@@ -437,7 +437,7 @@
     "id": "oll_33",
     "set": "OLL",
     "name": "OLL 33 (Key)",
-    "alg": "R U R' U' R' F R F'",
+    "alg": "[SEXY] [SLEDGEHMR]",
     "thumb": "/thumbs/generated/oll_33.svg?v11"
   },
   {
@@ -458,7 +458,7 @@
     "id": "oll_38",
     "set": "OLL",
     "name": "OLL 38 (Moustache)",
-    "alg": "R U R' U R U' R' U' R' F R F'",
+    "alg": "R U R' U R U' R' U' [SLEDGEHMR]",
     "thumb": "/thumbs/generated/oll_38.svg?v11"
   },
   {
@@ -486,14 +486,14 @@
     "id": "oll_44",
     "set": "OLL",
     "name": "OLL 44 (P)",
-    "alg": "f R U R' U' f'",
+    "alg": "f [SEXY] f'",
     "thumb": "/thumbs/generated/oll_44.svg?v11"
   },
   {
     "id": "oll_45",
     "set": "OLL",
     "name": "OLL 45 (T-shape)",
-    "alg": "F R U R' U' F'",
+    "alg": "F [SEXY] F'",
     "thumb": "/thumbs/generated/oll_45.svg?v11"
   },
   {
