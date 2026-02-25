@@ -177,371 +177,371 @@
   {
     "id": "oll_9",
     "set": "OLL",
-    "name": "OLL 9 (Fish)",
+    "name": "OLL 9 (Kite)",
     "alg": "R U R' U' R' F R2 U R' U' F'",
     "thumb": "/thumbs/generated/oll_9.svg?v11"
   },
   {
     "id": "oll_10",
     "set": "OLL",
-    "name": "OLL 10 (Fish)",
+    "name": "OLL 10 (Anti-Kite)",
     "alg": "R U R' U R' F R F' R U2 R'",
     "thumb": "/thumbs/generated/oll_10.svg?v11"
   },
   {
     "id": "oll_11",
     "set": "OLL",
-    "name": "OLL 11 (Lightning)",
+    "name": "OLL 11 (Downstairs)",
     "alg": "S R U R' U R U2 R' U2 S'",
     "thumb": "/thumbs/generated/oll_11.svg?v11"
   },
   {
     "id": "oll_12",
     "set": "OLL",
-    "name": "OLL 12 (Lightning)",
+    "name": "OLL 12 (Upstairs)",
     "alg": "S R' U' R U' R' U2 R U2 S'",
     "thumb": "/thumbs/generated/oll_12.svg?v11"
   },
   {
     "id": "oll_22",
     "set": "OLL",
-    "name": "OLL 22 (Edges Oriented)",
+    "name": "OLL 22 (Pi)",
     "alg": "R U2 R2 U' R2 U' R2 U2 R",
     "thumb": "/thumbs/generated/oll_22.svg?v11"
   },
   {
     "id": "oll_23",
     "set": "OLL",
-    "name": "OLL 23 (Edges Oriented)",
+    "name": "OLL 23 (Headlights)",
     "alg": "R2 D R' U2 R D' R' U2 R'",
     "thumb": "/thumbs/generated/oll_23.svg?v11"
   },
   {
     "id": "oll_25",
     "set": "OLL",
-    "name": "OLL 25 (Edges Oriented)",
+    "name": "OLL 25 (Bowtie)",
     "alg": "F' r U R' U' r' F R",
     "thumb": "/thumbs/generated/oll_25.svg?v11"
   },
   {
     "id": "oll_28",
     "set": "OLL",
-    "name": "OLL 28 (Corners Oriented)",
+    "name": "OLL 28 (Arrow)",
     "alg": "M' U' M U2 M' U' M",
     "thumb": "/thumbs/generated/oll_28.svg?v11"
   },
   {
     "id": "oll_35",
     "set": "OLL",
-    "name": "OLL 35 (Fish)",
+    "name": "OLL 35 (Fish Salad)",
     "alg": "R U2 R2 F R F' R U2 R'",
     "thumb": "/thumbs/generated/oll_35.svg?v11"
   },
   {
     "id": "oll_37",
     "set": "OLL",
-    "name": "OLL 37 (Fish)",
+    "name": "OLL 37 (Mounted Fish)",
     "alg": "F R U' R' U' R U R' F'",
     "thumb": "/thumbs/generated/oll_37.svg?v11"
   },
   {
     "id": "oll_39",
     "set": "OLL",
-    "name": "OLL 39 (Lightning)",
+    "name": "OLL 39 (Fung)",
     "alg": "f' r U r' U' r' F r S",
     "thumb": "/thumbs/generated/oll_39.svg?v11"
   },
   {
     "id": "oll_40",
     "set": "OLL",
-    "name": "OLL 40 (Lightning)",
+    "name": "OLL 40 (Anti-Fung)",
     "alg": "R' F R U R' U' F' U R",
     "thumb": "/thumbs/generated/oll_40.svg?v11"
   },
   {
     "id": "oll_51",
     "set": "OLL",
-    "name": "OLL 51 (Line)",
+    "name": "OLL 51 (Ant)",
     "alg": "F U R U' R' U R U' R' F'",
     "thumb": "/thumbs/generated/oll_51.svg?v11"
   },
   {
     "id": "oll_52",
     "set": "OLL",
-    "name": "OLL 52 (Line)",
+    "name": "OLL 52 (Rice Cooker)",
     "alg": "R' F' U' F U' R U R' U R",
     "thumb": "/thumbs/generated/oll_52.svg?v11"
   },
   {
     "id": "oll_55",
     "set": "OLL",
-    "name": "OLL 55 (Line)",
+    "name": "OLL 55 (Highway)",
     "alg": "R U2 R2 U' R U' R' U2 F R F'",
     "thumb": "/thumbs/generated/oll_55.svg?v11"
   },
   {
     "id": "oll_56",
     "set": "OLL",
-    "name": "OLL 56 (Line)",
+    "name": "OLL 56 (Streetlights)",
     "alg": "r U r' U R U' R' U R U' R' r U' r'",
     "thumb": "/thumbs/generated/oll_56.svg?v11"
   },
   {
     "id": "oll_57",
     "set": "OLL",
-    "name": "OLL 57 (Corners Oriented)",
+    "name": "OLL 57 (H)",
     "alg": "R U R' U' M' U R U' r'",
     "thumb": "/thumbs/generated/oll_57.svg?v11"
   },
   {
     "id": "oll_24",
     "set": "OLL",
-    "name": "OLL 24 (T)",
+    "name": "OLL 24 (Chameleon)",
     "alg": "r U R' U' r' F R F'",
     "thumb": "/thumbs/generated/oll_24.svg?v11"
   },
   {
     "id": "oll_1",
     "set": "OLL",
-    "name": "OLL 1",
+    "name": "OLL 1 (Runway)",
     "alg": "R U2 R2' F R F' U2' R' F R F'",
     "thumb": "/thumbs/generated/oll_1.svg?v11"
   },
   {
     "id": "oll_2",
     "set": "OLL",
-    "name": "OLL 2",
+    "name": "OLL 2 (Zamboni)",
     "alg": "F R U R' U' S R U R' U' B",
     "thumb": "/thumbs/generated/oll_2.svg?v11"
   },
   {
     "id": "oll_3",
     "set": "OLL",
-    "name": "OLL 3",
+    "name": "OLL 3 (Anti-Pinwheel)",
     "alg": "f R U R' U' f' U' F R U R' U' F'",
     "thumb": "/thumbs/generated/oll_3.svg?v11"
   },
   {
     "id": "oll_4",
     "set": "OLL",
-    "name": "OLL 4",
+    "name": "OLL 4 (Pinwheel)",
     "alg": "f R U R' U' f' U F R U R' U' F'",
     "thumb": "/thumbs/generated/oll_4.svg?v11"
   },
   {
     "id": "oll_13",
     "set": "OLL",
-    "name": "OLL 13",
+    "name": "OLL 13 (Gun)",
     "alg": "r' U' r U' r' U r y' x' R U' R' F",
     "thumb": "/thumbs/generated/oll_13.svg?v11"
   },
   {
     "id": "oll_14",
     "set": "OLL",
-    "name": "OLL 14",
+    "name": "OLL 14 (Anti-Gun)",
     "alg": "r U r' U r U' r' y x' R' U R F'",
     "thumb": "/thumbs/generated/oll_14.svg?v11"
   },
   {
     "id": "oll_15",
     "set": "OLL",
-    "name": "OLL 15",
+    "name": "OLL 15 (Squeegee)",
     "alg": "r' U' r' D' r U' r' D r2",
     "thumb": "/thumbs/generated/oll_15.svg?v11"
   },
   {
     "id": "oll_16",
     "set": "OLL",
-    "name": "OLL 16",
+    "name": "OLL 16 (Anti-Squeegee)",
     "alg": "r U r D r' U r D' r2'",
     "thumb": "/thumbs/generated/oll_16.svg?v11"
   },
   {
     "id": "oll_17",
     "set": "OLL",
-    "name": "OLL 17",
+    "name": "OLL 17 (Slash)",
     "alg": "F R' F' R2 r' U R U' R' U' M'",
     "thumb": "/thumbs/generated/oll_17.svg?v11"
   },
   {
     "id": "oll_18",
     "set": "OLL",
-    "name": "OLL 18",
+    "name": "OLL 18 (Crown)",
     "alg": "r U R' U R U2 r2' U' R U' R' U2 r",
     "thumb": "/thumbs/generated/oll_18.svg?v11"
   },
   {
     "id": "oll_19",
     "set": "OLL",
-    "name": "OLL 19",
+    "name": "OLL 19 (Bunny)",
     "alg": "M U R U R' U' M2 U R U' r'",
     "thumb": "/thumbs/generated/oll_19.svg?v11"
   },
   {
     "id": "oll_20",
     "set": "OLL",
-    "name": "OLL 20",
+    "name": "OLL 20 (Checkers)",
     "alg": "r U R' U' M2 U R U' R' U' M'",
     "thumb": "/thumbs/generated/oll_20.svg?v11"
   },
   {
     "id": "oll_21",
     "set": "OLL",
-    "name": "OLL 21",
+    "name": "OLL 21 (H-shape)",
     "alg": "R U2 R' U' R U R' U' R U' R'",
     "thumb": "/thumbs/generated/oll_21.svg?v11"
   },
   {
     "id": "oll_26",
     "set": "OLL",
-    "name": "OLL 26",
+    "name": "OLL 26 (Anti-Sune)",
     "alg": "R U2' R2' U' R U' R' U2' F R F'",
     "thumb": "/thumbs/generated/oll_26.svg?v11"
   },
   {
     "id": "oll_27",
     "set": "OLL",
-    "name": "OLL 27",
+    "name": "OLL 27 (Sune)",
     "alg": "R U R' U R U2 R'",
     "thumb": "/thumbs/generated/oll_27.svg?v11"
   },
   {
     "id": "oll_29",
     "set": "OLL",
-    "name": "OLL 29",
+    "name": "OLL 29 (Spotted Chameleon)",
     "alg": "R U R' U' R U' R' F' U' F R U R'",
     "thumb": "/thumbs/generated/oll_29.svg?v11"
   },
   {
     "id": "oll_30",
     "set": "OLL",
-    "name": "OLL 30",
+    "name": "OLL 30 (Anti-Spotted Chameleon)",
     "alg": "F R' F R2 U' R' U' R U R' F2",
     "thumb": "/thumbs/generated/oll_30.svg?v11"
   },
   {
     "id": "oll_31",
     "set": "OLL",
-    "name": "OLL 31",
+    "name": "OLL 31 (Couch)",
     "alg": "R' U' F U R U' R' F' R",
     "thumb": "/thumbs/generated/oll_31.svg?v11"
   },
   {
     "id": "oll_32",
     "set": "OLL",
-    "name": "OLL 32",
+    "name": "OLL 32 (Anti-Couch)",
     "alg": "L U F' U' L' U L F L'",
     "thumb": "/thumbs/generated/oll_32.svg?v11"
   },
   {
     "id": "oll_33",
     "set": "OLL",
-    "name": "OLL 33",
+    "name": "OLL 33 (Key)",
     "alg": "R U R' U' R' F R F'",
     "thumb": "/thumbs/generated/oll_33.svg?v11"
   },
   {
     "id": "oll_34",
     "set": "OLL",
-    "name": "OLL 34",
+    "name": "OLL 34 (City)",
     "alg": "R U R2' U' R' F R U R U' F'",
     "thumb": "/thumbs/generated/oll_34.svg?v11"
   },
   {
     "id": "oll_36",
     "set": "OLL",
-    "name": "OLL 36",
+    "name": "OLL 36 (Wario)",
     "alg": "R U R' F' R U R' U' R' F R2 U' R'",
     "thumb": "/thumbs/generated/oll_36.svg?v11"
   },
   {
     "id": "oll_38",
     "set": "OLL",
-    "name": "OLL 38",
+    "name": "OLL 38 (Moustache)",
     "alg": "R U R' U R U' R' U' R' F R F'",
     "thumb": "/thumbs/generated/oll_38.svg?v11"
   },
   {
     "id": "oll_41",
     "set": "OLL",
-    "name": "OLL 41",
+    "name": "OLL 41 (Awkward Fish)",
     "alg": "R U R' U R U2 R' F R U R' U' F'",
     "thumb": "/thumbs/generated/oll_41.svg?v11"
   },
   {
     "id": "oll_42",
     "set": "OLL",
-    "name": "OLL 42",
+    "name": "OLL 42 (Anti-Awkward Fish)",
     "alg": "R' U' R U' R' U2' R F R U R' U' F'",
     "thumb": "/thumbs/generated/oll_42.svg?v11"
   },
   {
     "id": "oll_43",
     "set": "OLL",
-    "name": "OLL 43",
+    "name": "OLL 43 (Anti-P)",
     "alg": "f' L' U' L U f",
     "thumb": "/thumbs/generated/oll_43.svg?v11"
   },
   {
     "id": "oll_44",
     "set": "OLL",
-    "name": "OLL 44",
+    "name": "OLL 44 (P)",
     "alg": "f R U R' U' f'",
     "thumb": "/thumbs/generated/oll_44.svg?v11"
   },
   {
     "id": "oll_45",
     "set": "OLL",
-    "name": "OLL 45",
+    "name": "OLL 45 (T-shape)",
     "alg": "F R U R' U' F'",
     "thumb": "/thumbs/generated/oll_45.svg?v11"
   },
   {
     "id": "oll_46",
     "set": "OLL",
-    "name": "OLL 46",
+    "name": "OLL 46 (Seein' Headlights)",
     "alg": "R' U' R' F R F' U R",
     "thumb": "/thumbs/generated/oll_46.svg?v11"
   },
   {
     "id": "oll_47",
     "set": "OLL",
-    "name": "OLL 47",
+    "name": "OLL 47 (Hook)",
     "alg": "F' L' U' L U L' U' L U F",
     "thumb": "/thumbs/generated/oll_47.svg?v11"
   },
   {
     "id": "oll_48",
     "set": "OLL",
-    "name": "OLL 48",
+    "name": "OLL 48 (Anti-Hook)",
     "alg": "F R U R' U' R U R' U' F'",
     "thumb": "/thumbs/generated/oll_48.svg?v11"
   },
   {
     "id": "oll_49",
     "set": "OLL",
-    "name": "OLL 49",
+    "name": "OLL 49 (Squeezy)",
     "alg": "r U' r2' U r2 U r2' U' r",
     "thumb": "/thumbs/generated/oll_49.svg?v11"
   },
   {
     "id": "oll_50",
     "set": "OLL",
-    "name": "OLL 50",
+    "name": "OLL 50 (Anti-Squeezy)",
     "alg": "r' U r2 U' r2' U' r2 U r'",
     "thumb": "/thumbs/generated/oll_50.svg?v11"
   },
   {
     "id": "oll_53",
     "set": "OLL",
-    "name": "OLL 53",
+    "name": "OLL 53 (Frying Pan)",
     "alg": "r' U2' R U R' U' r",
     "thumb": "/thumbs/generated/oll_53.svg?v11"
   },
   {
     "id": "oll_54",
     "set": "OLL",
-    "name": "OLL 54",
+    "name": "OLL 54 (Anti-Frying Pan)",
     "alg": "r U2 R' U' R U r'",
     "thumb": "/thumbs/generated/oll_54.svg?v11"
   }
