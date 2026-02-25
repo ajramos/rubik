@@ -1,38 +1,43 @@
-@import url("https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
 
 :root {
-  /* backgrounds — Arctic Frost: cool off-white with blue-grey cast */
-  --bg: #eef1f5;
-  --bg-2: #e8ecf1;
+  /* backgrounds — Ocean Depths */
+  --bg: #d8ecec;
+  --bg-2: #cce4e4;
 
   /* surfaces */
-  --surface-1: #f4f6f9;
-  --surface-2: #eceef3;
-  --surface-3: #e2e6ed;
+  --surface-1: #e6f4f4;
+  --surface-2: #daeaea;
+  --surface-3: #cce6e6;
 
   /* text */
-  --ink: #1a1d24;
-  --muted: #6b7280;
-  --muted-2: #9ca3af;
+  --ink: #1a2332;       /* Deep Navy — primary */
+  --muted: #1e5252;     /* Dark Teal — secondary, 6:1 contrast on seafoam */
+  --muted-2: #4a8585;   /* Medium Teal — tertiary */
 
   /* borders */
-  --line: rgba(30, 40, 60, 0.10);
-  --line-2: rgba(30, 40, 60, 0.16);
+  --line: rgba(26, 35, 50, 0.12);
+  --line-2: rgba(26, 35, 50, 0.22);
 
   /* legacy aliases */
-  --card: rgba(244, 246, 249, 0.97);
-  --card-strong: rgba(240, 243, 247, 0.99);
+  --card: rgba(230, 244, 244, 0.97);
+  --card-strong: rgba(238, 248, 248, 0.99);
 
-  /* accent palette — cube face colors, deepened for light-bg contrast */
-  --accent-oll: #d4aa00;      /* yellow  — OLL  */
-  --accent-pll: #2e8fd4;      /* blue    — PLL  */
-  --accent-f2l: #d96b20;      /* orange  — F2L  */
-  --accent-4lll: #7c63e0;     /* violet  — 4LLL */
-  --accent-green: #16a34a;    /* active/success  */
+  /* UI interaction accent — teal for selected/active states */
+  --accent-ui: #2d8b8b;
+  --accent-ui-bg: rgba(45, 139, 139, 0.14);
+  --accent-ui-border: rgba(45, 139, 139, 0.32);
+
+  /* categorical accents — cube face colors */
+  --accent-oll: #a07800;      /* yellow  — OLL  */
+  --accent-pll: #1464a0;      /* blue    — PLL  */
+  --accent-f2l: #b04c10;      /* orange  — F2L  */
+  --accent-4lll: #5840b0;     /* violet  — 4LLL */
+  --accent-green: #0f6630;    /* active/success  */
 
   /* shadows */
-  --shadow-lg: 0 28px 70px rgba(20, 30, 50, 0.14);
-  --shadow-md: 0 12px 32px rgba(20, 30, 50, 0.09);
+  --shadow-lg: 0 28px 70px rgba(26, 35, 50, 0.18);
+  --shadow-md: 0 12px 32px rgba(26, 35, 50, 0.12);
 
   /* radii */
   --radius-lg: 18px;
@@ -52,12 +57,13 @@ body,
 
 body {
   margin: 0;
+  font-size: 15px;
   color: var(--ink);
   background:
-    radial-gradient(ellipse 80% 40% at 15% -10%, rgba(245, 208, 0, 0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 70% 35% at 85% -5%, rgba(77, 179, 245, 0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 80% 40% at 15% -10%, rgba(45, 139, 139, 0.16) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 35% at 85% -5%, rgba(26, 35, 50, 0.06) 0%, transparent 55%),
     var(--bg);
-  font-family: "Figtree", "Avenir Next", "Segoe UI", sans-serif;
+  font-family: "Inter", "Avenir Next", "Segoe UI", sans-serif;
 }
 
 /* ── APP SHELL ─────────────────────────────────────── */
@@ -122,11 +128,11 @@ body {
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
-  border: 1px solid var(--line-2);
+  border: 1px solid rgba(168, 218, 220, 0.15);
   border-radius: var(--radius-lg);
-  background: var(--surface-1);
-  box-shadow: var(--shadow-md);
-  padding: 12px 18px;
+  background: #1a2332;
+  box-shadow: 0 4px 24px rgba(0, 8, 24, 0.28);
+  padding: 13px 20px;
 }
 
 .heroLeft {
@@ -138,83 +144,98 @@ body {
 .heroBrand {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-family: "Syne", sans-serif;
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--ink);
+  gap: 9px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #e4f2f2;
 }
 
 .heroBrandMark {
-  color: var(--accent-oll);
-  font-size: 9px;
+  color: #2d8b8b;
+  font-size: 11px;
   line-height: 1;
 }
 
 .heroEyebrow {
   display: inline-flex;
   align-items: center;
-  padding: 4px 9px;
+  padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid var(--line-2);
-  background: var(--surface-2);
+  border: 1px solid rgba(168, 218, 220, 0.20);
+  background: rgba(168, 218, 220, 0.08);
   font-family: "IBM Plex Mono", monospace;
   font-size: 10px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: #a8dadc;
 }
 
 .heroStats {
   display: flex;
-  gap: 8px;
+  gap: 6px;
   flex-wrap: wrap;
+  align-items: center;
+}
+
+.heroStatsDivider {
+  width: 1px;
+  height: 28px;
+  background: rgba(168, 218, 220, 0.15);
+  flex-shrink: 0;
 }
 
 .heroBadge {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 7px;
+  gap: 1px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--line-2);
-  background: var(--surface-2);
-  padding: 6px 10px;
+  border: 1px solid rgba(168, 218, 220, 0.15);
+  background: rgba(168, 218, 220, 0.07);
+  padding: 6px 13px;
+  min-width: 52px;
 }
 
 .heroBadgeLabel {
   font-family: "IBM Plex Mono", monospace;
   font-size: 9px;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted);
+  letter-spacing: 0.10em;
+  color: #6aacac;
+  line-height: 1;
 }
 
 .heroBadgeValue {
-  font-family: "Syne", sans-serif;
-  font-size: 14px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 15px;
   font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--ink);
+  letter-spacing: -0.02em;
+  color: #e4f2f2;
+  line-height: 1.2;
 }
 
 .heroBadge--oll {
-  border-color: rgba(245, 208, 0, 0.2);
-  background: rgba(245, 208, 0, 0.06);
+  border-color: rgba(160, 120, 0, 0.35);
+  background: rgba(160, 120, 0, 0.18);
 }
-.heroBadge--oll .heroBadgeValue { color: var(--accent-oll); }
+.heroBadge--oll .heroBadgeValue { color: #d4aa20; }
+.heroBadge--oll .heroBadgeLabel { color: #a07800; }
 
 .heroBadge--pll {
-  border-color: rgba(77, 179, 245, 0.2);
-  background: rgba(77, 179, 245, 0.06);
+  border-color: rgba(20, 100, 160, 0.35);
+  background: rgba(20, 100, 160, 0.18);
 }
-.heroBadge--pll .heroBadgeValue { color: var(--accent-pll); }
+.heroBadge--pll .heroBadgeValue { color: #5ab4e8; }
+.heroBadge--pll .heroBadgeLabel { color: #3a8ab8; }
 
 .heroBadge--active {
-  border-color: rgba(245, 208, 0, 0.2);
-  background: rgba(245, 208, 0, 0.07);
+  border-color: rgba(45, 139, 139, 0.35);
+  background: rgba(45, 139, 139, 0.18);
 }
-.heroBadge--active .heroBadgeValue { color: var(--accent-oll); }
+.heroBadge--active .heroBadgeValue { color: #a8dadc; }
+.heroBadge--active .heroBadgeLabel { color: #6aacac; }
 
 /* keep legacy statCard in case used elsewhere */
 .heroMain,
@@ -246,14 +267,110 @@ body {
 
 .railPanel {
   border-radius: var(--radius-lg);
-  border: 1px solid var(--line-2);
-  background: var(--surface-1);
+  border: 1px solid rgba(168, 218, 220, 0.15);
+  background: #1a2332;
   box-shadow: var(--shadow-md);
   padding: 14px;
+  color: #e4f2f2;
 }
 
 .railPanel--nav {
-  background: var(--surface-1);
+  background: #1a2332;
+}
+
+/* ── RAIL DARK THEME OVERRIDES ────────────────────────── */
+
+.railPanel .railTitle,
+.railPanel .mainMenuLabel,
+.railPanel .studyMapTitle,
+.railPanel .trackTop h3 {
+  color: #e4f2f2;
+}
+
+.railPanel .railBadge,
+.railPanel .studyMapMeta,
+.railPanel .treeNode,
+.railPanel .treeButton,
+.railPanel .mainMenuState--soon,
+.railPanel .trackCard p {
+  color: #a8dadc;
+}
+
+.railPanel .railBadge,
+.railPanel .studyMapMeta {
+  background: rgba(168, 218, 220, 0.08);
+  border-color: rgba(168, 218, 220, 0.15);
+}
+
+.railPanel .mainMenuItem {
+  background: rgba(168, 218, 220, 0.06);
+  border-color: rgba(168, 218, 220, 0.12);
+}
+
+.railPanel .mainMenuItem:hover {
+  background: rgba(168, 218, 220, 0.12);
+  border-color: rgba(168, 218, 220, 0.22);
+}
+
+.railPanel .mainMenuItem.isActive {
+  background: rgba(45, 139, 139, 0.25);
+  border-color: rgba(45, 139, 139, 0.50);
+}
+
+.railPanel .studyMap {
+  background: rgba(168, 218, 220, 0.06);
+  border-color: rgba(168, 218, 220, 0.10);
+}
+
+.railPanel .treeNode {
+  background: rgba(168, 218, 220, 0.08);
+  border-color: rgba(168, 218, 220, 0.12);
+}
+
+.railPanel .treeButton {
+  border-color: rgba(168, 218, 220, 0.10);
+  background: transparent;
+}
+
+.railPanel .treeButton:hover {
+  background: rgba(168, 218, 220, 0.10);
+  color: #e4f2f2;
+  border-color: rgba(168, 218, 220, 0.20);
+}
+
+.railPanel .treeButton.isActive {
+  background: rgba(45, 139, 139, 0.28);
+  border-color: rgba(45, 139, 139, 0.50);
+  color: #a8dadc;
+}
+
+.railPanel .mainMenuState--active {
+  background: rgba(74, 222, 128, 0.18);
+  border-color: rgba(74, 222, 128, 0.30);
+  color: #4ade80;
+}
+
+.railPanel .trackCard {
+  background: rgba(168, 218, 220, 0.06);
+  border-color: rgba(168, 218, 220, 0.10);
+}
+
+.railPanel .pill--active {
+  background: rgba(74, 222, 128, 0.18);
+  border-color: rgba(74, 222, 128, 0.30);
+  color: #4ade80;
+}
+
+.railPanel .pill--planned {
+  background: rgba(160, 120, 0, 0.20);
+  border-color: rgba(160, 120, 0, 0.35);
+  color: #d4aa00;
+}
+
+.railPanel .pill--backlog {
+  background: rgba(168, 218, 220, 0.08);
+  border-color: rgba(168, 218, 220, 0.12);
+  color: #7aacac;
 }
 
 .railPanel--compact {
@@ -269,7 +386,7 @@ body {
 }
 
 .railTitle {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -315,8 +432,8 @@ body {
 }
 
 .mainMenuItem.isActive {
-  background: rgba(245, 208, 0, 0.08);
-  border-color: rgba(245, 208, 0, 0.22);
+  background: var(--accent-ui-bg);
+  border-color: var(--accent-ui-border);
 }
 
 .mainMenuItem:disabled {
@@ -325,7 +442,7 @@ body {
 }
 
 .mainMenuLabel {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 13px;
   letter-spacing: -0.01em;
@@ -380,7 +497,7 @@ body {
 }
 
 .studyMapTitle {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 12px;
   color: var(--ink);
@@ -442,7 +559,7 @@ body {
   padding: 7px 9px;
   text-align: left;
   cursor: pointer;
-  font-family: "Figtree", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 12px;
   font-weight: 600;
   color: var(--muted);
@@ -466,9 +583,9 @@ body {
 }
 
 .treeButton.isActive {
-  background: rgba(245, 208, 0, 0.07);
-  border-color: rgba(245, 208, 0, 0.2);
-  color: var(--accent-oll);
+  background: var(--accent-ui-bg);
+  border-color: var(--accent-ui-border);
+  color: var(--accent-ui);
 }
 
 .treeButton--small {
@@ -509,9 +626,9 @@ body {
 }
 
 .treeInlineTabs button.isActive {
-  background: rgba(245, 208, 0, 0.1);
-  border-color: rgba(245, 208, 0, 0.2);
-  color: var(--accent-oll);
+  background: var(--accent-ui-bg);
+  border-color: var(--accent-ui-border);
+  color: var(--accent-ui);
 }
 
 .treeInlineTabs button:disabled { cursor: default; opacity: 0.6; }
@@ -539,7 +656,7 @@ body {
 
 .trackTop h3 {
   margin: 0;
-  font-family: "Figtree", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 12px;
   line-height: 1.2;
   font-weight: 700;
@@ -635,7 +752,7 @@ body {
 
 .workspaceSectionTitle {
   margin: 8px 0 0;
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: clamp(22px, 2.2vw, 30px);
   letter-spacing: -0.03em;
   line-height: 1;
@@ -666,7 +783,7 @@ body {
 
 .workspaceTile h3 {
   margin: 0;
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 14px;
   letter-spacing: -0.02em;
   color: var(--ink);
@@ -702,9 +819,9 @@ body {
   background:
     linear-gradient(
       180deg,
-      rgba(238, 241, 245, 0.96) 0%,
-      rgba(238, 241, 245, 0.96) 75%,
-      rgba(238, 241, 245, 0) 100%
+      color-mix(in srgb, var(--surface-1) 97%, transparent) 0%,
+      color-mix(in srgb, var(--surface-1) 97%, transparent) 75%,
+      transparent 100%
     );
   backdrop-filter: blur(8px);
 }
@@ -738,7 +855,7 @@ body {
   background: transparent;
   border-radius: 8px;
   padding: 7px 11px;
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 12px;
   cursor: pointer;
@@ -752,8 +869,8 @@ body {
 }
 
 .workspaceTabs button.active {
-  background: rgba(245, 208, 0, 0.12);
-  color: var(--accent-oll);
+  background: var(--accent-ui-bg);
+  color: var(--accent-ui);
 }
 
 /* ── CATALOG HEADER ─────────────────────────────────── */
@@ -807,15 +924,15 @@ body {
 }
 
 .catalogBreadcrumbItem.isCurrent {
-  background: rgba(245, 208, 0, 0.1);
-  border-color: rgba(245, 208, 0, 0.22);
-  color: var(--accent-oll);
+  background: var(--accent-ui-bg);
+  border-color: var(--accent-ui-border);
+  color: var(--accent-ui);
   font-weight: 700;
 }
 
 .catalogTitle {
   margin: 4px 0 0;
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: clamp(18px, 2vw, 26px);
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -868,7 +985,7 @@ body {
   border-radius: var(--radius-sm);
   background: var(--surface-3);
   color: var(--ink);
-  font-family: "Figtree", sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 13px;
   transition: border-color 120ms ease, background 120ms ease;
 }
@@ -879,7 +996,7 @@ body {
 
 .controls input:focus {
   outline: none;
-  border-color: rgba(245, 208, 0, 0.4);
+  border-color: var(--accent-ui-border);
   background: var(--surface-2);
 }
 
@@ -902,7 +1019,7 @@ body {
 }
 
 .f2lCanonicalBanner strong {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   color: var(--accent-oll);
 }
@@ -926,9 +1043,9 @@ body {
 }
 
 .f2lFilterChip.isActive {
-  background: rgba(245, 208, 0, 0.1);
-  border-color: rgba(245, 208, 0, 0.22);
-  color: var(--accent-oll);
+  background: var(--accent-ui-bg);
+  border-color: var(--accent-ui-border);
+  color: var(--accent-ui);
 }
 
 /* ── TABS ───────────────────────────────────────────── */
@@ -947,7 +1064,7 @@ body {
   color: var(--muted);
   padding: 8px 13px;
   border-radius: 8px;
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   cursor: pointer;
@@ -970,7 +1087,7 @@ body {
 }
 
 .tabs .active .tabShort {
-  color: rgba(245, 208, 0, 0.6);
+  color: rgba(45, 139, 139, 0.7);
 }
 
 .tabs button:hover {
@@ -979,8 +1096,8 @@ body {
 }
 
 .tabs .active {
-  background: rgba(245, 208, 0, 0.1);
-  color: var(--accent-oll);
+  background: var(--accent-ui-bg);
+  color: var(--accent-ui);
 }
 
 /* ── CATALOG SUBROW ─────────────────────────────────── */
@@ -1019,7 +1136,7 @@ body {
 }
 
 .methodSummaryCard strong {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 12px;
   line-height: 1.2;
   color: var(--ink);
@@ -1079,7 +1196,8 @@ body {
 }
 
 .sectionNavChip.isActive {
-  border-color: rgba(245, 208, 0, 0.25);
+  background: var(--accent-ui-bg);
+  border-color: var(--accent-ui-border);
   transform: translateY(-1px);
 }
 
@@ -1089,7 +1207,7 @@ body {
   line-height: 1.1;
   white-space: nowrap;
   color: var(--muted);
-  font-family: "Figtree", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .sectionNavChip.isActive .sectionNavChipLabel {
@@ -1110,20 +1228,20 @@ body {
 }
 
 .sectionNavChip.isActive .sectionNavChipCount {
-  background: rgba(245, 208, 0, 0.12);
-  border-color: rgba(245, 208, 0, 0.2);
-  color: var(--accent-oll);
+  background: rgba(45, 139, 139, 0.20);
+  border-color: rgba(45, 139, 139, 0.35);
+  color: var(--accent-ui);
 }
 
 .sectionNavChip--all {
-  background: rgba(245, 208, 0, 0.08);
-  border-color: rgba(245, 208, 0, 0.16);
+  background: rgba(45, 139, 139, 0.10);
+  border-color: rgba(45, 139, 139, 0.22);
 }
 
-.sectionNavChip--sand  { background: rgba(245, 208, 0, 0.06); }
-.sectionNavChip--sage  { background: rgba(77, 179, 245, 0.06); }
-.sectionNavChip--rose  { background: rgba(240, 130, 64, 0.06); }
-.sectionNavChip--sky   { background: rgba(155, 138, 245, 0.06); }
+.sectionNavChip--sand  { background: rgba(160, 120, 0, 0.12); }
+.sectionNavChip--sage  { background: rgba(20, 100, 160, 0.12); }
+.sectionNavChip--rose  { background: rgba(176, 76, 16, 0.12); }
+.sectionNavChip--sky   { background: rgba(88, 64, 176, 0.12); }
 
 /* ── GRID + SECTIONS ────────────────────────────────── */
 
@@ -1150,11 +1268,12 @@ body {
   justify-content: space-between;
   gap: 10px;
   align-items: center;
-  padding: 10px 13px;
-  font-family: "Syne", sans-serif;
+  padding: 11px 14px;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
-  font-size: 13px;
-  letter-spacing: -0.01em;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
   border-bottom: 1px solid var(--line);
 }
 
@@ -1180,34 +1299,54 @@ body {
 /* ── SECTION COLOR SYSTEM ───────────────────────────── */
 
 .section--sand {
-  background: linear-gradient(160deg, rgba(245, 208, 0, 0.05) 0%, transparent 60%);
+  background: linear-gradient(160deg, rgba(160, 120, 0, 0.08) 0%, transparent 60%);
 }
 .section--sand .sectionHeader {
-  background: rgba(245, 208, 0, 0.06);
+  background: rgba(160, 120, 0, 0.10);
+  border-bottom-color: rgba(160, 120, 0, 0.18);
+}
+.section--sand .sectionCount {
+  background: rgba(160, 120, 0, 0.12);
+  border-color: rgba(160, 120, 0, 0.22);
   color: var(--accent-oll);
 }
 
 .section--sage {
-  background: linear-gradient(160deg, rgba(77, 179, 245, 0.05) 0%, transparent 60%);
+  background: linear-gradient(160deg, rgba(20, 100, 160, 0.08) 0%, transparent 60%);
 }
 .section--sage .sectionHeader {
-  background: rgba(77, 179, 245, 0.06);
+  background: rgba(20, 100, 160, 0.10);
+  border-bottom-color: rgba(20, 100, 160, 0.18);
+}
+.section--sage .sectionCount {
+  background: rgba(20, 100, 160, 0.12);
+  border-color: rgba(20, 100, 160, 0.22);
   color: var(--accent-pll);
 }
 
 .section--rose {
-  background: linear-gradient(160deg, rgba(240, 130, 64, 0.05) 0%, transparent 60%);
+  background: linear-gradient(160deg, rgba(176, 76, 16, 0.08) 0%, transparent 60%);
 }
 .section--rose .sectionHeader {
-  background: rgba(240, 130, 64, 0.06);
+  background: rgba(176, 76, 16, 0.10);
+  border-bottom-color: rgba(176, 76, 16, 0.18);
+}
+.section--rose .sectionCount {
+  background: rgba(176, 76, 16, 0.12);
+  border-color: rgba(176, 76, 16, 0.22);
   color: var(--accent-f2l);
 }
 
 .section--sky {
-  background: linear-gradient(160deg, rgba(155, 138, 245, 0.05) 0%, transparent 60%);
+  background: linear-gradient(160deg, rgba(88, 64, 176, 0.08) 0%, transparent 60%);
 }
 .section--sky .sectionHeader {
-  background: rgba(155, 138, 245, 0.06);
+  background: rgba(88, 64, 176, 0.10);
+  border-bottom-color: rgba(88, 64, 176, 0.18);
+}
+.section--sky .sectionCount {
+  background: rgba(88, 64, 176, 0.12);
+  border-color: rgba(88, 64, 176, 0.22);
   color: var(--accent-4lll);
 }
 
@@ -1254,13 +1393,13 @@ body {
 
 .methodCard:hover {
   transform: translateY(-2px);
-  border-color: rgba(245, 208, 0, 0.2);
+  border-color: var(--accent-ui-border);
   box-shadow: var(--shadow-md);
   background: var(--surface-3);
 }
 
 .methodCard:focus-visible {
-  outline: 2px solid rgba(245, 208, 0, 0.4);
+  outline: 2px solid var(--accent-ui-border);
   outline-offset: 2px;
 }
 
@@ -1272,7 +1411,7 @@ body {
 }
 
 .methodCardTitle {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 16px;
   line-height: 1.1;
@@ -1296,8 +1435,8 @@ body {
 .methodTag--pll  { background: rgba(77, 179, 245, 0.12); border-color: rgba(77, 179, 245, 0.2); color: var(--accent-pll); }
 .methodTag--f2l  { background: rgba(240, 130, 64, 0.12); border-color: rgba(240, 130, 64, 0.2); color: var(--accent-f2l); }
 
-.methodCardNote  { font-size: 12px; line-height: 1.4; color: var(--muted); }
-.methodCardHint  { font-family: "IBM Plex Mono", monospace; font-size: 9px; color: var(--muted-2); }
+.methodCardNote  { font-size: 13px; line-height: 1.5; color: var(--muted); }
+.methodCardHint  { font-family: "IBM Plex Mono", monospace; font-size: 10px; color: var(--muted-2); }
 
 .methodCardMap {
   font-size: 11px;
@@ -1310,7 +1449,7 @@ body {
 }
 
 .methodCardMap strong {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   color: var(--ink);
 }
@@ -1335,17 +1474,17 @@ body {
 .methodCardAlg {
   margin: 0;
   font-family: "IBM Plex Mono", monospace;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--accent-oll);
-  line-height: 1.6;
-  letter-spacing: -0.01em;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(245, 208, 0, 0.12);
-  background: rgba(245, 208, 0, 0.04);
-  padding: 10px 12px;
+  border: 1px solid var(--accent-ui-border);
+  background: rgba(45, 139, 139, 0.07);
+  padding: 11px 13px;
 }
 
 .methodSection .sectionHeader { align-items: center; }
@@ -1400,7 +1539,7 @@ body {
 }
 
 .f2lCardTitle {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 16px;
   line-height: 1.05;
@@ -1492,7 +1631,7 @@ body {
 }
 
 .f2lModalMetaTitle {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 12px;
   font-weight: 700;
   color: var(--muted);
@@ -1512,17 +1651,17 @@ body {
 .f2lCardAlg {
   margin: 0;
   font-family: "IBM Plex Mono", monospace;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--accent-f2l);
-  line-height: 1.6;
-  letter-spacing: -0.01em;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(240, 130, 64, 0.14);
-  background: rgba(240, 130, 64, 0.04);
-  padding: 10px 12px;
+  border: 1px solid rgba(176, 76, 16, 0.20);
+  background: rgba(176, 76, 16, 0.06);
+  padding: 11px 13px;
 }
 
 /* ── F2L EMPTY STATE ────────────────────────────────── */
@@ -1544,7 +1683,7 @@ body {
 }
 
 .f2lEmptyTitle {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: var(--ink);
@@ -1593,7 +1732,7 @@ body {
 }
 
 .cardTitle {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 16px;
   text-align: center;
@@ -1765,7 +1904,7 @@ body {
 }
 
 .modalTitle {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: clamp(24px, 2.4vw, 32px);
   font-weight: 800;
   letter-spacing: -0.03em;
@@ -1823,7 +1962,7 @@ body {
   padding: 9px 12px;
   border-bottom: 1px solid var(--line);
   background: var(--surface-3);
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-size: 13px;
   font-weight: 700;
   color: var(--ink);
@@ -1871,7 +2010,7 @@ body {
 .algBlock { margin-top: 0; }
 
 .label {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   margin-bottom: 6px;
   font-size: 13px;
@@ -1916,7 +2055,7 @@ code {
 .canonicalPanelText { min-width: 0; }
 
 .canonicalPanelTitle {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 13px;
   line-height: 1.1;
@@ -1936,7 +2075,7 @@ code {
   background: rgba(77, 179, 245, 0.08);
   border-radius: 8px;
   padding: 7px 10px;
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 11px;
   cursor: pointer;
@@ -1949,7 +2088,7 @@ code {
 }
 
 .modalNoteTitle {
-  font-family: "Syne", sans-serif;
+  font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 13px;
   letter-spacing: -0.01em;
@@ -2068,8 +2207,8 @@ code {
 
   .methodSummaryRow { grid-template-columns: 1fr; }
   .methodGrid { grid-template-columns: 1fr; padding: 8px; }
-  .methodCardAlg { font-size: 13px; }
-  .f2lCardAlg { font-size: 13px; padding: 8px 10px; }
+  .methodCardAlg { font-size: 14px; }
+  .f2lCardAlg { font-size: 14px; padding: 9px 11px; }
 
   .modal { padding: 12px; border-radius: 16px; }
   .modalTitle { font-size: 22px; }

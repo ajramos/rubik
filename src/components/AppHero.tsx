@@ -33,6 +33,7 @@ export function AppHero({
           <span className="heroBadgeLabel">PLL</span>
           <span className="heroBadgeValue">{pllCount}</span>
         </div>
+        <div className="heroStatsDivider" aria-hidden="true" />
         <div className="heroBadge">
           <span className="heroBadgeLabel">Method</span>
           <span className="heroBadgeValue">CFOP</span>
