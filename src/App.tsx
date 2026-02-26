@@ -1022,7 +1022,9 @@ function renderAlgBlock(alg: string, set?: AlgSet, compact = false): React.React
   const processed = injectNamedTokens(alg);
   let formatted: string;
 
-  if (compact && !alg.includes("[")) {
+  // Detect complex bracket groups like [R U R' F'] (PLL-style) vs. named-token-only brackets
+  const hasComplexBrackets = /\[(?!SEXY]|SLEDGEHMR]|SLEDGEHAMMER])/.test(alg);
+  if (compact && !hasComplexBrackets) {
     // Card context with plain-move alg: chunk-based, treating [NAMEDTOKEN] as a single token
     // so triggers don't get split across line breaks
     const tokens = processed.match(/\[[A-Z]+\]|[^\s]+/g) ?? [];

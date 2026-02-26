@@ -178,14 +178,14 @@
     "id": "oll_9",
     "set": "OLL",
     "name": "OLL 9 (Kite)",
-    "alg": "R U R' U' R' F R2 U R' U' F'",
+    "alg": "[SEXY] R' F R2 U R' U' F'",
     "thumb": "/thumbs/generated/oll_9.svg?v11"
   },
   {
     "id": "oll_10",
     "set": "OLL",
     "name": "OLL 10 (Anti-Kite)",
-    "alg": "R U R' U R' F R F' R U2 R'",
+    "alg": "R U R' U [SLEDGEHMR] R U2 R'",
     "thumb": "/thumbs/generated/oll_10.svg?v11"
   },
   {
@@ -255,7 +255,7 @@
     "id": "oll_40",
     "set": "OLL",
     "name": "OLL 40 (Anti-Fung)",
-    "alg": "R' F R U R' U' F' U R",
+    "alg": "R' F [SEXY] F' U R",
     "thumb": "/thumbs/generated/oll_40.svg?v11"
   },
   {
@@ -290,7 +290,7 @@
     "id": "oll_57",
     "set": "OLL",
     "name": "OLL 57 (H)",
-    "alg": "R U R' U' M' U R U' r'",
+    "alg": "[SEXY] M' U R U' r'",
     "thumb": "/thumbs/generated/oll_57.svg?v11"
   },
   {
@@ -304,28 +304,28 @@
     "id": "oll_1",
     "set": "OLL",
     "name": "OLL 1 (Runway)",
-    "alg": "R U2 R2' F R F' U2' R' F R F'",
+    "alg": "R U2 R2' F R F' U2' [SLEDGEHMR]",
     "thumb": "/thumbs/generated/oll_1.svg?v11"
   },
   {
     "id": "oll_2",
     "set": "OLL",
     "name": "OLL 2 (Zamboni)",
-    "alg": "F R U R' U' S R U R' U' B",
+    "alg": "F [SEXY] S [SEXY] B",
     "thumb": "/thumbs/generated/oll_2.svg?v11"
   },
   {
     "id": "oll_3",
     "set": "OLL",
     "name": "OLL 3 (Anti-Pinwheel)",
-    "alg": "f R U R' U' f' U' F R U R' U' F'",
+    "alg": "f [SEXY] f' U' F [SEXY] F'",
     "thumb": "/thumbs/generated/oll_3.svg?v11"
   },
   {
     "id": "oll_4",
     "set": "OLL",
     "name": "OLL 4 (Pinwheel)",
-    "alg": "f R U R' U' f' U F R U R' U' F'",
+    "alg": "f [SEXY] f' U F [SEXY] F'",
     "thumb": "/thumbs/generated/oll_4.svg?v11"
   },
   {
@@ -374,7 +374,7 @@
     "id": "oll_19",
     "set": "OLL",
     "name": "OLL 19 (Bunny)",
-    "alg": "M U R U R' U' M2 U R U' r'",
+    "alg": "M U [SEXY] M2 U R U' r'",
     "thumb": "/thumbs/generated/oll_19.svg?v11"
   },
   {
@@ -388,7 +388,7 @@
     "id": "oll_21",
     "set": "OLL",
     "name": "OLL 21 (H-shape)",
-    "alg": "R U2 R' U' R U R' U' R U' R'",
+    "alg": "R U2 R' U' [SEXY] R U' R'",
     "thumb": "/thumbs/generated/oll_21.svg?v11"
   },
   {
@@ -409,7 +409,7 @@
     "id": "oll_29",
     "set": "OLL",
     "name": "OLL 29 (Spotted Chameleon)",
-    "alg": "R U R' U' R U' R' F' U' F R U R'",
+    "alg": "[SEXY] R U' R' F' U' F R U R'",
     "thumb": "/thumbs/generated/oll_29.svg?v11"
   },
   {
@@ -451,7 +451,7 @@
     "id": "oll_36",
     "set": "OLL",
     "name": "OLL 36 (Wario)",
-    "alg": "R U R' F' R U R' U' R' F R2 U' R'",
+    "alg": "R U R' F' [SEXY] R' F R2 U' R'",
     "thumb": "/thumbs/generated/oll_36.svg?v11"
   },
   {
@@ -465,14 +465,14 @@
     "id": "oll_41",
     "set": "OLL",
     "name": "OLL 41 (Awkward Fish)",
-    "alg": "R U R' U R U2 R' F R U R' U' F'",
+    "alg": "R U R' U R U2 R' F [SEXY] F'",
     "thumb": "/thumbs/generated/oll_41.svg?v11"
   },
   {
     "id": "oll_42",
     "set": "OLL",
     "name": "OLL 42 (Anti-Awkward Fish)",
-    "alg": "R' U' R U' R' U2' R F R U R' U' F'",
+    "alg": "R' U' R U' R' U2' R F [SEXY] F'",
     "thumb": "/thumbs/generated/oll_42.svg?v11"
   },
   {
@@ -500,7 +500,7 @@
     "id": "oll_46",
     "set": "OLL",
     "name": "OLL 46 (Seein' Headlights)",
-    "alg": "R' U' R' F R F' U R",
+    "alg": "R' U' [SLEDGEHMR] U R",
     "thumb": "/thumbs/generated/oll_46.svg?v11"
   },
   {
@@ -514,7 +514,7 @@
     "id": "oll_48",
     "set": "OLL",
     "name": "OLL 48 (Anti-Hook)",
-    "alg": "F R U R' U' R U R' U' F'",
+    "alg": "F [SEXY] [SEXY] F'",
     "thumb": "/thumbs/generated/oll_48.svg?v11"
   },
   {
@@ -535,7 +535,7 @@
     "id": "oll_53",
     "set": "OLL",
     "name": "OLL 53 (Frying Pan)",
-    "alg": "r' U2' R U R' U' r",
+    "alg": "r' U2' [SEXY] r",
     "thumb": "/thumbs/generated/oll_53.svg?v11"
   },
   {
