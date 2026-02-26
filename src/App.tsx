@@ -1605,23 +1605,6 @@ export default function App() {
         : appSection === "progress"
           ? "3x3x3 Progress Tracking"
           : "3x3x3 Reference Desk";
-  const heroLeadText =
-    appSection === "study"
-      ? "A living study base for reviewing algorithms, recognition, and training. OLL/PLL today; SRS, OH, BLD, and the rest of your practice workflow next."
-      : appSection === "practice"
-        ? "Run review queues, recognition drills, and execution sessions without mixing them into the case library."
-        : appSection === "progress"
-          ? "Track coverage, confidence, and weak spots across CFOP phases so your practice stays focused."
-          : "Keep notation, triggers, fingertricks, and method notes in one place for quick lookup while studying.";
-  const primaryPanelModeLabel =
-    appSection === "study"
-      ? cfopPhase === "f2l"
-        ? `F2L (${visibleF2LCaseCount})`
-        : workspaceMode === "full-ll"
-          ? `Full (${set})`
-          : `4LLL (${fourLookCaseCount})`
-      : activePrimaryLabel;
-
   const breadcrumbParts = [
     appSection === "study" ? "Study" : activePrimaryLabel,
     ...(appSection === "study"
@@ -1661,13 +1644,7 @@ export default function App() {
       <div className="appGridNoise" aria-hidden="true" />
 
       <main className="shell">
-        <AppHero
-          heroEyebrow={heroEyebrow}
-          heroLeadText={heroLeadText}
-          ollCount={ollCount}
-          pllCount={pllCount}
-          primaryPanelModeLabel={primaryPanelModeLabel}
-        />
+        <AppHero heroEyebrow={heroEyebrow} />
 
         <div className="workspace">
           <AppRail

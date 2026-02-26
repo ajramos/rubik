@@ -77,13 +77,9 @@ export function AppRail({
               title={item.label}
             >
               <span className="mainMenuLabel">{item.label}</span>
-              <span
-                className={`mainMenuState mainMenuState--${
-                  appSection === item.key ? "active" : "soon"
-                }`}
-              >
-                {appSection === item.key ? "Now" : item.status === "beta" ? "Beta" : "Soon"}
-              </span>
+              {item.status === "beta" && (
+                <span className="mainMenuState mainMenuState--soon">Beta</span>
+              )}
             </button>
           ))}
         </nav>

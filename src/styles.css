@@ -263,7 +263,11 @@ body {
   gap: 12px;
   position: sticky;
   top: 14px;
+  max-height: calc(100vh - 28px);
+  overflow-y: auto;
+  scrollbar-width: none;
 }
+.rail::-webkit-scrollbar { display: none; }
 
 .railPanel {
   border-radius: var(--radius-lg);
@@ -342,6 +346,11 @@ body {
   background: rgba(45, 139, 139, 0.28);
   border-color: rgba(45, 139, 139, 0.50);
   color: #a8dadc;
+}
+
+.railPanel .mainMenuState--soon {
+  background: rgba(168, 218, 220, 0.08);
+  border-color: rgba(168, 218, 220, 0.18);
 }
 
 .railPanel .mainMenuState--active {
