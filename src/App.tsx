@@ -977,6 +977,20 @@ function expandNamedTokens(alg: string): string {
     .replace(/\[SLEDGEHAMMER\]/gi, "R' F R F'");
 }
 
+function invertAlg(alg: string): string {
+  const expanded = expandNamedTokens(alg);
+  const stripped = expanded.replace(/[\[\]]/g, "");
+  const tokens = stripped.trim().split(/\s+/).filter(Boolean);
+  return tokens
+    .reverse()
+    .map((m) => {
+      if (m.endsWith("2")) return m;
+      if (m.endsWith("'")) return m.slice(0, -1);
+      return m + "'";
+    })
+    .join(" ");
+}
+
 function detectTriggers(alg: string): typeof KNOWN_TRIGGERS {
   const clean = expandNamedTokens(alg).replace(/[\[\]]/g, "").replace(/\s+/g, " ").trim();
   return KNOWN_TRIGGERS.filter((t) => t.patterns.some((p) => clean.includes(p)));
@@ -1472,6 +1486,7 @@ export default function App() {
         <MiniTwisty set={a.set} size={176} thumb={a.thumb} />
       </div>
       <div className="cardHint">{getCatalogCardHint(a, sectionTitle)}</div>
+      <div className="setupHint">Setup: {invertAlg(a.alg)}</div>
       <pre className="cardAlg">{renderAlgBlock(a.alg, a.set, true)}</pre>
     </button>
   );
@@ -1510,6 +1525,7 @@ export default function App() {
                 <div className="methodCardHint">No canonical thumbnail mapped yet</div>
               )}
               {c.note && <div className="methodCardNote">{c.note}</div>}
+              <div className="setupHint">Setup: {invertAlg(c.alg)}</div>
               <pre className="methodCardAlg">{renderAlgBlock(c.alg, c.set, true)}</pre>
             </button>
           );
@@ -1932,7 +1948,11 @@ export default function App() {
                 <div className="viewerPanelStage">
                   <Twisty
                     alg={selected.alg}
-                    setupAlg={selected.set === "F2L" ? selected.f2lMeta?.caseSetupAlg : undefined}
+                    setupAlg={
+                      selected.set === "F2L"
+                        ? selected.f2lMeta?.caseSetupAlg
+                        : invertAlg(selected.alg)
+                    }
                     experimentalStickering={selected.set === "F2L" ? "F2L" : undefined}
                   />
                 </div>
@@ -1975,6 +1995,13 @@ export default function App() {
                     {renderAlgBlock(selected.alg, selected.set)}
                   </code>
                 </section>
+
+                {selected.set !== "F2L" && (
+                  <section className="setupBlock">
+                    <div className="label">Setup from solved</div>
+                    <code className="setupDisplay">{invertAlg(selected.alg)}</code>
+                  </section>
+                )}
 
                 {detectTriggers(selected.alg).length > 0 && (
                   <section className="triggersPanel">

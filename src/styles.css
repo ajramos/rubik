@@ -1765,6 +1765,18 @@ body {
   color: var(--muted);
 }
 
+.setupHint {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--muted);
+  padding: 5px 8px;
+  border-radius: 8px;
+  border: 1px dashed var(--line-2);
+  background: var(--surface-3);
+  word-break: break-word;
+}
+
 /* ── MINI THUMB ─────────────────────────────────────── */
 
 .miniPlaceholder {
@@ -2122,6 +2134,21 @@ code {
   color: #ff9975;
   background: rgba(210, 90, 55, 0.18);
   border-bottom-color: #c05535;
+}
+
+/* ── Setup block (modal) ─────────────────────────────────────────────── */
+.setupBlock {
+  margin-top: 10px;
+}
+
+.setupDisplay {
+  display: block;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+  background: none;
+  padding: 0;
+  word-break: break-word;
 }
 
 /* ── Triggers panel ─────────────────────────────────────────────────── */
