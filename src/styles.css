@@ -2154,10 +2154,15 @@ code {
   display: block;
   font-family: "IBM Plex Mono", monospace;
   font-size: 12px;
+  line-height: 1.6;
   color: var(--muted);
-  background: none;
-  padding: 0;
+  background: var(--surface-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+  padding: 8px 10px;
   word-break: break-word;
+  white-space: pre-wrap;
 }
 
 /* ── Triggers panel ─────────────────────────────────────────────────── */
