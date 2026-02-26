@@ -2462,6 +2462,46 @@ code {
   opacity: 0.5;
 }
 
+/* ── Drill set selector (OLL / PLL buttons inside tile) ─────── */
+.drillSetRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.drillSetBtn {
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s, opacity 0.1s;
+}
+.drillSetBtn:disabled { cursor: default; opacity: 0.45; }
+
+.drillSetBtn--oll {
+  background: rgba(160, 120, 0, 0.10);
+  color: var(--accent-oll);
+  border: 1px solid rgba(160, 120, 0, 0.22);
+}
+.drillSetBtn--oll:not(:disabled):hover {
+  background: rgba(160, 120, 0, 0.18);
+  box-shadow: 0 2px 8px rgba(160, 120, 0, 0.14);
+}
+
+.drillSetBtn--pll {
+  background: rgba(20, 100, 160, 0.10);
+  color: var(--accent-pll);
+  border: 1px solid rgba(20, 100, 160, 0.22);
+}
+.drillSetBtn--pll:not(:disabled):hover {
+  background: rgba(20, 100, 160, 0.18);
+  box-shadow: 0 2px 8px rgba(20, 100, 160, 0.14);
+}
+
 /* ── Drill Modal overlay ─────────────────────────────────────── */
 .drillOverlay {
   position: fixed;

@@ -8,6 +8,7 @@ const SESSION_MAX = 20;
 
 type Props = {
   cases: AlgItem[];
+  label: string;
   srsData: Record<string, SRSCard>;
   onRate: (id: string, rating: SRSRating) => void;
   onClose: () => void;
@@ -45,7 +46,7 @@ const RATING_CONFIG: { rating: SRSRating; label: string; mod: string }[] = [
   { rating: 4, label: "Easy", mod: "easy" },
 ];
 
-export function DrillModal({ cases, srsData, onRate, onClose }: Props) {
+export function DrillModal({ cases, label, srsData, onRate, onClose }: Props) {
   const queue = useMemo(() => buildQueue(cases, srsData), [cases, srsData]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState<"question" | "answer">("question");
@@ -68,7 +69,7 @@ export function DrillModal({ cases, srsData, onRate, onClose }: Props) {
     <div className="drillOverlay" onClick={onClose}>
       <div className="drillModal" onClick={(e) => e.stopPropagation()}>
         <div className="drillHeader">
-          <div className="drillHeaderTitle">Recognition Drills · OLL</div>
+          <div className="drillHeaderTitle">Recognition Drills · {label}</div>
           <button className="close" type="button" onClick={onClose}>✕</button>
         </div>
 
@@ -108,7 +109,7 @@ export function DrillModal({ cases, srsData, onRate, onClose }: Props) {
 
             <div className="drillCard">
               <div className="drillThumbWrap">
-                <MiniTwisty set="OLL" size={200} thumb={current.thumb} />
+                <MiniTwisty set={current.set} size={200} thumb={current.thumb} />
               </div>
 
               {phase === "question" ? (

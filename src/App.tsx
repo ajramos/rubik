@@ -1250,7 +1250,7 @@ export default function App() {
   const [selected, setSelected] = useState<SelectedCase | null>(null);
   const [activeSectionAnchor, setActiveSectionAnchor] = useState<string>("all");
   const [srsData, setSrsData] = useState<Record<string, SRSCard>>(() => loadSRS());
-  const [drillOpen, setDrillOpen] = useState(false);
+  const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | null>(null);
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -1312,6 +1312,7 @@ export default function App() {
   const ollCount = useMemo(() => algs.filter((a) => a.set === "OLL").length, []);
   const pllCount = useMemo(() => algs.filter((a) => a.set === "PLL").length, []);
   const ollCases = useMemo(() => algs.filter((a) => a.set === "OLL"), []);
+  const pllCases = useMemo(() => algs.filter((a) => a.set === "PLL"), []);
 
   function handleRate(id: string, rating: SRSRating) {
     const card = getSRSCard(id, srsData);
@@ -1692,7 +1693,7 @@ export default function App() {
                 f2lCanonicalTotal={F2L_CANONICAL_TOTAL}
                 ollCount={ollCount}
                 pllCount={pllCount}
-                onStartDrill={appSection === "practice" ? () => setDrillOpen(true) : undefined}
+                onStartDrill={appSection === "practice" ? (s) => setDrillSet(s) : undefined}
               />
             ) : (
             <>
@@ -2082,12 +2083,13 @@ export default function App() {
         </div>
       )}
 
-      {drillOpen && (
+      {drillSet && (
         <DrillModal
-          cases={ollCases}
+          cases={drillSet === "OLL" ? ollCases : pllCases}
+          label={drillSet}
           srsData={srsData}
           onRate={handleRate}
-          onClose={() => setDrillOpen(false)}
+          onClose={() => setDrillSet(null)}
         />
       )}
     </div>

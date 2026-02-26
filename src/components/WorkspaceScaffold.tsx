@@ -9,7 +9,7 @@ type Props = {
   f2lCanonicalTotal: number;
   ollCount: number;
   pllCount: number;
-  onStartDrill?: () => void;
+  onStartDrill?: (set: "OLL" | "PLL") => void;
 };
 
 export function WorkspaceScaffold({
@@ -37,16 +37,28 @@ export function WorkspaceScaffold({
               <p>Daily SRS cases due across F2L, OLL, and PLL.</p>
               <span className="workspaceTileMeta">Next: localStorage queue</span>
             </article>
-            <button
-              type="button"
-              className="workspaceTile workspaceTile--clickable"
-              onClick={onStartDrill}
-              disabled={!onStartDrill}
-            >
+            <article className="workspaceTile">
               <h3>Recognition Drills</h3>
               <p>Case-only identification with reveal and confidence rating.</p>
-              <span className="workspaceTileMeta">OLL · SRS powered</span>
-            </button>
+              <div className="drillSetRow">
+                <button
+                  type="button"
+                  className="drillSetBtn drillSetBtn--oll"
+                  onClick={() => onStartDrill?.("OLL")}
+                  disabled={!onStartDrill}
+                >
+                  OLL
+                </button>
+                <button
+                  type="button"
+                  className="drillSetBtn drillSetBtn--pll"
+                  onClick={() => onStartDrill?.("PLL")}
+                  disabled={!onStartDrill}
+                >
+                  PLL
+                </button>
+              </div>
+            </article>
             <article className="workspaceTile">
               <h3>Execution Drills</h3>
               <p>Algorithm playback, timer, and fingertrick notes by case.</p>
