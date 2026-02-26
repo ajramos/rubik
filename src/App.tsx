@@ -6,6 +6,9 @@ import { AppRail } from "./components/AppRail";
 import { MiniTwisty } from "./components/MiniTwisty";
 import { Twisty } from "./components/Twisty";
 import { WorkspaceScaffold } from "./components/WorkspaceScaffold";
+import { DrillModal } from "./components/DrillModal";
+import { loadSRS, saveSRS, scheduleCard, getSRSCard } from "./utils/srs";
+import type { SRSCard, SRSRating } from "./utils/srs";
 
 const algs = algsRaw as AlgItem[];
 
@@ -1246,6 +1249,8 @@ export default function App() {
   const [q, setQ] = useState("");
   const [selected, setSelected] = useState<SelectedCase | null>(null);
   const [activeSectionAnchor, setActiveSectionAnchor] = useState<string>("all");
+  const [srsData, setSrsData] = useState<Record<string, SRSCard>>(() => loadSRS());
+  const [drillOpen, setDrillOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -1306,6 +1311,15 @@ export default function App() {
 
   const ollCount = useMemo(() => algs.filter((a) => a.set === "OLL").length, []);
   const pllCount = useMemo(() => algs.filter((a) => a.set === "PLL").length, []);
+  const ollCases = useMemo(() => algs.filter((a) => a.set === "OLL"), []);
+
+  function handleRate(id: string, rating: SRSRating) {
+    const card = getSRSCard(id, srsData);
+    const updated = scheduleCard(card, rating);
+    const next = { ...srsData, [id]: updated };
+    setSrsData(next);
+    saveSRS(next);
+  }
   const visibleCount = filtered.length;
   const selectedSetTotal = set === "OLL" ? ollCount : pllCount;
   const currentSections = set === "OLL" ? ollSections : pllSections;
@@ -1678,6 +1692,7 @@ export default function App() {
                 f2lCanonicalTotal={F2L_CANONICAL_TOTAL}
                 ollCount={ollCount}
                 pllCount={pllCount}
+                onStartDrill={appSection === "practice" ? () => setDrillOpen(true) : undefined}
               />
             ) : (
             <>
@@ -2065,6 +2080,15 @@ export default function App() {
             </div>
           </div>
         </div>
+      )}
+
+      {drillOpen && (
+        <DrillModal
+          cases={ollCases}
+          srsData={srsData}
+          onRate={handleRate}
+          onClose={() => setDrillOpen(false)}
+        />
       )}
     </div>
   );
