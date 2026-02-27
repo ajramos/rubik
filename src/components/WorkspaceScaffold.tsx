@@ -1,6 +1,7 @@
 import React from "react";
 import { NotationReference } from "./NotationReference";
 import { TriggerLibrary } from "./TriggerLibrary";
+import type { StreakData } from "../utils/streaks";
 
 type AppSection = "practice" | "progress" | "reference";
 
@@ -32,6 +33,7 @@ type Props = {
   ollStats: SRSStats;
   pllStats: SRSStats;
   weakCases: WeakCase[];
+  streaks: StreakData;
   onStartTodayQueue?: () => void;
   onStartDrill?: (set: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => void;
   onStartTimedBlock?: () => void;
@@ -70,6 +72,7 @@ export function WorkspaceScaffold({
   ollStats,
   pllStats,
   weakCases,
+  streaks,
   onStartTodayQueue,
   onStartDrill,
   onStartTimedBlock,
@@ -304,10 +307,47 @@ export function WorkspaceScaffold({
                 })()}
               </div>
             </article>
-            <article className="workspaceTile">
-              <h3>Streaks</h3>
-              <p>Practice streaks, review completion, and recovery after breaks.</p>
-              <span className="workspaceTileMeta">Planned</span>
+            <article className="workspaceTile streakTile">
+              <h3 className="progressTileTitle">Streaks</h3>
+              {streaks.totalDays === 0 ? (
+                <p className="progressEmpty">Complete your first review session to start tracking your streak.</p>
+              ) : (
+                <>
+                  <div className="streakHeroRow">
+                    <div className="streakHeroBlock">
+                      <span className="streakHeroNum">{streaks.currentStreak}</span>
+                      <span className="streakHeroLabel">day streak</span>
+                    </div>
+                    <div className="streakSecondary">
+                      <div className="streakStatRow">
+                        <span className="streakStatLabel">Longest</span>
+                        <span className="streakStatVal">{streaks.longestStreak}d</span>
+                      </div>
+                      <div className="streakStatRow">
+                        <span className="streakStatLabel">Total days</span>
+                        <span className="streakStatVal">{streaks.totalDays}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="streakDots">
+                    {Array.from({ length: 7 }, (_, i) => {
+                      const d = new Date();
+                      d.setDate(d.getDate() - (6 - i));
+                      const dateStr = d.toISOString().slice(0, 10);
+                      const todayDate = new Date().toISOString().slice(0, 10);
+                      const isToday = dateStr === todayDate;
+                      const active = streaks.recentDays.includes(dateStr);
+                      const dayLabel = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"][d.getDay()];
+                      return (
+                        <div key={dateStr} className="streakDotCol">
+                          <div className={`streakDot${active ? " streakDot--active" : ""}${isToday ? " streakDot--today" : ""}`} />
+                          <span className={`streakDotLabel${isToday ? " streakDotLabel--today" : ""}`}>{dayLabel}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
             </article>
           </div>
         </section>

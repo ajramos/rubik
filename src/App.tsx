@@ -10,6 +10,8 @@ import { DrillModal } from "./components/DrillModal";
 import { TimedBlockModal } from "./components/TimedBlockModal";
 import { loadSRS, saveSRS, scheduleCard, getSRSCard, isDue } from "./utils/srs";
 import type { SRSCard, SRSRating } from "./utils/srs";
+import { loadStreaks, recordPractice } from "./utils/streaks";
+import type { StreakData } from "./utils/streaks";
 
 const algs = algsRaw as AlgItem[];
 
@@ -1251,6 +1253,7 @@ export default function App() {
   const [selected, setSelected] = useState<SelectedCase | null>(null);
   const [activeSectionAnchor, setActiveSectionAnchor] = useState<string>("all");
   const [srsData, setSrsData] = useState<Record<string, SRSCard>>(() => loadSRS());
+  const [streaks, setStreaks] = useState<StreakData>(() => loadStreaks());
   const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "TODAY" | null>(null);
   const [timedBlockOpen, setTimedBlockOpen] = useState(false);
 
@@ -1379,6 +1382,7 @@ export default function App() {
     const next = { ...srsData, [id]: updated };
     setSrsData(next);
     saveSRS(next);
+    setStreaks((s) => recordPractice(s));
   }
   const visibleCount = filtered.length;
   const selectedSetTotal = set === "OLL" ? ollCount : pllCount;
@@ -1745,6 +1749,7 @@ export default function App() {
                 ollStats={ollStats}
                 pllStats={pllStats}
                 weakCases={weakCases}
+                streaks={streaks}
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
                 onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => setDrillSet(s) : undefined}
                 onStartTimedBlock={appSection === "practice" ? () => setTimedBlockOpen(true) : undefined}
