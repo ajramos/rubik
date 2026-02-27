@@ -1335,6 +1335,42 @@ export default function App() {
     return due;
   }, [ollCases, pllCases, srsData]);
 
+  const ollStats = useMemo(() => {
+    let newCount = 0, due = 0, learning = 0, learned = 0;
+    for (const c of ollCases) {
+      const card = srsData[c.id];
+      if (!card) { newCount++; continue; }
+      if (isDue(card)) { due++; continue; }
+      if (card.reps <= 2) learning++; else learned++;
+    }
+    return { new: newCount, due, learning, learned, total: ollCases.length };
+  }, [ollCases, srsData]);
+
+  const pllStats = useMemo(() => {
+    let newCount = 0, due = 0, learning = 0, learned = 0;
+    for (const c of pllCases) {
+      const card = srsData[c.id];
+      if (!card) { newCount++; continue; }
+      if (isDue(card)) { due++; continue; }
+      if (card.reps <= 2) learning++; else learned++;
+    }
+    return { new: newCount, due, learning, learned, total: pllCases.length };
+  }, [pllCases, srsData]);
+
+  const weakCases = useMemo(() => {
+    return [...ollCases, ...pllCases]
+      .filter((c) => !!srsData[c.id])
+      .sort((a, b) => srsData[a.id]!.easeFactor - srsData[b.id]!.easeFactor)
+      .slice(0, 8)
+      .map((c) => ({
+        id: c.id,
+        label: formatCaseNameForDisplay(c),
+        set: c.set as "OLL" | "PLL",
+        easeFactor: srsData[c.id]!.easeFactor,
+        reps: srsData[c.id]!.reps,
+      }));
+  }, [ollCases, pllCases, srsData]);
+
   function handleRate(id: string, rating: SRSRating) {
     const card = getSRSCard(id, srsData);
     const updated = scheduleCard(card, rating);
@@ -1704,6 +1740,9 @@ export default function App() {
                 pllCount={pllCount}
                 ollDueCount={ollDueCount}
                 pllDueCount={pllDueCount}
+                ollStats={ollStats}
+                pllStats={pllStats}
+                weakCases={weakCases}
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
                 onStartDrill={appSection === "practice" ? (s) => setDrillSet(s) : undefined}
               />

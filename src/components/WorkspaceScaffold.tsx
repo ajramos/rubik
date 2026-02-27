@@ -3,6 +3,22 @@ import { NotationReference } from "./NotationReference";
 
 type AppSection = "practice" | "progress" | "reference";
 
+type SRSStats = {
+  new: number;
+  due: number;
+  learning: number;
+  learned: number;
+  total: number;
+};
+
+type WeakCase = {
+  id: string;
+  label: string;
+  set: "OLL" | "PLL";
+  easeFactor: number;
+  reps: number;
+};
+
 type Props = {
   appSection: AppSection;
   activePrimaryLabel: string;
@@ -12,9 +28,33 @@ type Props = {
   pllCount: number;
   ollDueCount: number;
   pllDueCount: number;
+  ollStats: SRSStats;
+  pllStats: SRSStats;
+  weakCases: WeakCase[];
   onStartTodayQueue?: () => void;
   onStartDrill?: (set: "OLL" | "PLL") => void;
 };
+
+function SRSBar({ stats }: { stats: SRSStats }) {
+  const { new: newCount, due, learning, learned, total } = stats;
+  const pct = (n: number) => `${((n / total) * 100).toFixed(1)}%`;
+  return (
+    <div className="srsBarWrap">
+      <div className="srsBar">
+        {learned > 0 && <div className="srsBarSeg srsBarSeg--learned" style={{ width: pct(learned) }} />}
+        {learning > 0 && <div className="srsBarSeg srsBarSeg--learning" style={{ width: pct(learning) }} />}
+        {due > 0 && <div className="srsBarSeg srsBarSeg--due" style={{ width: pct(due) }} />}
+        {newCount > 0 && <div className="srsBarSeg srsBarSeg--new" style={{ width: pct(newCount) }} />}
+      </div>
+      <div className="srsLegend">
+        {learned > 0 && <span className="srsLegendItem srsLegendItem--learned"><span className="srsLegendDot" />Learned <strong>{learned}</strong></span>}
+        {learning > 0 && <span className="srsLegendItem srsLegendItem--learning"><span className="srsLegendDot" />Learning <strong>{learning}</strong></span>}
+        {due > 0 && <span className="srsLegendItem srsLegendItem--due"><span className="srsLegendDot" />Due <strong>{due}</strong></span>}
+        <span className="srsLegendItem srsLegendItem--new"><span className="srsLegendDot" />New <strong>{newCount}</strong></span>
+      </div>
+    </div>
+  );
+}
 
 export function WorkspaceScaffold({
   appSection,
@@ -25,6 +65,9 @@ export function WorkspaceScaffold({
   pllCount,
   ollDueCount,
   pllDueCount,
+  ollStats,
+  pllStats,
+  weakCases,
   onStartTodayQueue,
   onStartDrill,
 }: Props) {
@@ -112,29 +155,62 @@ export function WorkspaceScaffold({
   }
 
   if (appSection === "progress") {
+    const totalSeen = ollStats.learned + ollStats.learning + ollStats.due +
+                      pllStats.learned + pllStats.learning + pllStats.due;
     return (
       <div className="workspaceSectionShell">
         <section className="workspaceSectionCard workspaceSectionCard--cool">
           <div className="workspaceSectionKicker">Progress</div>
-          <h2 className="workspaceSectionTitle">Coverage & Confidence (v1 scaffold)</h2>
+          <h2 className="workspaceSectionTitle">Coverage & Confidence</h2>
           <p className="workspaceSectionLead">
-            A dedicated view for what is learned, what is weak, and what should be reviewed next.
+            What you've learned, what's due, and where to focus next.
           </p>
           <div className="workspaceSectionGrid">
-            <article className="workspaceTile">
-              <h3>Coverage</h3>
-              <p>
-                F2L canonical loaded: {totalF2LCaseCount}/{f2lCanonicalTotal}
-              </p>
-              <p>
-                OLL: {ollCount}/57 · PLL: {pllCount}/21
-              </p>
+
+            {/* SRS Coverage */}
+            <article className="workspaceTile progressCoverageTile">
+              <h3 className="progressTileTitle">SRS Coverage</h3>
+              <div className="progressSetRow">
+                <div className="progressSetLabel">
+                  <span className="progressSetName">OLL</span>
+                  <span className="progressSetCount">{ollCount}/57</span>
+                </div>
+                <SRSBar stats={ollStats} />
+              </div>
+              <div className="progressSetRow">
+                <div className="progressSetLabel">
+                  <span className="progressSetName">PLL</span>
+                  <span className="progressSetCount">{pllCount}/21</span>
+                </div>
+                <SRSBar stats={pllStats} />
+              </div>
+              <div className="progressCatalogNote">
+                F2L: {totalF2LCaseCount}/{f2lCanonicalTotal} cases loaded
+              </div>
             </article>
+
+            {/* Weak Cases */}
             <article className="workspaceTile">
-              <h3>Weak Cases</h3>
-              <p>Future list ranked by misses, hesitation, or SRS difficulty.</p>
-              <span className="workspaceTileMeta">Derived from Practice</span>
+              <h3 className="progressTileTitle">Weak Cases</h3>
+              {weakCases.length === 0 ? (
+                <p className="progressEmpty">Practice some drills to see your weakest cases here.</p>
+              ) : (
+                <div className="weakCaseList">
+                  {weakCases.map((c) => (
+                    <div key={c.id} className="weakCaseRow">
+                      <span className={`weakCaseSet weakCaseSet--${c.set.toLowerCase()}`}>{c.set}</span>
+                      <span className="weakCaseLabel">{c.label}</span>
+                      <span className="weakCaseEF">EF {c.easeFactor.toFixed(2)}</span>
+                      <span className="weakCaseReps">×{c.reps}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {weakCases.length > 0 && totalSeen > 0 && (
+                <span className="workspaceTileMeta">{weakCases.length} of {totalSeen} seen cases</span>
+              )}
             </article>
+
             <article className="workspaceTile">
               <h3>Phase Snapshot</h3>
               <p>Cross / F2L / LL readiness indicators and consistency trends.</p>

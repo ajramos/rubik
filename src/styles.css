@@ -3473,3 +3473,180 @@ code {
   padding: 0 5px;
   letter-spacing: 0;
 }
+
+/* ── Progress section ────────────────────────────────── */
+
+.progressTileTitle {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+
+.progressCoverageTile {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.progressSetRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progressSetLabel {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.progressSetName {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.progressSetCount {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  color: var(--muted-2);
+}
+
+.progressCatalogNote {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  color: var(--muted-2);
+  margin-top: 2px;
+}
+
+.progressEmpty {
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  margin: 0;
+}
+
+/* SRS stacked bar */
+.srsBarWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.srsBar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  overflow: hidden;
+  display: flex;
+}
+
+.srsBarSeg {
+  height: 100%;
+  transition: width 0.4s ease;
+}
+
+.srsBarSeg--learned  { background: var(--accent-ui); }
+.srsBarSeg--learning { background: rgba(45, 139, 139, 0.45); }
+.srsBarSeg--due      { background: #d97706; }
+.srsBarSeg--new      { background: var(--surface-3); }
+
+.srsLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+}
+
+.srsLegendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.srsLegendItem strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.srsLegendDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.srsLegendItem--learned  .srsLegendDot { background: var(--accent-ui); }
+.srsLegendItem--learning .srsLegendDot { background: rgba(45, 139, 139, 0.6); }
+.srsLegendItem--due      .srsLegendDot { background: #d97706; }
+.srsLegendItem--new      .srsLegendDot { background: var(--muted-2); }
+
+/* Weak cases list */
+.weakCaseList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.weakCaseRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.weakCaseSet {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 2px 5px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.weakCaseSet--oll {
+  background: var(--accent-ui-bg);
+  color: var(--accent-ui);
+  border: 1px solid var(--accent-ui-border);
+}
+
+.weakCaseSet--pll {
+  background: rgba(20, 100, 160, 0.10);
+  color: var(--accent-pll);
+  border: 1px solid rgba(20, 100, 160, 0.22);
+}
+
+.weakCaseLabel {
+  font-size: 12px;
+  color: var(--ink);
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.weakCaseEF {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  color: #d97706;
+  flex-shrink: 0;
+}
+
+.weakCaseReps {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  color: var(--muted-2);
+  flex-shrink: 0;
+}
