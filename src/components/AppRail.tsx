@@ -7,9 +7,9 @@ type LastLayerSet = "OLL" | "PLL";
 
 const PRIMARY_MENU_ITEMS: Array<{ key: AppSection; label: string; status?: "beta" }> = [
   { key: "study", label: "Study" },
-  { key: "practice", label: "Practice", status: "beta" },
+  { key: "practice", label: "Practice" },
   { key: "progress", label: "Progress", status: "beta" },
-  { key: "reference", label: "Reference", status: "beta" },
+  { key: "reference", label: "Reference" },
 ];
 
 const LEARNING_TRACKS = [

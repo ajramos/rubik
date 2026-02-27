@@ -238,10 +238,71 @@ export function WorkspaceScaffold({
               )}
             </article>
 
-            <article className="workspaceTile">
-              <h3>Phase Snapshot</h3>
-              <p>Cross / F2L / LL readiness indicators and consistency trends.</p>
-              <span className="workspaceTileMeta">Planned</span>
+            <article className="workspaceTile phaseSnapshotTile">
+              <h3 className="progressTileTitle">Phase Snapshot</h3>
+              <div className="phaseList">
+                {/* Cross — manual skill, no SRS */}
+                <div className="phaseRow">
+                  <span className="phaseLabel phaseLabel--cross">Cross</span>
+                  <div className="phaseBarWrap">
+                    <div className="phaseBar">
+                      <div className="phaseBarFill phaseBarFill--cross" style={{ width: "100%" }} />
+                    </div>
+                  </div>
+                  <span className="phaseFraction">Manual</span>
+                  <span className="phaseReadiness phaseReadiness--foundation">Foundation</span>
+                </div>
+                {/* F2L — catalog coverage, no SRS yet */}
+                <div className="phaseRow">
+                  <span className="phaseLabel phaseLabel--f2l">F2L</span>
+                  <div className="phaseBarWrap">
+                    <div className="phaseBar">
+                      <div
+                        className="phaseBarFill phaseBarFill--f2l"
+                        style={{ width: `${Math.round((totalF2LCaseCount / f2lCanonicalTotal) * 100)}%` }}
+                      />
+                    </div>
+                  </div>
+                  <span className="phaseFraction">{totalF2LCaseCount}/{f2lCanonicalTotal}</span>
+                  <span className="phaseReadiness phaseReadiness--catalog">Catalog</span>
+                </div>
+                {/* OLL */}
+                {(() => {
+                  const pct = ollStats.total > 0 ? ollStats.learned / ollStats.total : 0;
+                  const label = pct === 0 ? "Not started" : pct < 0.25 ? "Learning" : pct < 0.6 ? "Developing" : pct < 0.9 ? "Proficient" : "Mastered";
+                  const mod = pct === 0 ? "none" : pct < 0.25 ? "learning" : pct < 0.6 ? "developing" : pct < 0.9 ? "proficient" : "mastered";
+                  return (
+                    <div className="phaseRow">
+                      <span className="phaseLabel phaseLabel--oll">OLL</span>
+                      <div className="phaseBarWrap">
+                        <div className="phaseBar">
+                          <div className="phaseBarFill phaseBarFill--oll" style={{ width: `${Math.round(pct * 100)}%` }} />
+                        </div>
+                      </div>
+                      <span className="phaseFraction">{ollStats.learned}/{ollStats.total}</span>
+                      <span className={`phaseReadiness phaseReadiness--${mod}`}>{label}</span>
+                    </div>
+                  );
+                })()}
+                {/* PLL */}
+                {(() => {
+                  const pct = pllStats.total > 0 ? pllStats.learned / pllStats.total : 0;
+                  const label = pct === 0 ? "Not started" : pct < 0.25 ? "Learning" : pct < 0.6 ? "Developing" : pct < 0.9 ? "Proficient" : "Mastered";
+                  const mod = pct === 0 ? "none" : pct < 0.25 ? "learning" : pct < 0.6 ? "developing" : pct < 0.9 ? "proficient" : "mastered";
+                  return (
+                    <div className="phaseRow">
+                      <span className="phaseLabel phaseLabel--pll">PLL</span>
+                      <div className="phaseBarWrap">
+                        <div className="phaseBar">
+                          <div className="phaseBarFill phaseBarFill--pll" style={{ width: `${Math.round(pct * 100)}%` }} />
+                        </div>
+                      </div>
+                      <span className="phaseFraction">{pllStats.learned}/{pllStats.total}</span>
+                      <span className={`phaseReadiness phaseReadiness--${mod}`}>{label}</span>
+                    </div>
+                  );
+                })()}
+              </div>
             </article>
             <article className="workspaceTile">
               <h3>Streaks</h3>

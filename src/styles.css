@@ -3790,6 +3790,77 @@ code {
   flex-shrink: 0;
 }
 
+/* ── Phase Snapshot ──────────────────────────────────── */
+
+.phaseList {
+  display: grid;
+  gap: 10px;
+}
+
+.phaseRow {
+  display: grid;
+  grid-template-columns: 44px 1fr 42px auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.phaseLabel {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  padding: 3px 6px;
+  border-radius: 5px;
+}
+.phaseLabel--cross { background: var(--surface-3); color: var(--muted); border: 1px solid var(--line); }
+.phaseLabel--f2l   { background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56,189,248,0.25); }
+.phaseLabel--oll   { background: rgba(45, 139, 139, 0.12); color: var(--accent-ui); border: 1px solid rgba(45,139,139,0.25); }
+.phaseLabel--pll   { background: rgba(139, 92, 246, 0.12); color: #a78bfa; border: 1px solid rgba(139,92,246,0.25); }
+
+.phaseBarWrap { display: flex; align-items: center; }
+.phaseBar {
+  width: 100%;
+  height: 6px;
+  background: var(--surface-3);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.phaseBarFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+.phaseBarFill--cross { background: var(--muted-2); }
+.phaseBarFill--f2l   { background: #38bdf8; }
+.phaseBarFill--oll   { background: var(--accent-ui); }
+.phaseBarFill--pll   { background: #a78bfa; }
+
+.phaseFraction {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.phaseReadiness {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.phaseReadiness--foundation { background: var(--surface-3); color: var(--muted); }
+.phaseReadiness--catalog    { background: rgba(56,189,248,0.1); color: #38bdf8; }
+.phaseReadiness--none       { background: var(--surface-3); color: var(--muted-2); }
+.phaseReadiness--learning   { background: rgba(251,146,60,0.12); color: #fb923c; }
+.phaseReadiness--developing { background: rgba(250,204,21,0.12); color: #ca8a04; }
+.phaseReadiness--proficient { background: rgba(45,139,139,0.12); color: var(--accent-ui); }
+.phaseReadiness--mastered   { background: rgba(74,222,128,0.12); color: #4ade80; }
+
 /* ── Trigger Library ─────────────────────────────────── */
 
 .triggerSection {
