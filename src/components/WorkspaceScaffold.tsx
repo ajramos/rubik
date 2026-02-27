@@ -10,6 +10,9 @@ type Props = {
   f2lCanonicalTotal: number;
   ollCount: number;
   pllCount: number;
+  ollDueCount: number;
+  pllDueCount: number;
+  onStartTodayQueue?: () => void;
   onStartDrill?: (set: "OLL" | "PLL") => void;
 };
 
@@ -20,6 +23,9 @@ export function WorkspaceScaffold({
   f2lCanonicalTotal,
   ollCount,
   pllCount,
+  ollDueCount,
+  pllDueCount,
+  onStartTodayQueue,
   onStartDrill,
 }: Props) {
   if (appSection === "practice") {
@@ -33,10 +39,39 @@ export function WorkspaceScaffold({
             drill engines are wired.
           </p>
           <div className="workspaceSectionGrid">
-            <article className="workspaceTile">
-              <h3>Today Queue</h3>
-              <p>Daily SRS cases due across F2L, OLL, and PLL.</p>
-              <span className="workspaceTileMeta">Next: localStorage queue</span>
+            <article className={`workspaceTile todayQueueTile ${ollDueCount + pllDueCount === 0 ? "todayQueueTile--empty" : "todayQueueTile--due"}`}>
+              <h3 className="todayQueueTitle">Today Queue</h3>
+              {ollDueCount + pllDueCount === 0 ? (
+                <div className="todayQueueDone">
+                  <span className="todayQueueDoneIcon">✓</span>
+                  <span className="todayQueueDoneText">All caught up!</span>
+                  <span className="todayQueueDoneSub">No cards due today</span>
+                </div>
+              ) : (
+                <>
+                  <div className="todayQueueHero">
+                    <span className="todayQueueCount">{ollDueCount + pllDueCount}</span>
+                    <span className="todayQueueCountLabel">cards due</span>
+                  </div>
+                  <div className="todayQueueBreakdown">
+                    <span className="todayQueueBreakdownItem todayQueueBreakdownItem--oll">
+                      OLL <strong>{ollDueCount}</strong>
+                    </span>
+                    <span className="todayQueueBreakdownDot">·</span>
+                    <span className="todayQueueBreakdownItem todayQueueBreakdownItem--pll">
+                      PLL <strong>{pllDueCount}</strong>
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className="todayQueueCTA"
+                    onClick={onStartTodayQueue}
+                    disabled={!onStartTodayQueue}
+                  >
+                    Start Review →
+                  </button>
+                </>
+              )}
             </article>
             <article className="workspaceTile">
               <h3>Recognition Drills</h3>

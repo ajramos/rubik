@@ -7,7 +7,7 @@ import { MiniTwisty } from "./components/MiniTwisty";
 import { Twisty } from "./components/Twisty";
 import { WorkspaceScaffold } from "./components/WorkspaceScaffold";
 import { DrillModal } from "./components/DrillModal";
-import { loadSRS, saveSRS, scheduleCard, getSRSCard } from "./utils/srs";
+import { loadSRS, saveSRS, scheduleCard, getSRSCard, isDue } from "./utils/srs";
 import type { SRSCard, SRSRating } from "./utils/srs";
 
 const algs = algsRaw as AlgItem[];
@@ -1250,7 +1250,7 @@ export default function App() {
   const [selected, setSelected] = useState<SelectedCase | null>(null);
   const [activeSectionAnchor, setActiveSectionAnchor] = useState<string>("all");
   const [srsData, setSrsData] = useState<Record<string, SRSCard>>(() => loadSRS());
-  const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | null>(null);
+  const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "TODAY" | null>(null);
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -1313,6 +1313,27 @@ export default function App() {
   const pllCount = useMemo(() => algs.filter((a) => a.set === "PLL").length, []);
   const ollCases = useMemo(() => algs.filter((a) => a.set === "OLL"), []);
   const pllCases = useMemo(() => algs.filter((a) => a.set === "PLL"), []);
+
+  const ollDueCount = useMemo(
+    () => ollCases.filter((c) => { const card = srsData[c.id]; return !!card && isDue(card); }).length,
+    [ollCases, srsData]
+  );
+  const pllDueCount = useMemo(
+    () => pllCases.filter((c) => { const card = srsData[c.id]; return !!card && isDue(card); }).length,
+    [pllCases, srsData]
+  );
+  const todayDueCases = useMemo(() => {
+    const due = [...ollCases, ...pllCases].filter((c) => {
+      const card = srsData[c.id];
+      return !!card && isDue(card);
+    });
+    due.sort((a, b) => {
+      const da = srsData[a.id]!.dueDate;
+      const db = srsData[b.id]!.dueDate;
+      return da < db ? -1 : da > db ? 1 : 0;
+    });
+    return due;
+  }, [ollCases, pllCases, srsData]);
 
   function handleRate(id: string, rating: SRSRating) {
     const card = getSRSCard(id, srsData);
@@ -1670,6 +1691,9 @@ export default function App() {
                 f2lCanonicalTotal={F2L_CANONICAL_TOTAL}
                 ollCount={ollCount}
                 pllCount={pllCount}
+                ollDueCount={ollDueCount}
+                pllDueCount={pllDueCount}
+                onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
                 onStartDrill={appSection === "practice" ? (s) => setDrillSet(s) : undefined}
               />
             ) : (
@@ -2062,8 +2086,14 @@ export default function App() {
 
       {drillSet && (
         <DrillModal
-          cases={drillSet === "OLL" ? ollCases : pllCases}
-          label={drillSet}
+          cases={
+            drillSet === "TODAY"
+              ? todayDueCases
+              : drillSet === "OLL"
+                ? ollCases
+                : pllCases
+          }
+          label={drillSet === "TODAY" ? "Today's Queue" : drillSet}
           srsData={srsData}
           onRate={handleRate}
           onClose={() => setDrillSet(null)}
