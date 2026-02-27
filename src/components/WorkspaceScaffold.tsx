@@ -1,4 +1,5 @@
 import React from "react";
+import { NotationReference } from "./NotationReference";
 
 type AppSection = "practice" | "progress" | "reference";
 
@@ -119,15 +120,14 @@ export function WorkspaceScaffold({
     <div className="workspaceSectionShell">
       <section className="workspaceSectionCard workspaceSectionCard--neutral">
         <div className="workspaceSectionKicker">{activePrimaryLabel}</div>
-        <h2 className="workspaceSectionTitle">Notes & Quick Reference (v1 scaffold)</h2>
+        <h2 className="workspaceSectionTitle">Reference</h2>
         <p className="workspaceSectionLead">
-          Keep durable reference material here so the Study catalog stays focused on cases.
+          Notation, triggers, fingertricks, and method notes for quick lookup.
         </p>
+
+        <NotationReference />
+
         <div className="workspaceSectionGrid">
-          <article className="workspaceTile">
-            <h3>Notation & Rotations</h3>
-            <p>Standard move notation, wide turns, slices, and cube rotations.</p>
-          </article>
           <article className="workspaceTile">
             <h3>Trigger Library</h3>
             <p>Sexy, sledge, hedge, antisune families and when they appear.</p>

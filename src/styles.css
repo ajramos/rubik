@@ -2798,3 +2798,509 @@ code {
   transition: background 0.15s;
 }
 .drillDoneBtn:hover { background: var(--surface-3); }
+
+/* ── Notation Reference ──────────────────────────────────────── */
+
+.notationSection {
+  margin-top: 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.notationBlock {
+  background: var(--surface-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+}
+
+.notationBlockTitle {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.notationSubTitle {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+/* ── Face badge ────────────────────────────────── */
+.notationFaceBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 700;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* ── Cube net ──────────────────────────────────── */
+.notationOrientationLayout {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.notationNet {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.notationNetRow {
+  display: flex;
+  gap: 3px;
+}
+
+.notationNetRow--center {
+  padding-left: calc(38px + 3px); /* one cell + gap, align under F */
+}
+
+.notationNetCell {
+  width: 38px;
+  height: 38px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.notationFaceList {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+}
+
+.notationFaceListRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notationFaceListSymbol {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  width: 14px;
+}
+
+.notationFaceListName {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ── Modifiers ─────────────────────────────────── */
+.notationModRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.notationMod {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.notationModHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.notationModCode {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-ui);
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.notationModIcon {
+  font-size: 20px;
+  color: var(--muted);
+  line-height: 1;
+}
+
+.notationModBody {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.notationModTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.notationModDesc {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* ── Face moves grid ───────────────────────────── */
+.notationMoveGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+}
+
+.notationMoveRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+
+.notationFaceName {
+  font-size: 11px;
+  color: var(--muted);
+  width: 34px;
+  flex-shrink: 0;
+}
+
+.notationMoveChips { display: flex; gap: 5px; margin-left: auto; }
+
+.notationMove {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--surface-3);
+  border: 1px solid var(--line-2);
+  border-radius: 5px;
+  padding: 2px 7px;
+  box-shadow: none;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+/* ── Diagram cards row (slices & rotations) ────── */
+.notationDiagRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.notationDiagCard {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.notationDiagCardBody {
+  padding: 10px 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.notationDiagSymbol {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent-ui);
+  line-height: 1;
+}
+
+.notationDiagDesc {
+  font-size: 11px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.notationDiagNote {
+  font-size: 10px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── Slice cross-section diagram ───────────────── */
+.notationSliceDiag {
+  display: flex;
+  height: 52px;
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+/* col = vertical bands (M: L|M|R) */
+.notationSliceDiag--col {
+  flex-direction: row;
+}
+
+/* row = horizontal bands (E: U|E|D and S: B|S|F) */
+.notationSliceDiag--row {
+  flex-direction: column;
+}
+
+.notationSliceBand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* outer bands: fixed size */
+.notationSliceDiag--col .notationSliceBand--outer  { flex: 0 0 30%; }
+.notationSliceDiag--row .notationSliceBand--outer  { flex: 0 0 30%; }
+
+/* active (middle) band: remaining space, highlighted */
+.notationSliceBand--active {
+  flex: 1;
+  background: var(--surface-3);
+  border-left: 2px solid var(--accent-ui);
+  border-right: 2px solid var(--accent-ui);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notationSliceDiag--row .notationSliceBand--active {
+  border-left: none;
+  border-right: none;
+  border-top: 2px solid var(--accent-ui);
+  border-bottom: 2px solid var(--accent-ui);
+}
+
+.notationSliceActiveLabel {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-ui);
+}
+
+/* ── Rotation face diagram ─────────────────────── */
+.notationRotDiag {
+  height: 52px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+
+.notationRotFace {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 18px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.notationRotArrow {
+  font-size: 26px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+/* ── Clickable notation chips & cards ──────────── */
+/* Wide move chips — italic to signal lowercase */
+.notationMove--wide {
+  font-style: italic;
+  color: var(--muted);
+}
+.notationMove--wide.notationMove--clickable:hover {
+  color: var(--accent-ui);
+  font-style: italic;
+}
+
+/* Wide moves block description */
+.notationWideDesc {
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.notationMove--clickable {
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s, transform 0.1s;
+}
+.notationMove--clickable:hover {
+  background: var(--accent-ui-bg);
+  color: var(--accent-ui);
+  border-color: var(--accent-ui-border);
+  transform: translateY(-1px);
+}
+.notationMove--clickable:active { transform: translateY(0); }
+
+.notationDiagCard--clickable {
+  cursor: pointer;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+.notationDiagCard--clickable:hover {
+  border-color: var(--accent-ui-border);
+  box-shadow: 0 0 0 1px var(--accent-ui-border);
+}
+
+.notationClickHint {
+  font-family: var(--font-sans, sans-serif);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
+  margin-left: 8px;
+  opacity: 0.7;
+}
+
+/* ── Move Preview Modal ────────────────────────── */
+.movePreviewOverlay {
+  background: rgba(20, 24, 36, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.moveModal {
+  width: 288px;
+  background: var(--surface-1);
+  border: 1px solid var(--line-2);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  /* NO overflow:hidden — it clips the WebGL canvas inside twisty-player */
+  animation: moveModalIn 0.15s ease;
+}
+
+@keyframes moveModalIn {
+  from { opacity: 0; transform: scale(0.94) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.moveModalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid var(--line);
+  border-radius: 16px 16px 0 0;
+  background: var(--surface-1);
+}
+
+.moveModalBadgeWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.moveModalFaceBadge {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.moveModalFaceBadge--slice {
+  background: var(--accent-ui-bg);
+  color: var(--accent-ui);
+  border: 1px solid var(--accent-ui-border);
+}
+
+.moveModalTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.moveModalSymbol {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  background: none;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  line-height: 1;
+}
+
+.moveModalTitle {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+.moveModalClose {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, color 0.12s;
+  flex-shrink: 0;
+}
+.moveModalClose:hover { background: var(--surface-3); color: var(--ink); }
+
+.moveModalPlayer {
+  background: var(--surface-2);
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+}
+
+.moveModalDesc {
+  margin: 0;
+  padding: 10px 14px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+  text-align: center;
+  border-radius: 0 0 16px 16px;
+  background: var(--surface-1);
+}
+
+/* ── Responsive ────────────────────────────────── */
+@media (max-width: 600px) {
+  .notationMoveGrid { grid-template-columns: 1fr; }
+  .notationModRow { grid-template-columns: 1fr; }
+  .notationDiagRow { grid-template-columns: 1fr; }
+  .notationNetRow--center { padding-left: calc(38px + 3px); }
+  .notationSliceDiag { height: 44px; }
+  .moveModal { width: min(280px, 92vw); }
+}
