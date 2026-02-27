@@ -9,7 +9,7 @@ const FACE_TEXT: Record<string, string> = {
   U: "#333", D: "#333", R: "#fff", L: "#fff", F: "#fff", B: "#fff",
 };
 
-type MoveInfo = { title: string; desc: string; face?: string };
+type MoveInfo = { title: string; desc: string; face?: string; alg?: string };
 
 const MOVE_INFO: Record<string, MoveInfo> = {
   // Right
@@ -63,6 +63,14 @@ const MOVE_INFO: Record<string, MoveInfo> = {
   "x":  { face: "R", title: "x — Cube Rotation",  desc: "Entire cube rotates on the x-axis, equivalent to turning R." },
   "y":  { face: "U", title: "y — Cube Rotation",  desc: "Entire cube rotates on the y-axis, equivalent to turning U." },
   "z":  { face: "F", title: "z — Cube Rotation",  desc: "Entire cube rotates on the z-axis, equivalent to turning F." },
+  // Triggers
+  "sexy":        { face: "R", title: "Sexy Move",    alg: "R U R' U'",           desc: "R U R' U' — Most common CFOP building block. Drill until automatic." },
+  "anti-sexy":   { face: "U", title: "Anti-Sexy",    alg: "U R U' R'",           desc: "U R U' R' — Rotation-shifted version. Common in F2L and OLL." },
+  "double-sexy": { face: "R", title: "Double Sexy",  alg: "R U R' U' R U R' U'", desc: "Two consecutive sexy moves. Appears in OLL dot cases." },
+  "sledge":      { face: "R", title: "Sledgehammer", alg: "R' F R F'",           desc: "R' F R F' — F-face insertion. Pairs with Hedge as inverses." },
+  "hedge":       { face: "F", title: "Hedge",        alg: "F R' F' R",           desc: "F R' F' R — Reverse sledgehammer." },
+  "sune":        { face: "R", title: "Sune",         alg: "R U R' U R U2 R'",   desc: "R U R' U R U2 R' — OLL 27. Foundation of 2-Look OLL corners." },
+  "antisune":    { face: "R", title: "Antisune",     alg: "R U2 R' U' R U' R'", desc: "R U2 R' U' R U' R' — OLL 26. Mirror of Sune." },
 };
 
 type Props = {
@@ -110,7 +118,7 @@ export function MovePreviewModal({ move, onClose }: Props) {
         <div className="moveModalPlayer">
           <twisty-player
             puzzle="3x3x3"
-            alg={move}
+            alg={info.alg ?? move}
             experimental-setup-anchor="end"
             background="none"
             hint-facelets="none"

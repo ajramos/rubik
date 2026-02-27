@@ -1,5 +1,6 @@
 import React from "react";
 import { NotationReference } from "./NotationReference";
+import { TriggerLibrary } from "./TriggerLibrary";
 
 type AppSection = "practice" | "progress" | "reference";
 
@@ -238,18 +239,18 @@ export function WorkspaceScaffold({
 
         <NotationReference />
 
+        <TriggerLibrary />
+
         <div className="workspaceSectionGrid">
-          <article className="workspaceTile">
-            <h3>Trigger Library</h3>
-            <p>Sexy, sledge, hedge, antisune families and when they appear.</p>
-          </article>
           <article className="workspaceTile">
             <h3>Fingertricks</h3>
             <p>OH and two-handed execution notes by trigger/case family.</p>
+            <span className="workspaceTileMeta">Planned</span>
           </article>
           <article className="workspaceTile">
             <h3>Method Notes</h3>
             <p>CFOP heuristics now, plus room for OH/BLD/other methods later.</p>
+            <span className="workspaceTileMeta">Planned</span>
           </article>
         </div>
       </section>
