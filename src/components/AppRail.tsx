@@ -40,6 +40,7 @@ type Props = {
   cfopPhase: CfopPhase;
   workspaceMode: WorkspaceMode;
   lastLayerSet: LastLayerSet;
+  totalDueCount: number;
   onAppSectionChange: (section: AppSection) => void;
   onCfopPhaseChange: (phase: CfopPhase) => void;
   onWorkspaceModeChange: (mode: WorkspaceMode) => void;
@@ -51,6 +52,7 @@ export function AppRail({
   cfopPhase,
   workspaceMode,
   lastLayerSet,
+  totalDueCount,
   onAppSectionChange,
   onCfopPhaseChange,
   onWorkspaceModeChange,
@@ -77,6 +79,9 @@ export function AppRail({
               <span className="mainMenuLabel">{item.label}</span>
               {item.status === "beta" && (
                 <span className="mainMenuState mainMenuState--soon">Beta</span>
+              )}
+              {item.key === "practice" && totalDueCount > 0 && (
+                <span className="mainMenuDueBadge">{totalDueCount}</span>
               )}
             </button>
           ))}

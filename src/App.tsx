@@ -1515,17 +1515,27 @@ export default function App() {
     });
   };
 
-  const renderCard = (a: AlgItem, sectionTitle?: string) => (
-    <button key={a.id} className="card" type="button" onClick={() => setSelected(a)}>
-      <div className="cardTop">
-        <div className="cardTitle">{formatCaseNameForDisplay(a)}</div>
-        <MiniTwisty set={a.set} size={176} thumb={a.thumb} />
-      </div>
-      <div className="cardHint">{getCatalogCardHint(a, sectionTitle)}</div>
-      <div className="setupHint">Setup: {invertAlg(a.alg)}</div>
-      <pre className="cardAlg">{renderAlgBlock(a.alg, a.set, true)}</pre>
-    </button>
-  );
+  const renderCard = (a: AlgItem, sectionTitle?: string) => {
+    const srsCard = (a.set === "OLL" || a.set === "PLL") ? srsData[a.id] : null;
+    const srsState = srsCard ? (isDue(srsCard) ? "due" : "learned") : null;
+    return (
+      <button key={a.id} className="card" type="button" onClick={() => setSelected(a)}>
+        {srsState && (
+          <span
+            className={`srsStateDot srsStateDot--${srsState}`}
+            title={srsState === "due" ? "Due for review" : "Learned"}
+          />
+        )}
+        <div className="cardTop">
+          <div className="cardTitle">{formatCaseNameForDisplay(a)}</div>
+          <MiniTwisty set={a.set} size={176} thumb={a.thumb} />
+        </div>
+        <div className="cardHint">{getCatalogCardHint(a, sectionTitle)}</div>
+        <div className="setupHint">Setup: {invertAlg(a.alg)}</div>
+        <pre className="cardAlg">{renderAlgBlock(a.alg, a.set, true)}</pre>
+      </button>
+    );
+  };
 
   const renderMethodStage = (stage: MethodStage) => (
     <section key={stage.key} id={stage.key} className={`section methodSection section--${stage.tone}`}>
@@ -1673,6 +1683,7 @@ export default function App() {
             cfopPhase={cfopPhase}
             workspaceMode={workspaceMode}
             lastLayerSet={lastLayerSet}
+            totalDueCount={ollDueCount + pllDueCount}
             onAppSectionChange={setAppSection}
             onCfopPhaseChange={setCfopPhase}
             onWorkspaceModeChange={setWorkspaceMode}

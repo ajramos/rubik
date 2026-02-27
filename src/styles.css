@@ -1836,6 +1836,7 @@ body {
 /* ── OLL / PLL CARDS ────────────────────────────────── */
 
 .card {
+  position: relative;
   text-align: left;
   display: grid;
   align-content: start;
@@ -3428,4 +3429,47 @@ code {
   .notationNetRow--center { padding-left: calc(38px + 3px); }
   .notationSliceDiag { height: 44px; }
   .moveModal { width: min(280px, 92vw); }
+}
+
+/* ── SRS state dot on catalog cards ─────────────────── */
+
+.srsStateDot {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--surface-2);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.srsStateDot--due {
+  background: #d97706;
+  box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
+}
+
+.srsStateDot--learned {
+  background: var(--accent-ui);
+  box-shadow: 0 0 0 2px rgba(45, 139, 139, 0.18);
+}
+
+/* ── AppRail due badge ───────────────────────────────── */
+
+.mainMenuDueBadge {
+  margin-left: auto;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #d97706;
+  color: #fff;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  letter-spacing: 0;
 }
