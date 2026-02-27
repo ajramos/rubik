@@ -56,8 +56,6 @@ export function AppRail({
   onWorkspaceModeChange,
   onLastLayerSetChange,
 }: Props) {
-  const studyDisabled = appSection !== "study";
-
   return (
     <aside className="rail" aria-label="Learning modules">
       <section className="railPanel railPanel--nav">
@@ -84,104 +82,100 @@ export function AppRail({
           ))}
         </nav>
 
-        <div className={`studyMap ${studyDisabled ? "isMuted" : ""}`}>
-          <div className="studyMapHeader">
-            <span className="studyMapTitle">Study Map</span>
-            <span className="studyMapMeta">3x3 › CFOP</span>
-          </div>
-
-          <div className="studyTree">
-            <div className="treeLine">
-              <span className="treeNode treeNode--root">3x3</span>
-            </div>
-            <div className="treeLine treeLine--indent">
-              <span className="treeNode treeNode--branch isActive">CFOP</span>
-            </div>
-            <div className="treeLine treeLine--indent2">
-              <button
-                type="button"
-                className={`treeButton ${cfopPhase === "f2l" ? "isActive" : ""}`}
-                onClick={() => onCfopPhaseChange("f2l")}
-                aria-pressed={cfopPhase === "f2l"}
-                disabled={studyDisabled}
-              >
-                First 2 Layers (F2L)
-              </button>
-            </div>
-            <div className="treeLine treeLine--indent2">
-              <button
-                type="button"
-                className={`treeButton ${cfopPhase === "last-layer" ? "isActive" : ""}`}
-                onClick={() => onCfopPhaseChange("last-layer")}
-                aria-pressed={cfopPhase === "last-layer"}
-                disabled={studyDisabled}
-              >
-                Last Layer
-              </button>
+        {appSection === "study" && (
+          <div className="studyMap">
+            <div className="studyMapHeader">
+              <span className="studyMapTitle">Study Map</span>
+              <span className="studyMapMeta">3x3 › CFOP</span>
             </div>
 
-            {cfopPhase === "last-layer" && (
-              <>
-                <div className="treeLine treeLine--indent3">
-                  <button
-                    type="button"
-                    className={`treeButton treeButton--small ${
-                      workspaceMode === "4lll" ? "isActive" : ""
-                    }`}
-                    onClick={() => onWorkspaceModeChange("4lll")}
-                    aria-pressed={workspaceMode === "4lll"}
-                    disabled={studyDisabled}
-                  >
-                    4-Look Last Layer
-                  </button>
-                </div>
-                <div className="treeLine treeLine--indent3">
-                  <button
-                    type="button"
-                    className={`treeButton treeButton--small ${
-                      workspaceMode === "full-ll" ? "isActive" : ""
-                    }`}
-                    onClick={() => onWorkspaceModeChange("full-ll")}
-                    aria-pressed={workspaceMode === "full-ll"}
-                    disabled={studyDisabled}
-                  >
-                    Full OLL + PLL
-                  </button>
-                </div>
-                {workspaceMode === "full-ll" && (
-                  <>
-                    <div className="treeLine treeLine--indent4">
-                      <button
-                        type="button"
-                        className={`treeButton treeButton--small ${
-                          lastLayerSet === "OLL" ? "isActive" : ""
-                        }`}
-                        onClick={() => onLastLayerSetChange("OLL")}
-                        aria-pressed={lastLayerSet === "OLL"}
-                        disabled={studyDisabled}
-                      >
-                        Orientation of Last Layer
-                      </button>
-                    </div>
-                    <div className="treeLine treeLine--indent4">
-                      <button
-                        type="button"
-                        className={`treeButton treeButton--small ${
-                          lastLayerSet === "PLL" ? "isActive" : ""
-                        }`}
-                        onClick={() => onLastLayerSetChange("PLL")}
-                        aria-pressed={lastLayerSet === "PLL"}
-                        disabled={studyDisabled}
-                      >
-                        Permutation of Last Layer
-                      </button>
-                    </div>
-                  </>
-                )}
-              </>
-            )}
+            <div className="studyTree">
+              <div className="treeLine">
+                <span className="treeNode treeNode--root">3x3</span>
+              </div>
+              <div className="treeLine treeLine--indent">
+                <span className="treeNode treeNode--branch isActive">CFOP</span>
+              </div>
+              <div className="treeLine treeLine--indent2">
+                <button
+                  type="button"
+                  className={`treeButton ${cfopPhase === "f2l" ? "isActive" : ""}`}
+                  onClick={() => onCfopPhaseChange("f2l")}
+                  aria-pressed={cfopPhase === "f2l"}
+                >
+                  First 2 Layers (F2L)
+                </button>
+              </div>
+              <div className="treeLine treeLine--indent2">
+                <button
+                  type="button"
+                  className={`treeButton ${cfopPhase === "last-layer" ? "isActive" : ""}`}
+                  onClick={() => onCfopPhaseChange("last-layer")}
+                  aria-pressed={cfopPhase === "last-layer"}
+                >
+                  Last Layer
+                </button>
+              </div>
+
+              {cfopPhase === "last-layer" && (
+                <>
+                  <div className="treeLine treeLine--indent3">
+                    <button
+                      type="button"
+                      className={`treeButton treeButton--small ${
+                        workspaceMode === "4lll" ? "isActive" : ""
+                      }`}
+                      onClick={() => onWorkspaceModeChange("4lll")}
+                      aria-pressed={workspaceMode === "4lll"}
+                    >
+                      4-Look Last Layer
+                    </button>
+                  </div>
+                  <div className="treeLine treeLine--indent3">
+                    <button
+                      type="button"
+                      className={`treeButton treeButton--small ${
+                        workspaceMode === "full-ll" ? "isActive" : ""
+                      }`}
+                      onClick={() => onWorkspaceModeChange("full-ll")}
+                      aria-pressed={workspaceMode === "full-ll"}
+                    >
+                      Full OLL + PLL
+                    </button>
+                  </div>
+                  {workspaceMode === "full-ll" && (
+                    <>
+                      <div className="treeLine treeLine--indent4">
+                        <button
+                          type="button"
+                          className={`treeButton treeButton--small ${
+                            lastLayerSet === "OLL" ? "isActive" : ""
+                          }`}
+                          onClick={() => onLastLayerSetChange("OLL")}
+                          aria-pressed={lastLayerSet === "OLL"}
+                        >
+                          Orientation of Last Layer
+                        </button>
+                      </div>
+                      <div className="treeLine treeLine--indent4">
+                        <button
+                          type="button"
+                          className={`treeButton treeButton--small ${
+                            lastLayerSet === "PLL" ? "isActive" : ""
+                          }`}
+                          onClick={() => onLastLayerSetChange("PLL")}
+                          aria-pressed={lastLayerSet === "PLL"}
+                        >
+                          Permutation of Last Layer
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </section>
 
       <section className="railPanel">
