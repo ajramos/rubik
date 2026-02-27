@@ -2776,6 +2776,128 @@ code {
   min-height: 180px;
 }
 
+/* ── Timed Block ─────────────────────────────────────────────── */
+
+.timedSetup {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 4px 0;
+}
+
+.timedSetupGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timedSetupLabel {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.timedChips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.timedChip {
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-2);
+  background: var(--surface-2);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.timedChip:hover {
+  border-color: var(--accent-ui-border);
+  background: var(--accent-ui-bg);
+  color: var(--accent-ui);
+}
+.timedChip--active {
+  border-color: var(--accent-ui-border);
+  background: var(--accent-ui-bg);
+  color: var(--accent-ui);
+}
+
+.timedStartBtn {
+  margin-top: 4px;
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent-ui-border);
+  background: var(--accent-ui-bg);
+  color: var(--accent-ui);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+  align-self: stretch;
+}
+.timedStartBtn:hover {
+  background: rgba(45, 139, 139, 0.22);
+  box-shadow: 0 2px 10px rgba(45, 139, 139, 0.2);
+}
+
+.timedTimerRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timedTimerDisplay {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-ui);
+  min-width: 40px;
+  flex-shrink: 0;
+  transition: color 0.3s;
+}
+.timedTimerDisplay--warn { color: #d97706; }
+
+.timedTimerBar {
+  flex: 1;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.timedTimerFill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--accent-ui);
+  transition: width 0.9s linear, background 0.3s;
+}
+.timedTimerFill--warn { background: #d97706; }
+
+.timedStartTileBtn {
+  margin-top: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent-ui-border);
+  background: var(--accent-ui-bg);
+  color: var(--accent-ui);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.15s;
+}
+.timedStartTileBtn:hover { background: rgba(45, 139, 139, 0.22); }
+.timedStartTileBtn:disabled { opacity: 0.5; cursor: default; }
+
 /* ── Answer phase ────────────────────────────────────────────── */
 .drillAnswer {
   display: flex;

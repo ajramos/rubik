@@ -7,6 +7,7 @@ import { MiniTwisty } from "./components/MiniTwisty";
 import { Twisty } from "./components/Twisty";
 import { WorkspaceScaffold } from "./components/WorkspaceScaffold";
 import { DrillModal } from "./components/DrillModal";
+import { TimedBlockModal } from "./components/TimedBlockModal";
 import { loadSRS, saveSRS, scheduleCard, getSRSCard, isDue } from "./utils/srs";
 import type { SRSCard, SRSRating } from "./utils/srs";
 
@@ -1251,6 +1252,7 @@ export default function App() {
   const [activeSectionAnchor, setActiveSectionAnchor] = useState<string>("all");
   const [srsData, setSrsData] = useState<Record<string, SRSCard>>(() => loadSRS());
   const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "TODAY" | null>(null);
+  const [timedBlockOpen, setTimedBlockOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -1745,6 +1747,7 @@ export default function App() {
                 weakCases={weakCases}
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
                 onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => setDrillSet(s) : undefined}
+                onStartTimedBlock={appSection === "practice" ? () => setTimedBlockOpen(true) : undefined}
               />
             ) : (
             <>
@@ -2153,6 +2156,16 @@ export default function App() {
           srsData={srsData}
           onRate={handleRate}
           onClose={() => setDrillSet(null)}
+        />
+      )}
+
+      {timedBlockOpen && (
+        <TimedBlockModal
+          ollCases={ollCases}
+          pllCases={pllCases}
+          srsData={srsData}
+          onRate={handleRate}
+          onClose={() => setTimedBlockOpen(false)}
         />
       )}
     </div>

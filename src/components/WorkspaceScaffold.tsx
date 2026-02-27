@@ -34,6 +34,7 @@ type Props = {
   weakCases: WeakCase[];
   onStartTodayQueue?: () => void;
   onStartDrill?: (set: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => void;
+  onStartTimedBlock?: () => void;
 };
 
 function SRSBar({ stats }: { stats: SRSStats }) {
@@ -71,6 +72,7 @@ export function WorkspaceScaffold({
   weakCases,
   onStartTodayQueue,
   onStartDrill,
+  onStartTimedBlock,
 }: Props) {
   if (appSection === "practice") {
     return (
@@ -163,8 +165,15 @@ export function WorkspaceScaffold({
             </article>
             <article className="workspaceTile">
               <h3>Timed Blocks</h3>
-              <p>Short sessions (5/10/15 min) focused on weak subsets.</p>
-              <span className="workspaceTileMeta">Planned</span>
+              <p>3 / 5 / 10 min sessions. Pick your set and focus — cases loop until time's up.</p>
+              <button
+                type="button"
+                className="timedStartTileBtn"
+                onClick={onStartTimedBlock}
+                disabled={!onStartTimedBlock}
+              >
+                Start Block
+              </button>
             </article>
           </div>
         </section>
