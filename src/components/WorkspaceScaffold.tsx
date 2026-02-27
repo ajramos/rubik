@@ -33,7 +33,7 @@ type Props = {
   pllStats: SRSStats;
   weakCases: WeakCase[];
   onStartTodayQueue?: () => void;
-  onStartDrill?: (set: "OLL" | "PLL") => void;
+  onStartDrill?: (set: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => void;
 };
 
 function SRSBar({ stats }: { stats: SRSStats }) {
@@ -141,8 +141,25 @@ export function WorkspaceScaffold({
             </article>
             <article className="workspaceTile">
               <h3>Execution Drills</h3>
-              <p>Algorithm playback, timer, and fingertrick notes by case.</p>
-              <span className="workspaceTileMeta">Twisty viewer ready</span>
+              <p>Recall and execute each algorithm from memory — then reveal to verify.</p>
+              <div className="drillSetRow">
+                <button
+                  type="button"
+                  className="drillSetBtn drillSetBtn--oll"
+                  onClick={() => onStartDrill?.("OLL_EXEC")}
+                  disabled={!onStartDrill}
+                >
+                  OLL
+                </button>
+                <button
+                  type="button"
+                  className="drillSetBtn drillSetBtn--pll"
+                  onClick={() => onStartDrill?.("PLL_EXEC")}
+                  disabled={!onStartDrill}
+                >
+                  PLL
+                </button>
+              </div>
             </article>
             <article className="workspaceTile">
               <h3>Timed Blocks</h3>

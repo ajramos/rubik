@@ -9,6 +9,7 @@ const SESSION_MAX = 20;
 type Props = {
   cases: AlgItem[];
   label: string;
+  mode?: "recognition" | "execution";
   srsData: Record<string, SRSCard>;
   onRate: (id: string, rating: SRSRating) => void;
   onClose: () => void;
@@ -46,7 +47,7 @@ const RATING_CONFIG: { rating: SRSRating; label: string; mod: string }[] = [
   { rating: 4, label: "Easy", mod: "easy" },
 ];
 
-export function DrillModal({ cases, label, srsData, onRate, onClose }: Props) {
+export function DrillModal({ cases, label, mode = "recognition", srsData, onRate, onClose }: Props) {
   const queue = useMemo(() => buildQueue(cases, srsData), [cases, srsData]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState<"question" | "answer">("question");
@@ -69,7 +70,7 @@ export function DrillModal({ cases, label, srsData, onRate, onClose }: Props) {
     <div className="drillOverlay" onClick={onClose}>
       <div className="drillModal" onClick={(e) => e.stopPropagation()}>
         <div className="drillHeader">
-          <div className="drillHeaderTitle">Recognition Drills · {label}</div>
+          <div className="drillHeaderTitle">{mode === "execution" ? "Execution Drills" : "Recognition Drills"} · {label}</div>
           <button className="close" type="button" onClick={onClose}>✕</button>
         </div>
 
@@ -114,20 +115,44 @@ export function DrillModal({ cases, label, srsData, onRate, onClose }: Props) {
 
               {phase === "question" ? (
                 <div className="drillQuestion">
-                  <p className="drillQuestionHint">Which OLL case is this?</p>
+                  {mode === "execution" ? (
+                    <>
+                      <div className="drillExecCaseName">{current.name}</div>
+                      <div className="drillCaseId">{current.id.replace(/^(oll|pll|f2l)_/, (m) => m.slice(0, -1).toUpperCase() + " ").toUpperCase()}</div>
+                      <p className="drillQuestionHint">Execute this algorithm on your cube, then reveal.</p>
+                    </>
+                  ) : (
+                    <p className="drillQuestionHint">Which {current.set} case is this?</p>
+                  )}
                   <button
                     className="drillRevealBtn"
                     type="button"
                     onClick={() => setPhase("answer")}
                   >
-                    Reveal
+                    {mode === "execution" ? "Show Algorithm" : "Reveal"}
                   </button>
                 </div>
               ) : (
                 <div className="drillAnswer">
-                  <div className="drillCaseName">{current.name}</div>
-                  <div className="drillCaseId">{current.id.replace(/^oll_/, "OLL ").toUpperCase()}</div>
+                  {mode === "recognition" && (
+                    <>
+                      <div className="drillCaseName">{current.name}</div>
+                      <div className="drillCaseId">{current.id.replace(/^(oll|pll|f2l)_/, (m) => m.slice(0, -1).toUpperCase() + " ").toUpperCase()}</div>
+                    </>
+                  )}
                   <code className="drillAlg">{current.alg}</code>
+                  {mode === "execution" && (
+                    <div className="drillExecPlayer">
+                      <twisty-player
+                        puzzle="3x3x3"
+                        alg={current.alg}
+                        experimental-setup-anchor="end"
+                        background="none"
+                        hint-facelets="none"
+                        style={{ width: "180px", height: "180px", display: "block", margin: "0 auto" }}
+                      ></twisty-player>
+                    </div>
+                  )}
                   <div className="ratingRow">
                     {RATING_CONFIG.map(({ rating, label, mod }) => (
                       <button

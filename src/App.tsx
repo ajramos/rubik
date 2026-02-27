@@ -1250,7 +1250,7 @@ export default function App() {
   const [selected, setSelected] = useState<SelectedCase | null>(null);
   const [activeSectionAnchor, setActiveSectionAnchor] = useState<string>("all");
   const [srsData, setSrsData] = useState<Record<string, SRSCard>>(() => loadSRS());
-  const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "TODAY" | null>(null);
+  const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "TODAY" | null>(null);
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -1744,7 +1744,7 @@ export default function App() {
                 pllStats={pllStats}
                 weakCases={weakCases}
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
-                onStartDrill={appSection === "practice" ? (s) => setDrillSet(s) : undefined}
+                onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => setDrillSet(s) : undefined}
               />
             ) : (
             <>
@@ -2139,11 +2139,17 @@ export default function App() {
           cases={
             drillSet === "TODAY"
               ? todayDueCases
-              : drillSet === "OLL"
+              : drillSet === "OLL" || drillSet === "OLL_EXEC"
                 ? ollCases
                 : pllCases
           }
-          label={drillSet === "TODAY" ? "Today's Queue" : drillSet}
+          label={
+            drillSet === "TODAY" ? "Today's Queue" :
+            drillSet === "OLL_EXEC" ? "OLL" :
+            drillSet === "PLL_EXEC" ? "PLL" :
+            drillSet
+          }
+          mode={drillSet === "OLL_EXEC" || drillSet === "PLL_EXEC" ? "execution" : "recognition"}
           srsData={srsData}
           onRate={handleRate}
           onClose={() => setDrillSet(null)}
