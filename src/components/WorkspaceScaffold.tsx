@@ -37,6 +37,8 @@ type Props = {
   weakCases: WeakCase[];
   streaks: StreakData;
   reviewForecast: DayForecast[];
+  ohMode?: boolean;
+  onToggleOhMode?: () => void;
   onStartTodayQueue?: () => void;
   onStartDrill?: (set: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L" | "F2L_EXEC") => void;
   onStartTimedBlock?: () => void;
@@ -78,6 +80,8 @@ export function WorkspaceScaffold({
   weakCases,
   streaks,
   reviewForecast,
+  ohMode = false,
+  onToggleOhMode,
   onStartTodayQueue,
   onStartDrill,
   onStartTimedBlock,
@@ -87,12 +91,20 @@ export function WorkspaceScaffold({
     return (
       <div className="workspaceSectionShell">
         <section className="workspaceSectionCard workspaceSectionCard--warm">
-          <div className="workspaceSectionKicker">Practice</div>
-          <h2 className="workspaceSectionTitle">Session Modes (v1 scaffold)</h2>
-          <p className="workspaceSectionLead">
-            Keep practice flows separate from the canonical library. Start here once the SRS and
-            drill engines are wired.
-          </p>
+          <div className="workspacePracticeHeader">
+            <div>
+              <div className="workspaceSectionKicker">Practice</div>
+              <h2 className="workspaceSectionTitle">Session Modes</h2>
+            </div>
+            <button
+              type="button"
+              className={`ohToggle ${ohMode ? "ohToggle--on" : ""}`}
+              onClick={onToggleOhMode}
+              title="One-Handed mode — drills use your preferred (OH) alg"
+            >
+              🤚 OH {ohMode ? "ON" : "OFF"}
+            </button>
+          </div>
           <div className="workspaceSectionGrid">
             <article className={`workspaceTile todayQueueTile ${ollDueCount + pllDueCount === 0 ? "todayQueueTile--empty" : "todayQueueTile--due"}`}>
               <h3 className="todayQueueTitle">Today Queue</h3>
@@ -129,7 +141,7 @@ export function WorkspaceScaffold({
               )}
             </article>
             <article className="workspaceTile">
-              <h3>Recognition Drills</h3>
+              <h3>Recognition Drills {ohMode && <span className="ohBadge">🤚 OH</span>}</h3>
               <p>Case-only identification with reveal and confidence rating.</p>
               <div className="drillSetRow">
                 <button
@@ -159,7 +171,7 @@ export function WorkspaceScaffold({
               </div>
             </article>
             <article className="workspaceTile">
-              <h3>Execution Drills</h3>
+              <h3>Execution Drills {ohMode && <span className="ohBadge">🤚 OH</span>}</h3>
               <p>Recall and execute each algorithm from memory — then reveal to verify.</p>
               <div className="drillSetRow">
                 <button

@@ -12,6 +12,7 @@ type Props = {
   mode?: "recognition" | "execution";
   srsData: Record<string, SRSCard>;
   preferredAlgs?: Record<string, string>;
+  ohMode?: boolean;
   onRate: (id: string, rating: SRSRating) => void;
   onClose: () => void;
 };
@@ -48,7 +49,7 @@ const RATING_CONFIG: { rating: SRSRating; label: string; mod: string }[] = [
   { rating: 4, label: "Easy", mod: "easy" },
 ];
 
-export function DrillModal({ cases, label, mode = "recognition", srsData, preferredAlgs, onRate, onClose }: Props) {
+export function DrillModal({ cases, label, mode = "recognition", srsData, preferredAlgs, ohMode = false, onRate, onClose }: Props) {
   const queue = useMemo(() => buildQueue(cases, srsData), [cases, srsData]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState<"question" | "answer">("question");
@@ -71,7 +72,10 @@ export function DrillModal({ cases, label, mode = "recognition", srsData, prefer
     <div className="drillOverlay" onClick={onClose}>
       <div className="drillModal" onClick={(e) => e.stopPropagation()}>
         <div className="drillHeader">
-          <div className="drillHeaderTitle">{mode === "execution" ? "Execution Drills" : "Recognition Drills"} · {label}</div>
+          <div className="drillHeaderTitle">
+            {mode === "execution" ? "Execution Drills" : "Recognition Drills"} · {label}
+            {ohMode && <span className="ohBadge ohBadge--drill">🤚 OH</span>}
+          </div>
           <button className="close" type="button" onClick={onClose}>✕</button>
         </div>
 

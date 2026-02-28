@@ -13,7 +13,7 @@ import { loadSRS, saveSRS, scheduleCard, getSRSCard, isDue } from "./utils/srs";
 import type { SRSCard, SRSRating } from "./utils/srs";
 import { loadStreaks, recordPractice } from "./utils/streaks";
 import type { StreakData } from "./utils/streaks";
-import { loadPrefs, setPreferredAlg, clearPreferredAlg } from "./utils/prefs";
+import { loadPrefs, setPreferredAlg, clearPreferredAlg, toggleOhMode } from "./utils/prefs";
 import type { PrefsData } from "./utils/prefs";
 
 const algs = algsRaw as AlgItem[];
@@ -1822,6 +1822,8 @@ export default function App() {
                 weakCases={weakCases}
                 streaks={streaks}
                 reviewForecast={reviewForecast}
+                ohMode={prefs.ohMode}
+                onToggleOhMode={() => setPrefs((p) => toggleOhMode(p))}
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
                 onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L" | "F2L_EXEC") => setDrillSet(s) : undefined}
                 onStartTimedBlock={appSection === "practice" ? () => setTimedBlockOpen(true) : undefined}
@@ -2162,7 +2164,16 @@ export default function App() {
                 </section>
 
                 <section className="algBlock">
-                  <div className="label">Algorithm</div>
+                  <div className="label">
+                    Algorithm
+                    {prefs.ohMode && (
+                      <span className="ohAlgHint">
+                        {prefs.preferredAlgs[selected.id]
+                          ? "🤚 OH alg set"
+                          : "🤚 OH mode — pick your OH alg below"}
+                      </span>
+                    )}
+                  </div>
                   {selected.alts && selected.alts.length > 0 && (
                     <div className="algAltPicker">
                       <button
@@ -2282,6 +2293,7 @@ export default function App() {
           mode={drillSet === "OLL_EXEC" || drillSet === "PLL_EXEC" || drillSet === "F2L_EXEC" ? "execution" : "recognition"}
           srsData={srsData}
           preferredAlgs={prefs.preferredAlgs}
+          ohMode={prefs.ohMode}
           onRate={handleRate}
           onClose={() => setDrillSet(null)}
         />
