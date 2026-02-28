@@ -12,13 +12,15 @@ import type { Penalty, Solve, TimerData } from "../utils/timer";
 
 type Phase = "idle" | "holding" | "ready" | "inspection" | "solving" | "result";
 
+// Same palette as NotationReference — U=white, D=yellow, R=red, L=orange, F=green, B=blue
+// Text colors adapted for use on light background (bg colors are used as text color here)
 const FACE_COLORS: Record<string, string> = {
-  U: "#d4b800", // yellow (darkened for readability on light bg)
-  D: "#909090", // white face → gray on light bg
-  R: "#d05800",
-  L: "#b01818",
-  F: "#0e8c38",
-  B: "#1055c0",
+  U: "#555",     // white face chip → dark gray text (unreadable as text on light bg)
+  D: "#c8980a",  // yellow, darkened for contrast on light bg
+  R: "#c41e3a",  // red
+  L: "#d45000",  // orange, slightly darkened
+  F: "#007a3a",  // green, darkened
+  B: "#0046ad",  // blue
 };
 
 function ScrambleDisplay({ scramble }: { scramble: string }) {
