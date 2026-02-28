@@ -12,6 +12,36 @@ import type { Penalty, Solve, TimerData } from "../utils/timer";
 
 type Phase = "idle" | "holding" | "ready" | "inspection" | "solving" | "result";
 
+const FACE_COLORS: Record<string, string> = {
+  U: "#d4b800", // yellow (darkened for readability on light bg)
+  D: "#909090", // white face → gray on light bg
+  R: "#d05800",
+  L: "#b01818",
+  F: "#0e8c38",
+  B: "#1055c0",
+};
+
+function ScrambleDisplay({ scramble }: { scramble: string }) {
+  if (!scramble) return <p className="scrambleText scrambleText--loading">Generating…</p>;
+  const tokens = scramble.split(" ");
+  return (
+    <p className="scrambleText">
+      {tokens.map((tok, i) => {
+        const face = tok[0];
+        const color = FACE_COLORS[face];
+        return (
+          <span key={i}>
+            {i > 0 && " "}
+            <span className="scrambleMove" style={color ? { color } : undefined}>
+              {tok}
+            </span>
+          </span>
+        );
+      })}
+    </p>
+  );
+}
+
 const W = 240, H = 72, PL = 8, PR = 8, PT = 8, PB = 8;
 const CW = W - PL - PR, CH = H - PT - PB;
 
@@ -293,7 +323,7 @@ export function ScrambleTimerModal({ onClose }: Props) {
           <div className="scrambleMain">
             {!isSolving && (
               <div className="scrambleTextWrap">
-                <p className="scrambleText">{scramble || "Generating…"}</p>
+                <ScrambleDisplay scramble={scramble} />
               </div>
             )}
 
