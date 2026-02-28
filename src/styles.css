@@ -3616,9 +3616,19 @@ code {
   z-index: 1;
 }
 
+.srsStateDot--new {
+  background: var(--muted-2);
+  opacity: 0.55;
+}
+
 .srsStateDot--due {
   background: #d97706;
   box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
+}
+
+.srsStateDot--learning {
+  background: #b89000;
+  box-shadow: 0 0 0 2px rgba(184, 144, 0, 0.18);
 }
 
 .srsStateDot--learned {

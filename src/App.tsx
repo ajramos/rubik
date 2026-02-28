@@ -1563,14 +1563,29 @@ export default function App() {
   };
 
   const renderCard = (a: AlgItem, sectionTitle?: string) => {
-    const srsCard = (a.set === "OLL" || a.set === "PLL") ? srsData[a.id] : null;
-    const srsState = srsCard ? (isDue(srsCard) ? "due" : "learned") : null;
+    const isOllOrPll = a.set === "OLL" || a.set === "PLL";
+    const srsCard = isOllOrPll ? srsData[a.id] : null;
+    const srsState: "new" | "due" | "learning" | "learned" | null = isOllOrPll
+      ? srsCard
+        ? isDue(srsCard)
+          ? "due"
+          : srsCard.interval < 7
+            ? "learning"
+            : "learned"
+        : "new"
+      : null;
+    const srsTitles: Record<string, string> = {
+      new: "Never practiced",
+      due: "Due for review",
+      learning: "In progress",
+      learned: "Learned",
+    };
     return (
       <button key={a.id} className="card" type="button" onClick={() => setSelected(a)}>
         {srsState && (
           <span
             className={`srsStateDot srsStateDot--${srsState}`}
-            title={srsState === "due" ? "Due for review" : "Learned"}
+            title={srsTitles[srsState]}
           />
         )}
         <div className="cardTop">
