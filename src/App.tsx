@@ -8,6 +8,7 @@ import { Twisty } from "./components/Twisty";
 import { WorkspaceScaffold } from "./components/WorkspaceScaffold";
 import { DrillModal } from "./components/DrillModal";
 import { TimedBlockModal } from "./components/TimedBlockModal";
+import { ScrambleTimerModal } from "./components/ScrambleTimerModal";
 import { loadSRS, saveSRS, scheduleCard, getSRSCard, isDue } from "./utils/srs";
 import type { SRSCard, SRSRating } from "./utils/srs";
 import { loadStreaks, recordPractice } from "./utils/streaks";
@@ -1259,6 +1260,7 @@ export default function App() {
   const [prefs, setPrefs] = useState<PrefsData>(() => loadPrefs());
   const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "TODAY" | null>(null);
   const [timedBlockOpen, setTimedBlockOpen] = useState(false);
+  const [scrambleTimerOpen, setScrambleTimerOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -1756,6 +1758,7 @@ export default function App() {
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
                 onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => setDrillSet(s) : undefined}
                 onStartTimedBlock={appSection === "practice" ? () => setTimedBlockOpen(true) : undefined}
+                onStartScrambleTimer={appSection === "practice" ? () => setScrambleTimerOpen(true) : undefined}
               />
             ) : (
             <>
@@ -2198,6 +2201,10 @@ export default function App() {
           onRate={handleRate}
           onClose={() => setTimedBlockOpen(false)}
         />
+      )}
+
+      {scrambleTimerOpen && (
+        <ScrambleTimerModal onClose={() => setScrambleTimerOpen(false)} />
       )}
     </div>
   );

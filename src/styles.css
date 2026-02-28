@@ -4165,3 +4165,285 @@ code {
 @media (max-width: 600px) {
   .triggerCardGrid { grid-template-columns: 1fr; }
 }
+
+/* ── SCRAMBLE & TIMER ────────────────────────────────── */
+
+.scrambleTimerOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(26, 35, 50, 0.72);
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.scrambleTimerModal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.scrambleTimerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-1);
+  flex-shrink: 0;
+}
+
+.scrambleTimerHeaderTitle {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.scrambleTimerClose {
+  background: none;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 14px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 120ms;
+}
+.scrambleTimerClose:hover { background: var(--surface-3); }
+
+.scrambleTimerBody {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 0;
+  overflow: hidden;
+}
+
+.scrambleTimerBody--solving {
+  grid-template-columns: 1fr;
+}
+
+.scrambleMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 32px 40px;
+  min-height: 0;
+}
+
+.scrambleTextWrap {
+  width: 100%;
+  max-width: 680px;
+  text-align: center;
+}
+
+.scrambleText {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(14px, 2vw, 22px);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+  word-break: break-all;
+}
+
+.timerDisplay {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(56px, 12vw, 112px);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 20px 32px;
+  border-radius: var(--radius-lg);
+  transition: color 140ms, background 140ms;
+  border: 2px solid transparent;
+  min-width: 320px;
+  text-align: center;
+}
+
+.timerDisplay--holding {
+  color: var(--muted-2);
+  background: var(--surface-3);
+  border-color: var(--line-2);
+}
+
+.timerDisplay--ready {
+  color: var(--accent-green);
+  background: rgba(15, 102, 48, 0.08);
+  border-color: rgba(15, 102, 48, 0.28);
+}
+
+.timerDisplay--solving {
+  color: var(--ink);
+  cursor: default;
+}
+
+.timerDisplay--inspection {
+  color: var(--accent-oll);
+  font-size: clamp(72px, 16vw, 140px);
+}
+
+.timerDisplay--result {
+  color: var(--accent-ui);
+}
+
+.timerHint {
+  font-size: 13px;
+  color: var(--muted-2);
+  text-align: center;
+}
+
+.timerPenaltyRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.timerPenaltyBtn {
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  padding: 8px 18px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 120ms, color 120ms, border-color 120ms;
+}
+.timerPenaltyBtn:hover { background: var(--surface-3); }
+.timerPenaltyBtn--active {
+  background: rgba(160, 120, 0, 0.12);
+  border-color: rgba(160, 120, 0, 0.35);
+  color: var(--accent-oll);
+}
+
+.timerNextBtn {
+  background: var(--accent-ui);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 22px;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 120ms;
+}
+.timerNextBtn:hover { opacity: 0.88; }
+
+.timerInspToggle {
+  background: none;
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  padding: 5px 14px;
+  font-size: 12px;
+  color: var(--muted-2);
+  cursor: pointer;
+  transition: background 120ms;
+}
+.timerInspToggle:hover { background: var(--surface-3); }
+
+/* Sidebar */
+.timerSidebar {
+  border-left: 1px solid var(--line);
+  background: var(--surface-1);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+}
+
+.timerStatRow {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.timerStat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 8px;
+  gap: 3px;
+  border-right: 1px solid var(--line);
+}
+.timerStat:last-child { border-right: none; }
+
+.timerStatLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.timerStatVal {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.timerSolveList {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.timerSolveEmpty {
+  font-size: 12px;
+  color: var(--muted-2);
+  text-align: center;
+  padding: 20px;
+}
+
+.timerSolveRow {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 5px 16px;
+  border-bottom: 1px solid var(--line);
+}
+.timerSolveRow:last-child { border-bottom: none; }
+
+.timerSolveIdx {
+  font-size: 11px;
+  color: var(--muted-2);
+  min-width: 22px;
+  text-align: right;
+}
+
+.timerSolveTime {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.timerSolvePenalty {
+  color: var(--accent-oll);
+  font-size: 11px;
+}
+
+@media (max-width: 700px) {
+  .scrambleTimerBody {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+  .timerSidebar {
+    border-left: none;
+    border-top: 1px solid var(--line);
+    max-height: 180px;
+  }
+  .timerStatRow { flex-direction: row; }
+  .scrambleMain { padding: 20px 16px; gap: 16px; }
+}

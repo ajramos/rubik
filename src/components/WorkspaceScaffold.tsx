@@ -37,6 +37,7 @@ type Props = {
   onStartTodayQueue?: () => void;
   onStartDrill?: (set: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => void;
   onStartTimedBlock?: () => void;
+  onStartScrambleTimer?: () => void;
 };
 
 function SRSBar({ stats }: { stats: SRSStats }) {
@@ -76,6 +77,7 @@ export function WorkspaceScaffold({
   onStartTodayQueue,
   onStartDrill,
   onStartTimedBlock,
+  onStartScrambleTimer,
 }: Props) {
   if (appSection === "practice") {
     return (
@@ -176,6 +178,18 @@ export function WorkspaceScaffold({
                 disabled={!onStartTimedBlock}
               >
                 Start Block
+              </button>
+            </article>
+            <article className="workspaceTile">
+              <h3>Scramble & Timer</h3>
+              <p>WCA scramble, 15s inspection, and hold-to-ready timer. Session history with ao5 and ao12.</p>
+              <button
+                type="button"
+                className="timedStartTileBtn"
+                onClick={onStartScrambleTimer}
+                disabled={!onStartScrambleTimer}
+              >
+                Open Timer
               </button>
             </article>
           </div>
