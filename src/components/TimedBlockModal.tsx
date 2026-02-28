@@ -4,7 +4,7 @@ import type { SRSCard, SRSRating } from "../utils/srs";
 import { MiniTwisty } from "./MiniTwisty";
 
 type Phase = "setup" | "question" | "answer" | "complete";
-type SetChoice = "OLL" | "PLL" | "mixed";
+type SetChoice = "OLL" | "PLL" | "F2L" | "mixed";
 type FocusChoice = "all" | "weak";
 type Duration = 3 | 5 | 10;
 type SessionResult = { id: string; rating: SRSRating };
@@ -32,13 +32,14 @@ function fmt(s: number): string {
 type Props = {
   ollCases: AlgItem[];
   pllCases: AlgItem[];
+  f2lCases?: AlgItem[];
   srsData: Record<string, SRSCard>;
   preferredAlgs?: Record<string, string>;
   onRate: (id: string, rating: SRSRating) => void;
   onClose: () => void;
 };
 
-export function TimedBlockModal({ ollCases, pllCases, srsData, preferredAlgs, onRate, onClose }: Props) {
+export function TimedBlockModal({ ollCases, pllCases, f2lCases = [], srsData, preferredAlgs, onRate, onClose }: Props) {
   const [phase, setPhase]         = useState<Phase>("setup");
   const [duration, setDuration]   = useState<Duration>(5);
   const [setChoice, setSetChoice] = useState<SetChoice>("OLL");
@@ -73,6 +74,7 @@ export function TimedBlockModal({ ollCases, pllCases, srsData, preferredAlgs, on
     let base: AlgItem[];
     if (setChoice === "OLL")       base = ollCases;
     else if (setChoice === "PLL")  base = pllCases;
+    else if (setChoice === "F2L")  base = f2lCases;
     else                           base = [...ollCases, ...pllCases];
 
     if (focus === "weak") {
@@ -149,7 +151,7 @@ export function TimedBlockModal({ ollCases, pllCases, srsData, preferredAlgs, on
             <div className="timedSetupGroup">
               <div className="timedSetupLabel">Set</div>
               <div className="timedChips">
-                {(["OLL", "PLL", "mixed"] as SetChoice[]).map(s => (
+                {(["OLL", "PLL", "F2L", "mixed"] as SetChoice[]).map(s => (
                   <button
                     key={s}
                     type="button"

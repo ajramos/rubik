@@ -1258,7 +1258,7 @@ export default function App() {
   const [srsData, setSrsData] = useState<Record<string, SRSCard>>(() => loadSRS());
   const [streaks, setStreaks] = useState<StreakData>(() => loadStreaks());
   const [prefs, setPrefs] = useState<PrefsData>(() => loadPrefs());
-  const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "TODAY" | "F2L" | null>(null);
+  const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "TODAY" | "F2L" | "F2L_EXEC" | null>(null);
   const [timedBlockOpen, setTimedBlockOpen] = useState(false);
   const [scrambleTimerOpen, setScrambleTimerOpen] = useState(false);
 
@@ -1349,7 +1349,7 @@ export default function App() {
     [pllCases, srsData]
   );
   const todayDueCases = useMemo(() => {
-    const due = [...ollCases, ...pllCases].filter((c) => {
+    const due = [...ollCases, ...pllCases, ...f2lDrillCases].filter((c) => {
       const card = srsData[c.id];
       return !!card && isDue(card);
     });
@@ -1359,7 +1359,7 @@ export default function App() {
       return da < db ? -1 : da > db ? 1 : 0;
     });
     return due;
-  }, [ollCases, pllCases, srsData]);
+  }, [ollCases, pllCases, f2lDrillCases, srsData]);
 
   const ollStats = useMemo(() => {
     let newCount = 0, due = 0, learning = 0, learned = 0;
@@ -1823,7 +1823,7 @@ export default function App() {
                 streaks={streaks}
                 reviewForecast={reviewForecast}
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
-                onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L") => setDrillSet(s) : undefined}
+                onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L" | "F2L_EXEC") => setDrillSet(s) : undefined}
                 onStartTimedBlock={appSection === "practice" ? () => setTimedBlockOpen(true) : undefined}
                 onStartScrambleTimer={appSection === "practice" ? () => setScrambleTimerOpen(true) : undefined}
               />
@@ -2266,7 +2266,7 @@ export default function App() {
           cases={
             drillSet === "TODAY"
               ? todayDueCases
-              : drillSet === "F2L"
+              : drillSet === "F2L" || drillSet === "F2L_EXEC"
                 ? f2lDrillCases
                 : drillSet === "OLL" || drillSet === "OLL_EXEC"
                   ? ollCases
@@ -2276,9 +2276,10 @@ export default function App() {
             drillSet === "TODAY" ? "Today's Queue" :
             drillSet === "OLL_EXEC" ? "OLL" :
             drillSet === "PLL_EXEC" ? "PLL" :
+            drillSet === "F2L_EXEC" ? "F2L" :
             drillSet ?? ""
           }
-          mode={drillSet === "OLL_EXEC" || drillSet === "PLL_EXEC" ? "execution" : "recognition"}
+          mode={drillSet === "OLL_EXEC" || drillSet === "PLL_EXEC" || drillSet === "F2L_EXEC" ? "execution" : "recognition"}
           srsData={srsData}
           preferredAlgs={prefs.preferredAlgs}
           onRate={handleRate}
@@ -2290,6 +2291,7 @@ export default function App() {
         <TimedBlockModal
           ollCases={ollCases}
           pllCases={pllCases}
+          f2lCases={f2lDrillCases}
           srsData={srsData}
           preferredAlgs={prefs.preferredAlgs}
           onRate={handleRate}

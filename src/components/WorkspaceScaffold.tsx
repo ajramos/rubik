@@ -38,7 +38,7 @@ type Props = {
   streaks: StreakData;
   reviewForecast: DayForecast[];
   onStartTodayQueue?: () => void;
-  onStartDrill?: (set: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L") => void;
+  onStartDrill?: (set: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L" | "F2L_EXEC") => void;
   onStartTimedBlock?: () => void;
   onStartScrambleTimer?: () => void;
 };
@@ -177,6 +177,14 @@ export function WorkspaceScaffold({
                   disabled={!onStartDrill}
                 >
                   PLL
+                </button>
+                <button
+                  type="button"
+                  className="drillSetBtn drillSetBtn--f2l"
+                  onClick={() => onStartDrill?.("F2L_EXEC")}
+                  disabled={!onStartDrill}
+                >
+                  F2L
                 </button>
               </div>
             </article>
