@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState, memo } from "react";
 import {
   loadTimer,
   saveTimer,
@@ -11,6 +11,73 @@ import {
 import type { Penalty, Solve, TimerData } from "../utils/timer";
 
 type Phase = "idle" | "holding" | "ready" | "inspection" | "solving" | "result";
+
+const W = 240, H = 72, PL = 8, PR = 8, PT = 8, PB = 8;
+const CW = W - PL - PR, CH = H - PT - PB;
+
+const SessionChart = memo(function SessionChart({ solves }: { solves: Solve[] }) {
+  if (solves.length < 2) return null;
+
+  // Chronological order (oldest first)
+  const ordered = [...solves].reverse();
+  const n = ordered.length;
+  const times = ordered.map(effectiveTime); // null = DNF
+  const validTimes = times.filter((t): t is number => t !== null);
+
+  const minT = validTimes.length ? Math.min(...validTimes) : 0;
+  const maxT = validTimes.length ? Math.max(...validTimes) : 1;
+  const range = maxT - minT;
+
+  const toX = (i: number) => PL + (n === 1 ? CW / 2 : (i / (n - 1)) * CW);
+  const toY = (t: number) =>
+    range === 0 ? PT + CH / 2 : PT + CH - ((t - minT) / range) * CH;
+
+  // Build polyline segments (break on DNF)
+  const segments: Array<Array<[number, number]>> = [];
+  let current: Array<[number, number]> = [];
+  times.forEach((t, i) => {
+    if (t !== null) {
+      current.push([toX(i), toY(t)]);
+    } else {
+      if (current.length >= 2) segments.push(current);
+      current = [];
+    }
+  });
+  if (current.length >= 2) segments.push(current);
+
+  const bestY = validTimes.length ? toY(minT) : PT + CH / 2;
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="timerChart" aria-hidden="true">
+      {/* Best time reference */}
+      {validTimes.length >= 2 && (
+        <line x1={PL} y1={bestY} x2={W - PR} y2={bestY} className="timerChartBestLine" />
+      )}
+      {/* Line segments */}
+      {segments.map((seg, si) => (
+        <polyline
+          key={si}
+          points={seg.map(([x, y]) => `${x},${y}`).join(" ")}
+          className="timerChartLine"
+        />
+      ))}
+      {/* Dots and DNF markers */}
+      {times.map((t, i) =>
+        t !== null ? (
+          <circle
+            key={i}
+            cx={toX(i)}
+            cy={toY(t)}
+            r={i === n - 1 ? 4 : 2.5}
+            className={i === n - 1 ? "timerChartDotLast" : "timerChartDot"}
+          />
+        ) : (
+          <text key={i} x={toX(i)} y={PT + CH / 2} className="timerChartDnf">×</text>
+        )
+      )}
+    </svg>
+  );
+});
 
 type Props = {
   onClose: () => void;
@@ -293,6 +360,8 @@ export function ScrambleTimerModal({ onClose }: Props) {
                   <span className="timerStatVal">{ao12 !== null ? fmtTime(ao12) : "—"}</span>
                 </div>
               </div>
+
+              <SessionChart solves={solves} />
 
               <div className="timerSolveList">
                 {solves.length === 0 ? (

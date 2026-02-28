@@ -4444,6 +4444,50 @@ code {
   color: var(--ink);
 }
 
+/* Session chart */
+.timerChart {
+  width: 100%;
+  height: 72px;
+  display: block;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  flex-shrink: 0;
+}
+
+.timerChartBestLine {
+  stroke: var(--accent-green);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  opacity: 0.55;
+}
+
+.timerChartLine {
+  fill: none;
+  stroke: var(--accent-ui);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.timerChartDot {
+  fill: var(--accent-ui);
+  opacity: 0.65;
+}
+
+.timerChartDotLast {
+  fill: var(--accent-ui);
+  stroke: var(--surface-1);
+  stroke-width: 1.5;
+}
+
+.timerChartDnf {
+  fill: #d97706;
+  font-size: 10px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-family: "IBM Plex Mono", monospace;
+}
+
 .timerSolveList {
   flex: 1;
   overflow-y: auto;
