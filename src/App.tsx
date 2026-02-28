@@ -1373,6 +1373,24 @@ export default function App() {
     return { new: newCount, due, learning, learned, total: pllCases.length };
   }, [pllCases, srsData]);
 
+  const reviewForecast = useMemo(() => {
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const base = new Date();
+    const all = [...ollCases, ...pllCases];
+    return Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(base);
+      d.setDate(d.getDate() + i);
+      const dateStr = d.toISOString().slice(0, 10);
+      const count = all.filter((c) => {
+        const card = srsData[c.id];
+        if (!card) return false;
+        return i === 0 ? card.dueDate <= todayStr : card.dueDate === dateStr;
+      }).length;
+      const label = i === 0 ? "Today" : ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"][d.getDay()];
+      return { label, count, isToday: i === 0 };
+    });
+  }, [ollCases, pllCases, srsData]);
+
   const weakCases = useMemo(() => {
     return [...ollCases, ...pllCases]
       .filter((c) => !!srsData[c.id])
@@ -1793,6 +1811,7 @@ export default function App() {
                 pllStats={pllStats}
                 weakCases={weakCases}
                 streaks={streaks}
+                reviewForecast={reviewForecast}
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
                 onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => setDrillSet(s) : undefined}
                 onStartTimedBlock={appSection === "practice" ? () => setTimedBlockOpen(true) : undefined}

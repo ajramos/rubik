@@ -21,6 +21,8 @@ type WeakCase = {
   reps: number;
 };
 
+type DayForecast = { label: string; count: number; isToday: boolean };
+
 type Props = {
   appSection: AppSection;
   activePrimaryLabel: string;
@@ -34,6 +36,7 @@ type Props = {
   pllStats: SRSStats;
   weakCases: WeakCase[];
   streaks: StreakData;
+  reviewForecast: DayForecast[];
   onStartTodayQueue?: () => void;
   onStartDrill?: (set: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => void;
   onStartTimedBlock?: () => void;
@@ -74,6 +77,7 @@ export function WorkspaceScaffold({
   pllStats,
   weakCases,
   streaks,
+  reviewForecast,
   onStartTodayQueue,
   onStartDrill,
   onStartTimedBlock,
@@ -363,6 +367,39 @@ export function WorkspaceScaffold({
                 </>
               )}
             </article>
+
+            {/* Review Forecast */}
+            <article className="workspaceTile forecastTile">
+              <h3 className="progressTileTitle">Review Forecast</h3>
+              {(() => {
+                const maxCount = Math.max(...reviewForecast.map((d) => d.count), 1);
+                const totalNext7 = reviewForecast.slice(1).reduce((s, d) => s + d.count, 0);
+                return (
+                  <>
+                    <div className="forecastBars">
+                      {reviewForecast.map((day, i) => (
+                        <div key={i} className={`forecastBarCol${day.isToday ? " forecastBarCol--today" : ""}`}>
+                          <span className="forecastBarCount">{day.count > 0 ? day.count : ""}</span>
+                          <div className="forecastBarTrack">
+                            <div
+                              className={`forecastBarFill${day.isToday ? " forecastBarFill--today" : ""}`}
+                              style={{ height: `${Math.max(2, (day.count / maxCount) * 100)}%` }}
+                            />
+                          </div>
+                          <span className="forecastBarLabel">{day.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="forecastNote">
+                      {totalNext7 > 0
+                        ? `${totalNext7} card${totalNext7 === 1 ? "" : "s"} due in the next 6 days`
+                        : "No upcoming reviews scheduled"}
+                    </p>
+                  </>
+                );
+              })()}
+            </article>
+
           </div>
         </section>
       </div>
