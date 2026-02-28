@@ -1258,7 +1258,7 @@ export default function App() {
   const [srsData, setSrsData] = useState<Record<string, SRSCard>>(() => loadSRS());
   const [streaks, setStreaks] = useState<StreakData>(() => loadStreaks());
   const [prefs, setPrefs] = useState<PrefsData>(() => loadPrefs());
-  const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "TODAY" | null>(null);
+  const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "TODAY" | "F2L" | null>(null);
   const [timedBlockOpen, setTimedBlockOpen] = useState(false);
   const [scrambleTimerOpen, setScrambleTimerOpen] = useState(false);
 
@@ -1329,6 +1329,16 @@ export default function App() {
   const pllCount = useMemo(() => algs.filter((a) => a.set === "PLL").length, []);
   const ollCases = useMemo(() => algs.filter((a) => a.set === "OLL"), []);
   const pllCases = useMemo(() => algs.filter((a) => a.set === "PLL"), []);
+  const f2lDrillCases = useMemo<AlgItem[]>(() =>
+    F2L_CANONICAL_STARTER.flatMap((section) =>
+      section.cases.map((c) => ({
+        id: c.id,
+        set: "F2L" as const,
+        name: c.name,
+        alg: c.alg,
+        caseSetupAlg: c.caseSetupAlg,
+      }))
+    ), []);
 
   const ollDueCount = useMemo(
     () => ollCases.filter((c) => { const card = srsData[c.id]; return !!card && isDue(card); }).length,
@@ -1813,7 +1823,7 @@ export default function App() {
                 streaks={streaks}
                 reviewForecast={reviewForecast}
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
-                onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC") => setDrillSet(s) : undefined}
+                onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L") => setDrillSet(s) : undefined}
                 onStartTimedBlock={appSection === "practice" ? () => setTimedBlockOpen(true) : undefined}
                 onStartScrambleTimer={appSection === "practice" ? () => setScrambleTimerOpen(true) : undefined}
               />
@@ -2256,15 +2266,17 @@ export default function App() {
           cases={
             drillSet === "TODAY"
               ? todayDueCases
-              : drillSet === "OLL" || drillSet === "OLL_EXEC"
-                ? ollCases
-                : pllCases
+              : drillSet === "F2L"
+                ? f2lDrillCases
+                : drillSet === "OLL" || drillSet === "OLL_EXEC"
+                  ? ollCases
+                  : pllCases
           }
           label={
             drillSet === "TODAY" ? "Today's Queue" :
             drillSet === "OLL_EXEC" ? "OLL" :
             drillSet === "PLL_EXEC" ? "PLL" :
-            drillSet
+            drillSet ?? ""
           }
           mode={drillSet === "OLL_EXEC" || drillSet === "PLL_EXEC" ? "execution" : "recognition"}
           srsData={srsData}

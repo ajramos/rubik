@@ -111,7 +111,13 @@ export function DrillModal({ cases, label, mode = "recognition", srsData, prefer
 
             <div className="drillCard">
               <div className="drillThumbWrap">
-                <MiniTwisty set={current.set} size={200} thumb={current.thumb} />
+                <MiniTwisty
+                  set={current.set}
+                  size={200}
+                  thumb={current.thumb}
+                  alg={current.set === "F2L" ? current.alg : undefined}
+                  setupAlg={current.set === "F2L" ? current.caseSetupAlg : undefined}
+                />
               </div>
 
               {phase === "question" ? (
@@ -123,7 +129,11 @@ export function DrillModal({ cases, label, mode = "recognition", srsData, prefer
                       <p className="drillQuestionHint">Execute this algorithm on your cube, then reveal.</p>
                     </>
                   ) : (
-                    <p className="drillQuestionHint">Which {current.set} case is this?</p>
+                    <p className="drillQuestionHint">
+                      {current.set === "F2L"
+                        ? "Recall the algorithm for this F2L case"
+                        : `Which ${current.set} case is this?`}
+                    </p>
                   )}
                   <button
                     className="drillRevealBtn"

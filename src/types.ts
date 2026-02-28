@@ -7,4 +7,5 @@ export type AlgItem = {
   alg: string;
   thumb?: string;
   alts?: string[];
+  caseSetupAlg?: string;
 };

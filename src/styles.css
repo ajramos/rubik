@@ -2715,6 +2715,16 @@ code {
   box-shadow: 0 2px 8px rgba(20, 100, 160, 0.14);
 }
 
+.drillSetBtn--f2l {
+  background: rgba(176, 76, 16, 0.10);
+  color: var(--accent-f2l);
+  border: 1px solid rgba(176, 76, 16, 0.22);
+}
+.drillSetBtn--f2l:not(:disabled):hover {
+  background: rgba(176, 76, 16, 0.18);
+  box-shadow: 0 2px 8px rgba(176, 76, 16, 0.14);
+}
+
 /* ── Drill Modal overlay ─────────────────────────────────────── */
 .drillOverlay {
   position: fixed;
