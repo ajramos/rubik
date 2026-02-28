@@ -12,6 +12,8 @@ import { loadSRS, saveSRS, scheduleCard, getSRSCard, isDue } from "./utils/srs";
 import type { SRSCard, SRSRating } from "./utils/srs";
 import { loadStreaks, recordPractice } from "./utils/streaks";
 import type { StreakData } from "./utils/streaks";
+import { loadPrefs, setPreferredAlg, clearPreferredAlg } from "./utils/prefs";
+import type { PrefsData } from "./utils/prefs";
 
 const algs = algsRaw as AlgItem[];
 
@@ -1254,6 +1256,7 @@ export default function App() {
   const [activeSectionAnchor, setActiveSectionAnchor] = useState<string>("all");
   const [srsData, setSrsData] = useState<Record<string, SRSCard>>(() => loadSRS());
   const [streaks, setStreaks] = useState<StreakData>(() => loadStreaks());
+  const [prefs, setPrefs] = useState<PrefsData>(() => loadPrefs());
   const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "TODAY" | null>(null);
   const [timedBlockOpen, setTimedBlockOpen] = useState(false);
 
@@ -2022,11 +2025,11 @@ export default function App() {
                 </div>
                 <div className="viewerPanelStage">
                   <Twisty
-                    alg={selected.alg}
+                    alg={prefs.preferredAlgs[selected.id] ?? selected.alg}
                     setupAlg={
                       selected.set === "F2L"
                         ? selected.f2lMeta?.caseSetupAlg
-                        : invertAlg(selected.alg)
+                        : invertAlg(prefs.preferredAlgs[selected.id] ?? selected.alg)
                     }
                     experimentalStickering={selected.set === "F2L" ? "F2L" : undefined}
                   />
@@ -2066,15 +2069,36 @@ export default function App() {
 
                 <section className="algBlock">
                   <div className="label">Algorithm</div>
+                  {selected.alts && selected.alts.length > 0 && (
+                    <div className="algAltPicker">
+                      <button
+                        type="button"
+                        className={`algAltBtn${!prefs.preferredAlgs[selected.id] ? " algAltBtn--active" : ""}`}
+                        onClick={() => setPrefs((p) => clearPreferredAlg(p, selected.id))}
+                      >
+                        Default
+                      </button>
+                      {selected.alts.map((alt, i) => (
+                        <button
+                          key={i}
+                          type="button"
+                          className={`algAltBtn${prefs.preferredAlgs[selected.id] === alt ? " algAltBtn--active" : ""}`}
+                          onClick={() => setPrefs((p) => setPreferredAlg(p, selected.id, alt))}
+                        >
+                          Alt {i + 1}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   <code className="algDisplay">
-                    {renderAlgBlock(selected.alg, selected.set)}
+                    {renderAlgBlock(prefs.preferredAlgs[selected.id] ?? selected.alg, selected.set)}
                   </code>
                 </section>
 
                 {selected.set !== "F2L" && (
                   <section className="setupBlock">
                     <div className="label">Setup from solved</div>
-                    <code className="setupDisplay">{invertAlg(selected.alg)}</code>
+                    <code className="setupDisplay">{invertAlg(prefs.preferredAlgs[selected.id] ?? selected.alg)}</code>
                   </section>
                 )}
 
@@ -2159,6 +2183,7 @@ export default function App() {
           }
           mode={drillSet === "OLL_EXEC" || drillSet === "PLL_EXEC" ? "execution" : "recognition"}
           srsData={srsData}
+          preferredAlgs={prefs.preferredAlgs}
           onRate={handleRate}
           onClose={() => setDrillSet(null)}
         />
@@ -2169,6 +2194,7 @@ export default function App() {
           ollCases={ollCases}
           pllCases={pllCases}
           srsData={srsData}
+          preferredAlgs={prefs.preferredAlgs}
           onRate={handleRate}
           onClose={() => setTimedBlockOpen(false)}
         />

@@ -2234,6 +2234,38 @@ code {
 .f2lCardAlg    .algNamedToken--indigo { color: #3d28b8; background: rgba(75,55,200,0.12); border-bottom-color: #5040d0; }
 
 /* ── Inline trigger highlights (inside dark alg code block) ─────────── */
+.algAltPicker {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.algAltBtn {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: var(--surface-3);
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+
+.algAltBtn:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+  border-color: var(--muted);
+}
+
+.algAltBtn--active {
+  background: var(--accent-ui);
+  color: #fff;
+  border-color: var(--accent-ui);
+}
+
 .algDisplay {
   /* inherits from code {} — display:block, dark bg, monospace, pre-wrap */
   white-space: pre-wrap;

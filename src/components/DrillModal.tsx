@@ -11,6 +11,7 @@ type Props = {
   label: string;
   mode?: "recognition" | "execution";
   srsData: Record<string, SRSCard>;
+  preferredAlgs?: Record<string, string>;
   onRate: (id: string, rating: SRSRating) => void;
   onClose: () => void;
 };
@@ -47,7 +48,7 @@ const RATING_CONFIG: { rating: SRSRating; label: string; mod: string }[] = [
   { rating: 4, label: "Easy", mod: "easy" },
 ];
 
-export function DrillModal({ cases, label, mode = "recognition", srsData, onRate, onClose }: Props) {
+export function DrillModal({ cases, label, mode = "recognition", srsData, preferredAlgs, onRate, onClose }: Props) {
   const queue = useMemo(() => buildQueue(cases, srsData), [cases, srsData]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState<"question" | "answer">("question");
@@ -140,12 +141,12 @@ export function DrillModal({ cases, label, mode = "recognition", srsData, onRate
                       <div className="drillCaseId">{current.id.replace(/^(oll|pll|f2l)_/, (m) => m.slice(0, -1).toUpperCase() + " ").toUpperCase()}</div>
                     </>
                   )}
-                  <code className="drillAlg">{current.alg}</code>
+                  <code className="drillAlg">{preferredAlgs?.[current.id] ?? current.alg}</code>
                   {mode === "execution" && (
                     <div className="drillExecPlayer">
                       <twisty-player
                         puzzle="3x3x3"
-                        alg={current.alg}
+                        alg={preferredAlgs?.[current.id] ?? current.alg}
                         experimental-setup-anchor="end"
                         background="none"
                         hint-facelets="none"

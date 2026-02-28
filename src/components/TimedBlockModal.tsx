@@ -33,11 +33,12 @@ type Props = {
   ollCases: AlgItem[];
   pllCases: AlgItem[];
   srsData: Record<string, SRSCard>;
+  preferredAlgs?: Record<string, string>;
   onRate: (id: string, rating: SRSRating) => void;
   onClose: () => void;
 };
 
-export function TimedBlockModal({ ollCases, pllCases, srsData, onRate, onClose }: Props) {
+export function TimedBlockModal({ ollCases, pllCases, srsData, preferredAlgs, onRate, onClose }: Props) {
   const [phase, setPhase]         = useState<Phase>("setup");
   const [duration, setDuration]   = useState<Duration>(5);
   const [setChoice, setSetChoice] = useState<SetChoice>("OLL");
@@ -225,7 +226,7 @@ export function TimedBlockModal({ ollCases, pllCases, srsData, onRate, onClose }
                   <div className="drillCaseId">
                     {current.id.replace(/^(oll|pll|f2l)_/, m => m.slice(0, -1).toUpperCase() + " ").toUpperCase()}
                   </div>
-                  <code className="drillAlg">{current.alg}</code>
+                  <code className="drillAlg">{preferredAlgs?.[current.id] ?? current.alg}</code>
                   <div className="ratingRow">
                     {RATING_CONFIG.map(({ rating, label, mod }) => (
                       <button

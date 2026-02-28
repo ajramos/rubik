@@ -6,4 +6,5 @@ export type AlgItem = {
   name: string;
   alg: string;
   thumb?: string;
+  alts?: string[];
 };
