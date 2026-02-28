@@ -2022,6 +2022,47 @@ body {
   gap: 4px;
 }
 
+.modalHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.modalNav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.modalNavBtn {
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  padding: 5px 11px;
+  font-size: 15px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background 120ms, color 120ms;
+  line-height: 1;
+}
+.modalNavBtn:hover:not(:disabled) {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+.modalNavBtn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.modalNavCount {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  color: var(--muted-2);
+  min-width: 42px;
+  text-align: center;
+}
+
 .modalTagRow {
   display: flex;
   flex-wrap: wrap;

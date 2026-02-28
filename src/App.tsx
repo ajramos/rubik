@@ -1319,6 +1319,12 @@ export default function App() {
     return sections;
   }, [filtered, set]);
 
+  const catalogNavList = useMemo<AlgItem[]>(() => {
+    if (set === "OLL") return ollSections.flatMap((s) => s.items);
+    if (set === "PLL") return pllSections.flatMap((s) => s.items);
+    return [];
+  }, [set, ollSections, pllSections]);
+
   const ollCount = useMemo(() => algs.filter((a) => a.set === "OLL").length, []);
   const pllCount = useMemo(() => algs.filter((a) => a.set === "PLL").length, []);
   const ollCases = useMemo(() => algs.filter((a) => a.set === "OLL"), []);
@@ -1471,6 +1477,23 @@ export default function App() {
   useEffect(() => {
     setActiveSectionAnchor("all");
   }, [cfopPhase, workspaceMode, set, q, f2lFilter]);
+
+  // Keyboard nav for catalog modal
+  useEffect(() => {
+    if (!selected) return;
+    const isOllPll = selected.set === "OLL" || selected.set === "PLL";
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") { setSelected(null); return; }
+      if (!isOllPll || (e.key !== "ArrowLeft" && e.key !== "ArrowRight")) return;
+      const idx = catalogNavList.findIndex((a) => a.id === selected.id);
+      if (idx === -1) return;
+      e.preventDefault();
+      const next = e.key === "ArrowRight" ? idx + 1 : idx - 1;
+      if (next >= 0 && next < catalogNavList.length) setSelected(catalogNavList[next]);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [selected, catalogNavList]);
 
   useEffect(() => {
     const supportsSpy = cfopPhase === "f2l" || workspaceMode === "full-ll";
@@ -2012,7 +2035,10 @@ export default function App() {
         </div>
       </main>
 
-      {selected && (
+      {selected && (() => {
+        const isOllPll = selected.set === "OLL" || selected.set === "PLL";
+        const navIdx = isOllPll ? catalogNavList.findIndex((a) => a.id === selected.id) : -1;
+        return (
         <div className="modalOverlay" onClick={() => setSelected(null)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <div className="modalHeader">
@@ -2028,9 +2054,30 @@ export default function App() {
                     : "Recognition + execution viewer"}
                 </div>
               </div>
-              <button className="close" type="button" onClick={() => setSelected(null)}>
-                ✕
-              </button>
+              <div className="modalHeaderRight">
+                {isOllPll && navIdx !== -1 && (
+                  <div className="modalNav">
+                    <button
+                      className="modalNavBtn"
+                      type="button"
+                      disabled={navIdx === 0}
+                      onClick={() => setSelected(catalogNavList[navIdx - 1])}
+                      title="Previous case (←)"
+                    >←</button>
+                    <span className="modalNavCount">{navIdx + 1} / {catalogNavList.length}</span>
+                    <button
+                      className="modalNavBtn"
+                      type="button"
+                      disabled={navIdx === catalogNavList.length - 1}
+                      onClick={() => setSelected(catalogNavList[navIdx + 1])}
+                      title="Next case (→)"
+                    >→</button>
+                  </div>
+                )}
+                <button className="close" type="button" onClick={() => setSelected(null)}>
+                  ✕
+                </button>
+              </div>
             </div>
 
             <div className="modalLayout">
@@ -2182,7 +2229,8 @@ export default function App() {
             </div>
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {drillSet && (
         <DrillModal
