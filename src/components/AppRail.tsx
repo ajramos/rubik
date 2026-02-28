@@ -1,6 +1,6 @@
 import React from "react";
 
-type AppSection = "study" | "practice" | "progress" | "reference";
+type AppSection = "study" | "practice" | "progress" | "reference" | "bld";
 type CfopPhase = "f2l" | "last-layer";
 type WorkspaceMode = "full-ll" | "4lll";
 type LastLayerSet = "OLL" | "PLL";
@@ -10,6 +10,7 @@ const PRIMARY_MENU_ITEMS: Array<{ key: AppSection; label: string; status?: "beta
   { key: "practice", label: "Practice" },
   { key: "progress", label: "Progress" },
   { key: "reference", label: "Reference" },
+  { key: "bld", label: "BLD", status: "beta" },
 ];
 
 const LEARNING_TRACKS = [
@@ -30,8 +31,8 @@ const LEARNING_TRACKS = [
   },
   {
     title: "Blindfolded (BLD)",
-    state: "Backlog",
-    detail: "Letter pairs, memo systems, execution drills.",
+    state: "Active",
+    detail: "M2 edges, OP corners, Speffz scheme, SRS drills.",
   },
 ] as const;
 
