@@ -11,10 +11,12 @@ import { TimedBlockModal } from "./components/TimedBlockModal";
 import { ScrambleTimerModal } from "./components/ScrambleTimerModal";
 import { loadSRS, saveSRS, scheduleCard, getSRSCard, isDue } from "./utils/srs";
 import type { SRSCard, SRSRating } from "./utils/srs";
+import { loadBldSRS, saveBldSRS, getBldCard } from "./utils/bld-srs";
 import { loadStreaks, recordPractice } from "./utils/streaks";
 import type { StreakData } from "./utils/streaks";
 import { loadPrefs, setPreferredAlg, clearPreferredAlg, toggleOhMode } from "./utils/prefs";
 import type { PrefsData } from "./utils/prefs";
+import { BldSection } from "./components/BldSection";
 
 const algs = algsRaw as AlgItem[];
 
@@ -28,7 +30,7 @@ type CatalogGroup = {
 
 type WorkspaceMode = "full-ll" | "4lll";
 type CfopPhase = "f2l" | "last-layer";
-type AppSection = "study" | "practice" | "progress" | "reference";
+type AppSection = "study" | "practice" | "progress" | "reference" | "bld";
 
 type MethodCase = {
   name: string;
@@ -100,6 +102,7 @@ const APP_SECTION_LABELS: Record<AppSection, string> = {
   practice: "Practice",
   progress: "Progress",
   reference: "Reference",
+  bld: "BLD",
 };
 
 const SET_META: Record<Exclude<AlgSet, "F2L">, { short: string; long: string; description: string }> = {
@@ -1256,6 +1259,7 @@ export default function App() {
   const [selected, setSelected] = useState<SelectedCase | null>(null);
   const [activeSectionAnchor, setActiveSectionAnchor] = useState<string>("all");
   const [srsData, setSrsData] = useState<Record<string, SRSCard>>(() => loadSRS());
+  const [bldSrsData, setBldSrsData] = useState<Record<string, SRSCard>>(() => loadBldSRS());
   const [streaks, setStreaks] = useState<StreakData>(() => loadStreaks());
   const [prefs, setPrefs] = useState<PrefsData>(() => loadPrefs());
   const [drillSet, setDrillSet] = useState<"OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "TODAY" | "F2L" | "F2L_EXEC" | null>(null);
@@ -1421,6 +1425,15 @@ export default function App() {
     const next = { ...srsData, [id]: updated };
     setSrsData(next);
     saveSRS(next);
+    setStreaks((s) => recordPractice(s));
+  }
+
+  function handleBldRate(id: string, rating: SRSRating) {
+    const card = getBldCard(id, bldSrsData);
+    const updated = scheduleCard(card, rating);
+    const next = { ...bldSrsData, [id]: updated };
+    setBldSrsData(next);
+    saveBldSRS(next);
     setStreaks((s) => recordPractice(s));
   }
   const visibleCount = filtered.length;
@@ -1748,7 +1761,9 @@ export default function App() {
         ? "3x3x3 Practice Workspace"
         : appSection === "progress"
           ? "3x3x3 Progress Tracking"
-          : "3x3x3 Reference Desk";
+          : appSection === "bld"
+            ? "3x3x3 Blindfolded Training"
+            : "3x3x3 Reference Desk";
   const breadcrumbParts = [
     appSection === "study" ? "Study" : activePrimaryLabel,
     ...(appSection === "study"
@@ -1807,7 +1822,9 @@ export default function App() {
             className="catalogPanel"
             aria-label={appSection === "study" ? "Algorithm catalog" : `${activePrimaryLabel} workspace`}
           >
-            {appSection !== "study" ? (
+            {appSection === "bld" ? (
+              <BldSection bldSrsData={bldSrsData} onRate={handleBldRate} />
+            ) : appSection !== "study" ? (
               <WorkspaceScaffold
                 appSection={appSection}
                 activePrimaryLabel={activePrimaryLabel}
