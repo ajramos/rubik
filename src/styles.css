@@ -4720,272 +4720,73 @@ code {
   letter-spacing: 0.01em;
 }
 
+
+
 /* ═══════════════════════════════════════════════════════════════
-   BLD (Blindfolded) Section
+   BLD (Blindfolded) — additions on top of existing theme
    ═══════════════════════════════════════════════════════════════ */
 
-.bldSection {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  min-height: 0;
-  overflow-y: auto;
+/* Card color variant — purple, matching --accent-4lll */
+.workspaceSectionCard--bld {
+  background:
+    linear-gradient(135deg, rgba(88, 64, 176, 0.06), transparent 50%),
+    var(--surface-2);
+  border-color: rgba(88, 64, 176, 0.14);
 }
 
-/* Header */
-.bldHeader {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.bldHeaderTop {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.bldTitle {
-  font-family: var(--font-display, "Space Grotesk", sans-serif);
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--ink);
-  margin: 0;
-}
-
-.bldMethodBadge {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--accent-ui);
-  background: var(--accent-ui-bg);
-  border: 1px solid var(--accent-ui-border);
-  border-radius: 4px;
-  padding: 2px 7px;
-  text-transform: uppercase;
-}
-
-.bldSubtitle {
-  font-size: 13px;
-  color: var(--muted);
-  margin: 0;
-  line-height: 1.5;
-}
-
-/* Tabs */
-.bldTabs {
-  display: flex;
-  gap: 4px;
-  border-bottom: 1px solid var(--line-2);
-  padding-bottom: 0;
-}
-
-.bldTab {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--muted);
-  background: none;
-  border: 1px solid transparent;
-  border-bottom: none;
-  border-radius: 6px 6px 0 0;
-  cursor: pointer;
-  transition: color 0.15s, background 0.15s;
-  position: relative;
-  bottom: -1px;
-}
-
-.bldTab:hover {
-  color: var(--ink);
-  background: var(--surface-2);
-}
-
-.bldTab.isActive {
-  color: var(--accent-ui);
-  background: var(--surface-1);
-  border-color: var(--line-2);
-  border-bottom-color: var(--surface-1);
-}
-
-.bldTabBadge {
-  font-size: 10px;
-  font-weight: 700;
-  background: var(--accent-ui);
-  color: #fff;
-  border-radius: 10px;
-  padding: 1px 5px;
-  min-width: 16px;
-  text-align: center;
-}
-
-/* Tab content */
-.bldTabContent {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* ── Reference: Speffz diagram + letter lists ── */
-.bldDiagramWrap {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.bldTableTitle {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink);
-  margin: 0 0 4px;
-}
-
-.bldTableDesc {
+/* Buffer note row below the section lead */
+.bldBufferNote {
+  margin: 10px 0 0;
   font-size: 12.5px;
   color: var(--muted);
-  margin: 0 0 10px;
-  line-height: 1.5;
-}
-
-.bldLetterGrid {
-  display: grid;
-  grid-template-columns: auto 1fr 1fr;
-  gap: 16px;
-  align-items: start;
-}
-
-.bldLetterFace {
-  background: var(--surface-2);
-  border: 1px solid var(--line-2);
-  border-radius: var(--radius-md, 8px);
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.bldLetterFaceLabel {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--accent-ui);
-  margin-bottom: 4px;
-}
-
-.bldLetterFaceRows {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.bldLetterRow {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-}
-
-.bldLetterCell {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: var(--surface-1);
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: 600;
-  font-family: "IBM Plex Mono", monospace;
-  color: var(--ink);
-  padding: 5px 3px;
-  min-width: 36px;
-  text-align: center;
+  gap: 8px;
+  flex-wrap: wrap;
 }
+.bldBufferNote strong { color: var(--ink); }
+.bldBufferSep { color: var(--muted-2); }
 
-.bldLetterCellEmpty {
-  background: transparent;
-  border-color: transparent;
-}
+/* ── BLD letter display inside the drill modal (replaces MiniTwisty) ── */
 
-.bldLetterCellBuffer {
-  color: var(--muted-2);
-  font-style: italic;
-  font-size: 10px;
-}
-
-.bldLetterFaceNote {
-  font-size: 10.5px;
-  color: var(--muted-2);
-  margin: 0;
-  line-height: 1.5;
-}
-
-/* Letter list (full position list) */
-.bldLetterList {
+.bldDrillThumb {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  max-height: 320px;
-  overflow-y: auto;
-}
-
-.bldLetterListItem {
-  display: grid;
-  grid-template-columns: 20px 36px 1fr auto;
-  gap: 8px;
   align-items: center;
-  padding: 3px 6px;
-  border-radius: 4px;
-  font-size: 12px;
+  gap: 4px;
+  padding: 8px 0 4px;
 }
 
-.bldLetterListItem:hover {
-  background: var(--surface-2);
-}
-
-.bldLetterListItemBuffer {
-  opacity: 0.5;
-}
-
-.bldLetterListLetter {
-  font-family: "IBM Plex Mono", monospace;
+.bldDrillLetter {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 72px;
   font-weight: 700;
-  font-size: 12px;
-  color: var(--accent-ui);
+  color: #5840b0;
+  line-height: 1;
 }
 
-.bldLetterListPos {
+.bldDrillPos {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--ink);
 }
 
-.bldLetterListFace {
-  font-size: 11px;
+.bldDrillFaceName {
+  font-size: 12px;
   color: var(--muted);
 }
 
-.bldLetterListBufferTag {
-  font-size: 10px;
-  color: var(--muted-2);
-  background: var(--surface-3);
-  border-radius: 3px;
-  padding: 1px 4px;
-}
+/* ── Reference section (below landing card) ── */
 
-/* ── Reference: commutator tables ── */
-.bldTableWrap {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.bldRefSection {
+  margin-top: 10px;
 }
 
 .bldTableScroll {
+  margin-top: 10px;
   overflow-x: auto;
-  border-radius: var(--radius-md, 8px);
+  border-radius: var(--radius-sm);
   border: 1px solid var(--line-2);
 }
 
@@ -4994,84 +4795,61 @@ code {
   border-collapse: collapse;
   font-size: 12.5px;
 }
-
 .bldTable th {
-  background: var(--surface-2);
+  background: var(--surface-3);
   color: var(--muted);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 600;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   text-align: left;
-  padding: 7px 10px;
+  padding: 6px 10px;
   border-bottom: 1px solid var(--line-2);
   white-space: nowrap;
 }
-
 .bldTable td {
   padding: 5px 10px;
   border-bottom: 1px solid var(--line);
   vertical-align: middle;
   color: var(--ink);
 }
-
-.bldTable tr:last-child td {
-  border-bottom: none;
-}
-
-.bldTable tr:hover td {
-  background: var(--surface-2);
-}
-
-.bldTableRowBuffer td {
-  opacity: 0.5;
-  font-style: italic;
-}
+.bldTable tr:last-child td { border-bottom: none; }
+.bldTable tr:hover td { background: var(--surface-2); }
+.bldTableRowBuffer td { opacity: 0.45; }
 
 .bldTableLetter {
   font-family: "IBM Plex Mono", monospace;
   font-weight: 700;
   font-size: 14px;
-  color: var(--accent-ui);
-  width: 36px;
+  color: #5840b0;
+  width: 34px;
 }
-
 .bldTablePos {
   font-family: "IBM Plex Mono", monospace;
   font-size: 12px;
-  color: var(--ink);
   white-space: nowrap;
 }
-
 .bldTableAlg {
   font-family: "IBM Plex Mono", monospace;
   font-size: 11.5px;
-  color: var(--ink);
   background: var(--surface-2);
   border-radius: 3px;
   padding: 2px 5px;
   white-space: nowrap;
 }
-
 .bldTableAlgInline {
   font-family: "IBM Plex Mono", monospace;
   font-size: 11px;
-  color: var(--ink);
 }
-
-.bldTableBufferNote {
-  font-size: 11px;
-  color: var(--muted-2);
-}
-
+.bldTableMuted { font-size: 11px; color: var(--muted-2); }
 .bldTableFootnote {
+  margin: 8px 0 0;
   font-size: 11px;
   color: var(--muted-2);
-  margin: 0;
   line-height: 1.5;
 }
 
-/* SRS status badges in table */
+/* SRS status badges in reference table */
 .bldSrsStatus {
   font-size: 10px;
   font-weight: 600;
@@ -5081,156 +4859,7 @@ code {
   padding: 2px 5px;
   white-space: nowrap;
 }
+.bldSrsStatus--new   { color: var(--muted-2); background: var(--surface-3); }
+.bldSrsStatus--due   { color: #a07800; background: rgba(160, 120, 0, 0.1); }
+.bldSrsStatus--learned { color: var(--accent-green, #0f6630); background: rgba(15, 102, 48, 0.1); }
 
-.bldSrsStatus--new {
-  color: var(--muted-2);
-  background: var(--surface-3);
-}
-
-.bldSrsStatus--due {
-  color: #a07800;
-  background: rgba(160, 120, 0, 0.1);
-}
-
-.bldSrsStatus--learned {
-  color: var(--accent-green, #0f6630);
-  background: rgba(15, 102, 48, 0.1);
-}
-
-/* ── Drill panel ── */
-.bldDrillWrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 8px 0 24px;
-}
-
-.bldCard {
-  width: 100%;
-  max-width: 480px;
-  background: var(--surface-2);
-  border: 1px solid var(--line-2);
-  border-radius: var(--radius-lg, 12px);
-  padding: 28px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  text-align: center;
-}
-
-.bldCardFront,
-.bldCardBack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-}
-
-.bldCardLetter {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 72px;
-  font-weight: 700;
-  color: var(--accent-ui);
-  line-height: 1;
-}
-
-.bldCardPosition {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.bldCardFaceName {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.bldCardNote {
-  font-size: 12px;
-  color: var(--muted-2);
-  font-style: italic;
-  max-width: 320px;
-}
-
-.bldCardHint {
-  font-size: 12.5px;
-  color: var(--muted);
-  margin: 4px 0 8px;
-}
-
-.bldCardAlgBlock {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  width: 100%;
-}
-
-.bldCardAlgLabel {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--muted-2);
-}
-
-.bldCardAlg {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 13px;
-  color: var(--ink);
-  background: var(--surface-1);
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 6px 12px;
-  text-align: center;
-  word-break: break-all;
-  max-width: 100%;
-}
-
-/* ── Drill complete screen ── */
-.bldDrillComplete {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  padding: 40px 16px;
-  text-align: center;
-}
-
-.bldDrillCompleteIcon {
-  font-size: 40px;
-}
-
-.bldDrillCompleteTitle {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--ink);
-  margin: 0;
-}
-
-.bldDrillCompleteLead {
-  font-size: 13.5px;
-  color: var(--muted);
-  margin: 0;
-}
-
-.bldDrillRestartBtn {
-  margin-top: 8px;
-  padding: 8px 20px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--accent-ui);
-  background: var(--accent-ui-bg);
-  border: 1px solid var(--accent-ui-border);
-  border-radius: 6px;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-
-.bldDrillRestartBtn:hover {
-  opacity: 0.8;
-}
