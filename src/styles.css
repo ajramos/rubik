@@ -4881,52 +4881,7 @@ code {
   margin-top: 10px;
 }
 
-.bldTableScroll {
-  margin-top: 10px;
-  overflow-x: auto;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--line-2);
-}
-
-.bldTable {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12.5px;
-}
-.bldTable th {
-  background: var(--surface-3);
-  color: var(--muted);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  text-align: left;
-  padding: 6px 10px;
-  border-bottom: 1px solid var(--line-2);
-  white-space: nowrap;
-}
-.bldTable td {
-  padding: 5px 10px;
-  border-bottom: 1px solid var(--line);
-  vertical-align: middle;
-  color: var(--ink);
-}
-.bldTable tr:last-child td { border-bottom: none; }
-.bldTable tr:hover td { background: var(--surface-2); }
-.bldTableRowBuffer td { opacity: 0.45; }
-
-.bldTableLetter {
-  font-family: "IBM Plex Mono", monospace;
-  font-weight: 700;
-  font-size: 14px;
-  color: #5840b0;
-  width: 34px;
-}
-.bldTablePos {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
-  white-space: nowrap;
-}
+/* Keep for backward compat in SpeffzNet / inline use */
 .bldTableAlg {
   font-family: "IBM Plex Mono", monospace;
   font-size: 11.5px;
@@ -4945,6 +4900,140 @@ code {
   font-size: 11px;
   color: var(--muted-2);
   line-height: 1.5;
+}
+
+/* ── Reference tabs ── */
+.bldYpermRef {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 12px 0 16px;
+  padding: 8px 12px;
+  background: var(--accent-ui-bg);
+  border: 1px solid var(--accent-ui-border);
+  border-radius: var(--radius-sm);
+}
+.bldYpermLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-ui);
+  white-space: nowrap;
+}
+.bldYpermCode {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.bldRefTabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.bldRefTab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--line-2);
+  background: var(--surface-1);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 150ms, background 150ms;
+}
+.bldRefTab:hover { border-color: var(--accent-ui); }
+.bldRefTab--active {
+  border-color: var(--accent-ui);
+  background: var(--accent-ui-bg);
+  color: var(--ink);
+}
+.bldRefTabSub {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--muted-2);
+}
+
+/* ── Face-grouped reference ── */
+.bldFaceGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bldFaceGroup {
+  border: 1px solid var(--line-2);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.bldFaceGroupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.bldFaceGroupCount {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+.bldFaceGroupBody {
+  background: var(--surface-1);
+}
+
+.bldRefRow {
+  display: grid;
+  grid-template-columns: 28px 52px 1fr auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.bldRefRow:last-child { border-bottom: none; }
+.bldRefRow:hover { background: var(--surface-2); }
+.bldRefRow--buffer { opacity: 0.45; }
+
+.bldRefLetter {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+}
+.bldRefPos {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.bldRefFaceName {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bldRefSetup {
+  display: flex;
+  justify-content: flex-end;
+}
+.bldRefSrs {
+  min-width: 48px;
+  display: flex;
+  justify-content: flex-end;
 }
 
 /* SRS status badges in reference table */

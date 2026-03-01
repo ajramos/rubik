@@ -21,134 +21,149 @@ function statusOf(t: BldTarget, srsData: Record<string, SRSCard>): "new" | "due"
   return isDue(getSRSCard(t.id, srsData)) ? "due" : "learned";
 }
 
-// ── Reference tables (toggled from landing) ───────────────────────────────────
+// Face palette — matches BldDrillModal + NotationReference
+const FACE_META: Record<string, { bg: string; text: string; label: string }> = {
+  U: { bg: "#6b7280", text: "#fff", label: "U — Up" },
+  D: { bg: "#c8980a", text: "#fff", label: "D — Down" },
+  R: { bg: "#c41e3a", text: "#fff", label: "R — Right" },
+  L: { bg: "#d45000", text: "#fff", label: "L — Left" },
+  F: { bg: "#007a3a", text: "#fff", label: "F — Front" },
+  B: { bg: "#0046ad", text: "#fff", label: "B — Back" },
+};
+
+const FACE_ORDER = ["U", "L", "F", "R", "B", "D"] as const;
+
+function groupByFace(targets: BldTarget[]) {
+  const groups: Record<string, BldTarget[]> = {};
+  for (const face of FACE_ORDER) groups[face] = [];
+  for (const t of targets) {
+    const face = t.position[0];
+    if (face && groups[face]) groups[face].push(t);
+  }
+  return groups;
+}
+
+// ── Grouped reference ─────────────────────────────────────────────────────────
+
+function FaceGroup({
+  face,
+  targets,
+  srsData,
+  type,
+}: {
+  face: string;
+  targets: BldTarget[];
+  srsData: Record<string, SRSCard>;
+  type: "edge" | "corner";
+}) {
+  const meta = FACE_META[face] ?? { bg: "#6b7280", text: "#fff", label: face };
+  if (targets.length === 0) return null;
+
+  return (
+    <div className="bldFaceGroup">
+      <div className="bldFaceGroupHeader" style={{ background: meta.bg, color: meta.text }}>
+        {meta.label}
+        <span className="bldFaceGroupCount">{targets.filter((t) => !t.isBuffer).length} positions</span>
+      </div>
+      <div className="bldFaceGroupBody">
+        {targets.map((t) => {
+          const faceName = t.faceName.replace(/ \([A-Z] sticker\)$/, "");
+          return (
+            <div key={t.id} className={`bldRefRow ${t.isBuffer ? "bldRefRow--buffer" : ""}`}>
+              <span className="bldRefLetter" style={{ color: t.isBuffer ? "var(--muted-2)" : meta.bg }}>
+                {t.letter}
+              </span>
+              <span className="bldRefPos">{t.position}</span>
+              <span className="bldRefFaceName">{faceName}</span>
+              <span className="bldRefSetup">
+                {t.isBuffer ? (
+                  <em className="bldTableMuted">buffer</em>
+                ) : t.setupAlg ? (
+                  <code className="bldTableAlg">{t.setupAlg}</code>
+                ) : type === "edge" ? (
+                  <code className="bldTableAlg">— direct</code>
+                ) : (
+                  <em className="bldTableMuted">no setup</em>
+                )}
+              </span>
+              <span className="bldRefSrs">
+                {!t.isBuffer && (
+                  <span className={`bldSrsStatus bldSrsStatus--${statusOf(t, srsData)}`}>
+                    {statusOf(t, srsData)}
+                  </span>
+                )}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 function ReferenceSection({ srsData }: { srsData: Record<string, SRSCard> }) {
+  const [tab, setTab] = useState<"edges" | "corners">("edges");
+  const edgeGroups = groupByFace(SPEFFZ_EDGES);
+  const cornerGroups = groupByFace(SPEFFZ_CORNERS);
+
   return (
     <section className="workspaceSectionCard workspaceSectionCard--bld bldRefSection">
       <div className="workspaceSectionKicker">Speffz Reference</div>
 
-      {/* ── Cube net diagram ── */}
+      {/* Cube net */}
       <h3 className="workspaceSectionTitle" style={{ fontSize: 18, marginTop: 0 }}>
         Letter Mapping — Cube Net
       </h3>
       <p className="workspaceSectionLead" style={{ marginTop: 4, marginBottom: 12 }}>
-        Every non-center sticker is assigned a unique letter A–X. The net below shows all
-        six faces unfolded. Each face has 4 edge stickers (middle of each side) and 4
-        corner stickers (corners), all labeled.
+        Every non-center sticker gets a unique letter A–X. Each face has 4 edge stickers
+        and 4 corner stickers — the net below shows all 48 positions labeled.
       </p>
       <SpeffzNet />
 
-      <h3 className="workspaceSectionTitle" style={{ fontSize: 18, marginTop: 24 }}>
-        M2 Edges
-      </h3>
-      <p className="workspaceSectionLead" style={{ marginTop: 4 }}>
-        Buffer: <strong>UF (letter C)</strong>. Each alg = setup · M2 · undo setup.
-        Letters C and I are the same piece (the buffer) — skipped automatically in drills.
-      </p>
-      <div className="bldTableScroll">
-        <table className="bldTable">
-          <thead>
-            <tr>
-              <th>Letter</th>
-              <th>Position</th>
-              <th>Setup</th>
-              <th>Full Alg</th>
-              <th>SRS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {SPEFFZ_EDGES.map((t) => (
-              <tr key={t.id} className={t.isBuffer ? "bldTableRowBuffer" : ""}>
-                <td className="bldTableLetter">{t.letter}</td>
-                <td className="bldTablePos">{t.position}</td>
-                <td>
-                  {t.isBuffer ? (
-                    <em className="bldTableMuted">buffer</em>
-                  ) : t.setupAlg ? (
-                    <code className="bldTableAlg">{t.setupAlg}</code>
-                  ) : (
-                    <em className="bldTableMuted">—</em>
-                  )}
-                </td>
-                <td>
-                  {t.isBuffer ? (
-                    <em className="bldTableMuted">skip</em>
-                  ) : (
-                    <code className="bldTableAlg">{t.fullAlg}</code>
-                  )}
-                </td>
-                <td>
-                  {!t.isBuffer && (
-                    <span className={`bldSrsStatus bldSrsStatus--${statusOf(t, srsData)}`}>
-                      {statusOf(t, srsData)}
-                    </span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Y-perm reference */}
+      <div className="bldYpermRef">
+        <span className="bldYpermLabel">Y-perm (OP base commutator)</span>
+        <code className="bldYpermCode">{Y_PERM}</code>
       </div>
 
-      <h3 className="workspaceSectionTitle" style={{ fontSize: 18, marginTop: 20 }}>
-        OP Corners
-      </h3>
-      <p className="workspaceSectionLead" style={{ marginTop: 4 }}>
-        Buffer: <strong>URF U-sticker (letter B)</strong>. Each alg = setup · Y-perm · undo setup.
-        Letters B, H, and P are the three stickers of the buffer piece — skipped in drills.
-      </p>
-      <p className="workspaceSectionLead" style={{ marginTop: 4 }}>
-        Y-perm: <code className="bldTableAlgInline">{Y_PERM}</code>
-      </p>
-      <div className="bldTableScroll">
-        <table className="bldTable">
-          <thead>
-            <tr>
-              <th>Letter</th>
-              <th>Position</th>
-              <th>Setup</th>
-              <th>Full Alg</th>
-              <th>SRS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {SPEFFZ_CORNERS.map((t) => (
-              <tr key={t.id} className={t.isBuffer ? "bldTableRowBuffer" : ""}>
-                <td className="bldTableLetter">{t.letter}</td>
-                <td className="bldTablePos">{t.position}</td>
-                <td>
-                  {t.isBuffer ? (
-                    <em className="bldTableMuted">buffer</em>
-                  ) : t.setupAlg ? (
-                    <code className="bldTableAlg">{t.setupAlg}</code>
-                  ) : (
-                    <em className="bldTableMuted">—</em>
-                  )}
-                </td>
-                <td>
-                  {t.isBuffer ? (
-                    <em className="bldTableMuted">skip</em>
-                  ) : (
-                    <code className="bldTableAlg">{t.fullAlg}</code>
-                  )}
-                </td>
-                <td>
-                  {!t.isBuffer && (
-                    <span className={`bldSrsStatus bldSrsStatus--${statusOf(t, srsData)}`}>
-                      {statusOf(t, srsData)}
-                    </span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* Tab switcher */}
+      <div className="bldRefTabs">
+        <button
+          type="button"
+          className={`bldRefTab ${tab === "edges" ? "bldRefTab--active" : ""}`}
+          onClick={() => setTab("edges")}
+        >
+          M2 Edges
+          <span className="bldRefTabSub">buffer: C (UF)</span>
+        </button>
+        <button
+          type="button"
+          className={`bldRefTab ${tab === "corners" ? "bldRefTab--active" : ""}`}
+          onClick={() => setTab("corners")}
+        >
+          OP Corners
+          <span className="bldRefTabSub">buffer: B (URF)</span>
+        </button>
       </div>
-      <p className="bldTableFootnote">
-        Corner setups use the Y-perm as the base commutator.
-        Verify algs against your preferred reference while you're learning them.
-      </p>
+
+      {/* Face-grouped list */}
+      <div className="bldFaceGroups">
+        {FACE_ORDER.map((face) => (
+          <FaceGroup
+            key={face}
+            face={face}
+            targets={tab === "edges" ? edgeGroups[face] : cornerGroups[face]}
+            srsData={srsData}
+            type={tab === "edges" ? "edge" : "corner"}
+          />
+        ))}
+      </div>
+
+      {tab === "corners" && (
+        <p className="bldTableFootnote">
+          fullAlg = setup · Y-perm · undo(setup). Drill view shows each step separately.
+        </p>
+      )}
     </section>
   );
 }
@@ -184,7 +199,7 @@ export function BldSection({ bldSrsData, onRate }: Props) {
             className={`workspaceTile todayQueueTile ${edgeDue > 0 ? "todayQueueTile--due" : ""}`}
           >
             <h3 className="todayQueueTitle">M2 Edges</h3>
-            <p>Flashcards for all 22 edge positions. See the letter — recall the setup alg — reveal and rate your confidence.</p>
+            <p>22 edge positions. See the letter — recall the setup alg — reveal and rate.</p>
             {edgeDue === 0 ? (
               <div className="todayQueueDone">
                 <span className="todayQueueDoneIcon">✓</span>
@@ -211,7 +226,7 @@ export function BldSection({ bldSrsData, onRate }: Props) {
             className={`workspaceTile todayQueueTile ${cornerDue > 0 ? "todayQueueTile--due" : ""}`}
           >
             <h3 className="todayQueueTitle">OP Corners</h3>
-            <p>Flashcards for all 21 corner positions. See the letter — recall the Y-perm setup — reveal and rate.</p>
+            <p>21 corner positions. See the letter — recall the Y-perm setup — reveal and rate.</p>
             {cornerDue === 0 ? (
               <div className="todayQueueDone">
                 <span className="todayQueueDoneIcon">✓</span>
@@ -233,27 +248,28 @@ export function BldSection({ bldSrsData, onRate }: Props) {
             </button>
           </article>
 
-          {/* How it works tile */}
+          {/* How it works */}
           <article className="workspaceTile">
-            <h3>New to BLD?</h3>
+            <h3>How M2/OP works</h3>
             <p>
-              Each sticker on the cube has a letter (A–X). To solve blindfolded: memorise which
-              letter goes where, close your eyes, and execute one algorithm per piece.
-              The buffer piece (UF for edges, URF for corners) acts as the anchor — M2 or
-              Y-perm cycles it against each target.
+              Each sticker has a letter (A–X). During memo, you scan the cube and note which
+              letter lands on each target. During execution, you run one alg per letter:
+              <strong> setup · M2 · undo</strong> for edges,{" "}
+              <strong>setup · Y-perm · undo</strong> for corners.
+              The buffer piece (UF / URF) acts as the anchor for every cycle.
             </p>
           </article>
 
-          {/* Reference tile */}
+          {/* Reference toggle */}
           <article className="workspaceTile">
             <h3>Algorithm Reference</h3>
-            <p>Full list of all 24 edge and corner positions with their Speffz letter, setup move, and complete alg. Handy until you have them memorised.</p>
+            <p>All positions grouped by face — letter, position, setup move, and SRS status at a glance.</p>
             <button
               type="button"
               className="timedStartTileBtn"
               onClick={() => setShowRef((v) => !v)}
             >
-              {showRef ? "Hide Reference" : "Show M2 / OP Table"}
+              {showRef ? "Hide Reference" : "Show Reference"}
             </button>
           </article>
 
