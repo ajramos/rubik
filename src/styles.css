@@ -2765,7 +2765,7 @@ code {
 
   .treeInlineTabs { margin: 0; }
 
-  .sectionGrid { grid-template-columns: 1fr; }
+  .sectionGrid { grid-template-columns: 1fr; padding: 8px; }
 
   .f2lGrid    { grid-template-columns: 1fr; padding: 8px; }
   .f2lEmptyBody { grid-template-columns: 1fr; padding: 8px; }
@@ -2798,7 +2798,16 @@ code {
   .sectionNavChip { padding: 6px 8px; }
   .sectionNavChipLabel { font-size: 10px; }
 
-  .cardAlg { font-size: 13px; padding: 8px 10px; }
+  .card { padding: 10px; gap: 6px; }
+  .cardTop { gap: 8px; }
+  .cardTitle { font-size: 14px; }
+  .cardTop .miniThumb {
+    width: min(128px, 48vw) !important;
+    height: min(128px, 48vw) !important;
+  }
+  .cardHint { margin-top: 4px; font-size: 10px; }
+  .setupHint { font-size: 9px; padding: 4px 7px; }
+  .cardAlg { margin-top: 6px; font-size: 12px; line-height: 1.5; padding: 7px 9px; }
   .heroStats { gap: 5px; }
   .heroBadge { padding: 5px 8px; gap: 5px; }
   .heroBadgeValue { font-size: 12px; }
@@ -5471,4 +5480,3 @@ code {
   color: var(--ink);
   font-weight: 600;
 }
-
