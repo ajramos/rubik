@@ -22,3 +22,16 @@ export function normalizeAlg(input: string): string {
 
   return s.replace(/\s+/g, " ").trim();
 }
+
+export function invertAlg(input: string): string {
+  const normalized = normalizeAlg(input);
+  const tokens = normalized.split(/\s+/).filter(Boolean);
+  return tokens
+    .reverse()
+    .map((move) => {
+      if (move.endsWith("2")) return move;
+      if (move.endsWith("'")) return move.slice(0, -1);
+      return `${move}'`;
+    })
+    .join(" ");
+}
