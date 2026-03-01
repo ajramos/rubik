@@ -3,6 +3,7 @@ import type { SRSCard, SRSRating } from "../utils/srs";
 import { isDue, getSRSCard } from "../utils/srs";
 import { SPEFFZ_EDGES, SPEFFZ_CORNERS, Y_PERM, type BldTarget } from "../data/bld-data";
 import { BldDrillModal } from "./BldDrillModal";
+import { SpeffzNet } from "./SpeffzNet";
 
 type Props = {
   bldSrsData: Record<string, SRSCard>;
@@ -27,7 +28,18 @@ function ReferenceSection({ srsData }: { srsData: Record<string, SRSCard> }) {
     <section className="workspaceSectionCard workspaceSectionCard--bld bldRefSection">
       <div className="workspaceSectionKicker">Speffz Reference</div>
 
+      {/* ── Cube net diagram ── */}
       <h3 className="workspaceSectionTitle" style={{ fontSize: 18, marginTop: 0 }}>
+        Letter Mapping — Cube Net
+      </h3>
+      <p className="workspaceSectionLead" style={{ marginTop: 4, marginBottom: 12 }}>
+        Every non-center sticker is assigned a unique letter A–X. The net below shows all
+        six faces unfolded. Each face has 4 edge stickers (middle of each side) and 4
+        corner stickers (corners), all labeled.
+      </p>
+      <SpeffzNet />
+
+      <h3 className="workspaceSectionTitle" style={{ fontSize: 18, marginTop: 24 }}>
         M2 Edges
       </h3>
       <p className="workspaceSectionLead" style={{ marginTop: 4 }}>
