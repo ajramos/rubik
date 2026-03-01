@@ -13,6 +13,7 @@ type Props = {
   setupAlg?: string;
   exactF2L?: boolean;
   experimentalStickering?: string;
+  preferRuntime?: boolean;
 };
 
 export function MiniTwisty({
@@ -23,6 +24,7 @@ export function MiniTwisty({
   setupAlg,
   exactF2L = false,
   experimentalStickering: experimentalStickeringOverride,
+  preferRuntime = false,
 }: Props) {
   const cleanedAlg = useMemo(() => (alg ? normalizeAlg(alg) : undefined), [alg]);
   const cleanedSetupAlg = useMemo(
@@ -65,7 +67,7 @@ export function MiniTwisty({
   const [renderError, setRenderError] = React.useState(false);
 
   React.useEffect(() => {
-    if (thumb || !cleanedAlg || !cacheKey) return;
+    if ((!preferRuntime && thumb) || !cleanedAlg || !cacheKey) return;
     if (runtimeThumbCache.has(cacheKey)) {
       setRuntimeThumb(runtimeThumbCache.get(cacheKey)!);
       return;
@@ -196,6 +198,7 @@ export function MiniTwisty({
       cleanup();
     };
   }, [
+    preferRuntime,
     thumb,
     cleanedAlg,
     cacheKey,
@@ -214,9 +217,9 @@ export function MiniTwisty({
       style={{ width: size, height: size }}
       aria-hidden="true"
     >
-      {thumb || runtimeThumb ? (
+      {runtimeThumb || thumb ? (
         <img
-          src={thumb ?? runtimeThumb ?? ""}
+          src={runtimeThumb ?? thumb ?? ""}
           alt=""
           className="miniImage"
           style={{ width: "100%", height: "100%", display: "block" }}

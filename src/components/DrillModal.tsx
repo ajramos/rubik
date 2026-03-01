@@ -3,6 +3,7 @@ import type { AlgItem } from "../types";
 import type { SRSCard, SRSRating } from "../utils/srs";
 import { isDue, getSRSCard } from "../utils/srs";
 import { MiniTwisty } from "./MiniTwisty";
+import { invertAlg } from "../utils/alg";
 
 const SESSION_MAX = 20;
 
@@ -119,8 +120,9 @@ export function DrillModal({ cases, label, mode = "recognition", srsData, prefer
                   set={current.set}
                   size={200}
                   thumb={current.thumb}
-                  alg={current.set === "F2L" ? current.alg : undefined}
-                  setupAlg={current.set === "F2L" ? current.caseSetupAlg : undefined}
+                  alg={current.alg}
+                  setupAlg={current.set === "F2L" ? current.caseSetupAlg : invertAlg(current.alg)}
+                  preferRuntime={current.set !== "F2L"}
                 />
               </div>
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import type { AlgItem } from "../types";
 import type { SRSCard, SRSRating } from "../utils/srs";
 import { MiniTwisty } from "./MiniTwisty";
+import { invertAlg } from "../utils/alg";
 
 type Phase = "setup" | "question" | "answer" | "complete";
 type SetChoice = "OLL" | "PLL" | "F2L" | "mixed";
@@ -208,7 +209,14 @@ export function TimedBlockModal({ ollCases, pllCases, f2lCases = [], srsData, pr
 
             <div className="drillCard">
               <div className="drillThumbWrap">
-                <MiniTwisty set={current.set} size={200} thumb={current.thumb} />
+                <MiniTwisty
+                  set={current.set}
+                  size={200}
+                  thumb={current.thumb}
+                  alg={current.alg}
+                  setupAlg={current.set === "F2L" ? current.caseSetupAlg : invertAlg(current.alg)}
+                  preferRuntime={current.set !== "F2L"}
+                />
               </div>
 
               {phase === "question" ? (

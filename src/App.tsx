@@ -1694,7 +1694,7 @@ export default function App() {
         )}
         <div className="cardTop">
           <div className="cardTitle">{formatCaseNameForDisplay(a)}</div>
-          <MiniTwisty set={a.set} size={176} thumb={a.thumb} />
+          <MiniTwisty set={a.set} size={176} thumb={a.thumb} alg={a.alg} setupAlg={invertAlg(a.alg)} preferRuntime />
         </div>
         <div className="cardHint">{getCatalogCardHint(a, sectionTitle)}</div>
         <div className="setupHint">Setup: {invertAlg(a.alg)}</div>
@@ -1726,7 +1726,7 @@ export default function App() {
                 <span className={`methodTag methodTag--${c.set.toLowerCase()}`}>{c.set}</span>
               </div>
               <div className="methodThumb">
-                <MiniTwisty set={c.set} size={176} thumb={canonicalThumb} />
+                <MiniTwisty set={c.set} size={176} thumb={canonicalThumb} alg={c.alg} setupAlg={invertAlg(c.alg)} preferRuntime />
               </div>
               {canonical && (
                 <div className="methodCardMap">
@@ -2224,7 +2224,7 @@ export default function App() {
                         experimentalStickering="F2L"
                       />
                     ) : (
-                      <MiniTwisty set={selected.set} size={210} thumb={selected.thumb} />
+                      <MiniTwisty set={selected.set} size={210} thumb={selected.thumb} alg={prefs.preferredAlgs[selected.id] ?? selected.alg} setupAlg={invertAlg(prefs.preferredAlgs[selected.id] ?? selected.alg)} preferRuntime />
                     )}
                   </div>
                   {selected.set === "F2L" && selected.f2lMeta && (
