@@ -534,6 +534,7 @@ body {
 .treeLine {
   display: flex;
   align-items: center;
+  min-width: 0;
 }
 
 .treeLine--indent  { padding-left: 10px; }
@@ -569,6 +570,7 @@ body {
 
 .treeButton {
   width: 100%;
+  min-width: 0;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: transparent;
@@ -621,6 +623,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 5px;
+  min-width: 0;
 }
 
 .treeInlineTabs button {
@@ -1207,6 +1210,7 @@ body {
 
 .catalogHeader {
   border-radius: var(--radius-md);
+  overflow: hidden;
   border: 1px solid var(--line);
   background: var(--surface-2);
   padding: 12px;
@@ -1234,6 +1238,7 @@ body {
   align-items: center;
   gap: 5px;
   margin-bottom: 6px;
+  min-width: 0;
 }
 
 .catalogBreadcrumbSep {
@@ -1251,6 +1256,7 @@ body {
   font-size: 9px;
   color: var(--muted);
   letter-spacing: 0.03em;
+  max-width: 100%;
 }
 
 .catalogBreadcrumbItem.isCurrent {
@@ -2229,6 +2235,8 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .modalNavBtn {
@@ -2364,6 +2372,7 @@ body {
   display: grid;
   place-items: center;
   background: var(--surface-1);
+  overflow: hidden;
 }
 
 .modalSide {
@@ -2748,7 +2757,7 @@ code {
 }
 
 @media (max-width: 760px) {
-  .app { padding: 10px 10px 24px; }
+  .app { padding: 10px 10px 24px; overflow-x: hidden; }
 
   .heroLeft { flex-wrap: wrap; gap: 8px; }
   .heroBrand { font-size: 15px; }
@@ -2784,6 +2793,95 @@ code {
   .workspaceTabs { width: 100%; display: grid; grid-template-columns: 1fr 1fr; }
   .workspaceTabs button { width: 100%; }
 
+
+  .catalogHeader { padding: 10px; }
+  .catalogTitle { font-size: clamp(16px, 7vw, 24px); }
+  .catalogDescription { font-size: 11px; }
+
+  .controls { gap: 8px; }
+  .controls input {
+    min-width: 0;
+    width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .catalogSubRow { align-items: flex-start; }
+
+  .section { scroll-margin-top: 16px; }
+
+  .modal {
+    width: min(100%, 98vw);
+    max-width: 98vw;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .modalHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modalHeaderRight {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .modalNav {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .modalNavCount {
+    min-width: 0;
+    font-size: 12px;
+  }
+
+  .modalTagRow {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .modalSetTag,
+  .modalCaseTag {
+    font-size: 10px;
+  }
+
+  .close { align-self: flex-start; }
+
+  .viewerPanelStage {
+    min-height: min(56vh, 360px);
+    padding: 4px;
+  }
+
+  .recognitionThumbWrap { padding: 6px; }
+
+  .algAltPicker { gap: 5px; }
+  .algAltBtn { padding: 4px 8px; }
+
+  .treeButton {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .treeInlineTabs {
+    margin-left: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .treeInlineTabs button {
+    width: 100%;
+    text-align: left;
+  }
+
+  .treeNode {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .sectionNav {
+    padding-bottom: 2px;
+  }
   .catalogSticky {
     position: static;
     margin: 0 0 8px;
@@ -2817,11 +2915,11 @@ code {
   .methodCardAlg { font-size: 14px; }
   .f2lCardAlg { font-size: 14px; padding: 9px 11px; }
 
-  .modal { padding: 12px; border-radius: 16px; }
+  .modal { padding: 10px; border-radius: 16px; }
   .modalTitle { font-size: 22px; }
 
   .viewerPanelBar { flex-direction: column; align-items: flex-start; }
-  .viewerPanelStage { min-height: 340px; padding: 6px 4px 4px; }
+  .viewerPanelStage { min-height: min(56vh, 340px); padding: 6px 4px 4px; }
 
   code { font-size: 13px; }
 
