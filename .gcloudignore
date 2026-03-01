@@ -1,0 +1,24 @@
+# Files NOT to upload to Cloud Build
+# Source code is uploaded; secrets and build artifacts are not.
+
+.env
+.env.local
+.env.staging
+.env.production
+*.env
+firebase-credentials.json
+service-account*.json
+*-firebase-adminsdk-*.json
+*.pem
+*.key
+*.crt
+
+node_modules/
+dist/
+out/
+build/
+
+docs/
+.github/
+.git/
+skills/

@@ -1,0 +1,96 @@
+# Cloud Build pipeline — Staging
+# Triggered by: push to 'develop' branch
+# Deploys to: Cloud Run service 'rubik-staging'
+#
+# Substitutions set in the Cloud Build trigger (read from .env.staging by setup-environment.sh):
+#   _CLOUD_BUILD_SERVICE_ACCOUNT  (optional — if using a custom SA)
+#   _ALLOWED_ORIGINS              (CORS origins for the service)
+#   Add VITE_* vars here as needed, e.g.:
+#   _VITE_API_URL
+
+substitutions:
+  _SERVICE_NAME: rubik-staging
+  _REGION: europe-west1
+  _ALLOWED_ORIGINS: "*"
+  # Add VITE_* substitutions here when needed:
+  # _VITE_API_URL: ""
+
+# Uncomment if using a custom Cloud Build service account:
+# serviceAccount: '$_CLOUD_BUILD_SERVICE_ACCOUNT'
+
+steps:
+  # ── Step 1: Build Docker image ──────────────────────────────────────────────
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      # Add --build-arg for each VITE_* variable when needed:
+      # - --build-arg
+      # - VITE_API_URL=$_VITE_API_URL
+      - -t
+      - gcr.io/$PROJECT_ID/rubik:$COMMIT_SHA
+      - -t
+      - gcr.io/$PROJECT_ID/rubik:latest
+      - .
+    id: build
+
+  # ── Step 2: Push image (commit SHA tag) ─────────────────────────────────────
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - gcr.io/$PROJECT_ID/rubik:$COMMIT_SHA
+    id: push-sha
+    waitFor: [build]
+
+  # ── Step 3: Push image (latest tag) ─────────────────────────────────────────
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - gcr.io/$PROJECT_ID/rubik:latest
+    id: push-latest
+    waitFor: [build]
+
+  # ── Step 4: Deploy to Cloud Run (staging) ────────────────────────────────────
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - run
+      - deploy
+      - $_SERVICE_NAME
+      - --image=gcr.io/$PROJECT_ID/rubik:$COMMIT_SHA
+      - --region=$_REGION
+      - --platform=managed
+      - --allow-unauthenticated
+      - --memory=512Mi
+      - --cpu=1
+      - --min-instances=0
+      - --max-instances=5
+      - --timeout=60
+      - --set-env-vars=APP_ENV=staging,LOG_LEVEL=info,ALLOWED_ORIGINS=$_ALLOWED_ORIGINS
+      # Add VITE_* runtime env vars for consistency when needed:
+      # - --set-env-vars=VITE_API_URL=$_VITE_API_URL
+      # Add secrets when needed (format: ENV_VAR=secret-name:latest):
+      # - --set-secrets=MY_SECRET=my-secret-name:latest
+    id: deploy
+    waitFor: [push-sha, push-latest]
+
+  # ── Step 5: Ensure public access ─────────────────────────────────────────────
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - run
+      - services
+      - add-iam-policy-binding
+      - $_SERVICE_NAME
+      - --region=$_REGION
+      - --member=allUsers
+      - --role=roles/run.invoker
+    id: iam
+    waitFor: [deploy]
+
+images:
+  - gcr.io/$PROJECT_ID/rubik:$COMMIT_SHA
+  - gcr.io/$PROJECT_ID/rubik:latest
+
+options:
+  machineType: E2_HIGHCPU_8
+  logging: CLOUD_LOGGING_ONLY
+
+timeout: '1200s'
