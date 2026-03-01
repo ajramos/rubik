@@ -39,9 +39,7 @@ type Props = {
   streaks: StreakData;
   reviewForecast: DayForecast[];
   ohMode?: boolean;
-  onToggleOhMode?: () => void;
   cubeScheme?: CubeScheme;
-  onSetCubeScheme?: (s: CubeScheme) => void;
   onStartTodayQueue?: () => void;
   onStartDrill?: (set: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L" | "F2L_EXEC") => void;
   onStartTimedBlock?: () => void;
@@ -84,9 +82,7 @@ export function WorkspaceScaffold({
   streaks,
   reviewForecast,
   ohMode = false,
-  onToggleOhMode,
   cubeScheme = "wca",
-  onSetCubeScheme,
   onStartTodayQueue,
   onStartDrill,
   onStartTimedBlock,
@@ -101,32 +97,9 @@ export function WorkspaceScaffold({
               <div className="workspaceSectionKicker">Practice</div>
               <h2 className="workspaceSectionTitle">Session Modes</h2>
             </div>
-            <div className="practiceHeaderControls">
-              <div className="cubeSchemeToggle" title="Cube colour scheme">
-                <button
-                  type="button"
-                  className={`cubeSchemeBtn ${cubeScheme === "wca" ? "cubeSchemeBtn--active" : ""}`}
-                  onClick={() => onSetCubeScheme?.("wca")}
-                >
-                  WCA
-                </button>
-                <button
-                  type="button"
-                  className={`cubeSchemeBtn ${cubeScheme === "yellow-top" ? "cubeSchemeBtn--active" : ""}`}
-                  onClick={() => onSetCubeScheme?.("yellow-top")}
-                >
-                  🟡 Top
-                </button>
-              </div>
-              <button
-                type="button"
-                className={`ohToggle ${ohMode ? "ohToggle--on" : ""}`}
-                onClick={onToggleOhMode}
-                title="One-Handed mode — drills use your preferred (OH) alg"
-              >
-                🤚 OH {ohMode ? "ON" : "OFF"}
-              </button>
-            </div>
+            {ohMode && (
+              <span className="ohBadge ohBadge--header">🤚 OH</span>
+            )}
           </div>
           <div className="workspaceSectionGrid">
             <article className={`workspaceTile todayQueueTile ${ollDueCount + pllDueCount === 0 ? "todayQueueTile--empty" : "todayQueueTile--due"}`}>

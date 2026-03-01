@@ -1,11 +1,12 @@
 import React from "react";
 
-type AppSection = "study" | "practice" | "progress" | "reference" | "bld";
+type AppSection = "home" | "study" | "practice" | "progress" | "reference" | "bld";
 type CfopPhase = "f2l" | "last-layer";
 type WorkspaceMode = "full-ll" | "4lll";
 type LastLayerSet = "OLL" | "PLL";
 
 const PRIMARY_MENU_ITEMS: Array<{ key: AppSection; label: string; status?: "beta" }> = [
+  { key: "home", label: "Home" },
   { key: "study", label: "Study" },
   { key: "practice", label: "Practice" },
   { key: "progress", label: "Progress" },

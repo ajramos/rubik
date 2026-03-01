@@ -18,6 +18,7 @@ import { loadPrefs, setPreferredAlg, clearPreferredAlg, toggleOhMode, setCubeSch
 import type { PrefsData } from "./utils/prefs";
 import type { CubeScheme } from "./utils/faceColors";
 import { BldSection } from "./components/BldSection";
+import { HomeSection } from "./components/HomeSection";
 
 const algs = algsRaw as AlgItem[];
 
@@ -31,7 +32,7 @@ type CatalogGroup = {
 
 type WorkspaceMode = "full-ll" | "4lll";
 type CfopPhase = "f2l" | "last-layer";
-type AppSection = "study" | "practice" | "progress" | "reference" | "bld";
+type AppSection = "home" | "study" | "practice" | "progress" | "reference" | "bld";
 
 type MethodCase = {
   name: string;
@@ -99,6 +100,7 @@ type SelectedCase = AlgItem & {
 };
 
 const APP_SECTION_LABELS: Record<AppSection, string> = {
+  home: "Home",
   study: "Study",
   practice: "Practice",
   progress: "Progress",
@@ -1251,7 +1253,7 @@ function matchesF2LFilter(c: F2LCase, filter: F2LFilterKey) {
 }
 
 export default function App() {
-  const [appSection, setAppSection] = useState<AppSection>("study");
+  const [appSection, setAppSection] = useState<AppSection>("home");
   const [cfopPhase, setCfopPhase] = useState<CfopPhase>("last-layer");
   const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>("full-ll");
   const [set, setSet] = useState<AlgSet>("OLL");
@@ -1756,15 +1758,17 @@ export default function App() {
 
   const activePrimaryLabel = APP_SECTION_LABELS[appSection];
   const heroEyebrow =
-    appSection === "study"
+    appSection === "home"
       ? "3x3x3 Study System"
-      : appSection === "practice"
-        ? "3x3x3 Practice Workspace"
-        : appSection === "progress"
-          ? "3x3x3 Progress Tracking"
-          : appSection === "bld"
-            ? "3x3x3 Blindfolded Training"
-            : "3x3x3 Reference Desk";
+      : appSection === "study"
+        ? "3x3x3 Algorithm Catalog"
+        : appSection === "practice"
+          ? "3x3x3 Practice Workspace"
+          : appSection === "progress"
+            ? "3x3x3 Progress Tracking"
+            : appSection === "bld"
+              ? "3x3x3 Blindfolded Training"
+              : "3x3x3 Reference Desk";
   const breadcrumbParts = [
     appSection === "study" ? "Study" : activePrimaryLabel,
     ...(appSection === "study"
@@ -1804,7 +1808,13 @@ export default function App() {
       <div className="appGridNoise" aria-hidden="true" />
 
       <main className="shell">
-        <AppHero heroEyebrow={heroEyebrow} />
+        <AppHero
+          heroEyebrow={heroEyebrow}
+          ohMode={prefs.ohMode}
+          cubeScheme={prefs.cubeScheme}
+          onToggleOhMode={() => setPrefs((p) => toggleOhMode(p))}
+          onSetCubeScheme={(s: CubeScheme) => setPrefs((p) => setCubeScheme(p, s))}
+        />
 
         <div className="workspace">
           <AppRail
@@ -1823,7 +1833,18 @@ export default function App() {
             className="catalogPanel"
             aria-label={appSection === "study" ? "Algorithm catalog" : `${activePrimaryLabel} workspace`}
           >
-            {appSection === "bld" ? (
+            {appSection === "home" ? (
+              <HomeSection
+                totalDueCount={ollDueCount + pllDueCount}
+                currentStreak={streaks.currentStreak}
+                ollLearned={ollStats.learned}
+                ollTotal={ollStats.total}
+                pllLearned={pllStats.learned}
+                pllTotal={pllStats.total}
+                onNavigate={setAppSection}
+                onStartTodayQueue={ollDueCount + pllDueCount > 0 ? () => setDrillSet("TODAY") : undefined}
+              />
+            ) : appSection === "bld" ? (
               <BldSection bldSrsData={bldSrsData} cubeScheme={prefs.cubeScheme} onRate={handleBldRate} />
             ) : appSection !== "study" ? (
               <WorkspaceScaffold
@@ -1841,9 +1862,7 @@ export default function App() {
                 streaks={streaks}
                 reviewForecast={reviewForecast}
                 ohMode={prefs.ohMode}
-                onToggleOhMode={() => setPrefs((p) => toggleOhMode(p))}
                 cubeScheme={prefs.cubeScheme}
-                onSetCubeScheme={(s: CubeScheme) => setPrefs((p) => setCubeScheme(p, s))}
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
                 onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L" | "F2L_EXEC") => setDrillSet(s) : undefined}
                 onStartTimedBlock={appSection === "practice" ? () => setTimedBlockOpen(true) : undefined}
