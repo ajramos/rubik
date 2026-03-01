@@ -4,9 +4,12 @@ import { isDue, getSRSCard } from "../utils/srs";
 import { SPEFFZ_EDGES, SPEFFZ_CORNERS, Y_PERM, type BldTarget } from "../data/bld-data";
 import { BldDrillModal } from "./BldDrillModal";
 import { SpeffzNet } from "./SpeffzNet";
+import type { CubeScheme } from "../utils/faceColors";
+import { getFaceScheme } from "../utils/faceColors";
 
 type Props = {
   bldSrsData: Record<string, SRSCard>;
+  cubeScheme: CubeScheme;
   onRate: (id: string, rating: SRSRating) => void;
 };
 
@@ -20,16 +23,6 @@ function statusOf(t: BldTarget, srsData: Record<string, SRSCard>): "new" | "due"
   if (!srsData[t.id]) return "new";
   return isDue(getSRSCard(t.id, srsData)) ? "due" : "learned";
 }
-
-// Face palette — matches BldDrillModal + NotationReference
-const FACE_META: Record<string, { bg: string; text: string; label: string }> = {
-  U: { bg: "#6b7280", text: "#fff", label: "U — Up" },
-  D: { bg: "#c8980a", text: "#fff", label: "D — Down" },
-  R: { bg: "#c41e3a", text: "#fff", label: "R — Right" },
-  L: { bg: "#d45000", text: "#fff", label: "L — Left" },
-  F: { bg: "#007a3a", text: "#fff", label: "F — Front" },
-  B: { bg: "#0046ad", text: "#fff", label: "B — Back" },
-};
 
 const FACE_ORDER = ["U", "L", "F", "R", "B", "D"] as const;
 
@@ -50,13 +43,15 @@ function FaceGroup({
   targets,
   srsData,
   type,
+  scheme,
 }: {
   face: string;
   targets: BldTarget[];
   srsData: Record<string, SRSCard>;
   type: "edge" | "corner";
+  scheme: ReturnType<typeof getFaceScheme>;
 }) {
-  const meta = FACE_META[face] ?? { bg: "#6b7280", text: "#fff", label: face };
+  const meta = scheme[face] ?? { bg: "#6b7280", text: "#fff", label: face };
   if (targets.length === 0) return null;
 
   return (
@@ -102,10 +97,11 @@ function FaceGroup({
   );
 }
 
-function ReferenceSection({ srsData }: { srsData: Record<string, SRSCard> }) {
+function ReferenceSection({ srsData, cubeScheme }: { srsData: Record<string, SRSCard>; cubeScheme: CubeScheme }) {
   const [tab, setTab] = useState<"edges" | "corners">("edges");
   const edgeGroups = groupByFace(SPEFFZ_EDGES);
   const cornerGroups = groupByFace(SPEFFZ_CORNERS);
+  const scheme = getFaceScheme(cubeScheme);
 
   return (
     <section className="workspaceSectionCard workspaceSectionCard--bld bldRefSection">
@@ -119,7 +115,7 @@ function ReferenceSection({ srsData }: { srsData: Record<string, SRSCard> }) {
         Every non-center sticker gets a unique letter A–X. Each face has 4 edge stickers
         and 4 corner stickers — the net below shows all 48 positions labeled.
       </p>
-      <SpeffzNet />
+      <SpeffzNet cubeScheme={cubeScheme} />
 
       {/* Y-perm reference */}
       <div className="bldYpermRef">
@@ -156,6 +152,7 @@ function ReferenceSection({ srsData }: { srsData: Record<string, SRSCard> }) {
             targets={tab === "edges" ? edgeGroups[face] : cornerGroups[face]}
             srsData={srsData}
             type={tab === "edges" ? "edge" : "corner"}
+            scheme={scheme}
           />
         ))}
       </div>
@@ -171,7 +168,7 @@ function ReferenceSection({ srsData }: { srsData: Record<string, SRSCard> }) {
 
 // ── Landing page ──────────────────────────────────────────────────────────────
 
-export function BldSection({ bldSrsData, onRate }: Props) {
+export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
   const [openDrill, setOpenDrill] = useState<null | "edges" | "corners">(null);
   const [showRef, setShowRef] = useState(false);
 
@@ -277,13 +274,14 @@ export function BldSection({ bldSrsData, onRate }: Props) {
         </div>
       </section>
 
-      {showRef && <ReferenceSection srsData={bldSrsData} />}
+      {showRef && <ReferenceSection srsData={bldSrsData} cubeScheme={cubeScheme} />}
 
       {openDrill === "edges" && (
         <BldDrillModal
           targets={SPEFFZ_EDGES}
           label="Edges (M2)"
           bldSrsData={bldSrsData}
+          cubeScheme={cubeScheme}
           onRate={onRate}
           onClose={() => setOpenDrill(null)}
         />
@@ -294,6 +292,7 @@ export function BldSection({ bldSrsData, onRate }: Props) {
           targets={SPEFFZ_CORNERS}
           label="Corners (OP)"
           bldSrsData={bldSrsData}
+          cubeScheme={cubeScheme}
           onRate={onRate}
           onClose={() => setOpenDrill(null)}
         />

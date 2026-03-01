@@ -3,6 +3,8 @@ import type { SRSCard, SRSRating } from "../utils/srs";
 import { isDue } from "../utils/srs";
 import type { BldTarget } from "../data/bld-data";
 import { Y_PERM } from "../data/bld-data";
+import type { CubeScheme } from "../utils/faceColors";
+import { getFaceScheme } from "../utils/faceColors";
 
 const SESSION_MAX = 20;
 
@@ -10,6 +12,7 @@ type Props = {
   targets: BldTarget[];
   label: string;
   bldSrsData: Record<string, SRSCard>;
+  cubeScheme: CubeScheme;
   onRate: (id: string, rating: SRSRating) => void;
   onClose: () => void;
 };
@@ -22,21 +25,6 @@ const RATING_CONFIG: { rating: SRSRating; label: string; mod: string }[] = [
   { rating: 3, label: "Good", mod: "good" },
   { rating: 4, label: "Easy", mod: "easy" },
 ];
-
-// Face color palette — matches NotationReference + BLD theme
-const FACE_COLORS: Record<string, { bg: string; label: string }> = {
-  U: { bg: "#6b7280", label: "U-face" },
-  D: { bg: "#c8980a", label: "D-face" },
-  R: { bg: "#c41e3a", label: "R-face" },
-  L: { bg: "#d45000", label: "L-face" },
-  F: { bg: "#007a3a", label: "F-face" },
-  B: { bg: "#0046ad", label: "B-face" },
-};
-
-function getFace(position: string) {
-  const f = position[0] ?? "U";
-  return FACE_COLORS[f] ?? { bg: "#6b7280", label: `${f}-face` };
-}
 
 function buildQueue(targets: BldTarget[], srsData: Record<string, SRSCard>): BldTarget[] {
   const active = targets.filter((t) => !t.isBuffer);
@@ -61,7 +49,8 @@ function buildQueue(targets: BldTarget[], srsData: Record<string, SRSCard>): Bld
   return [...due, ...newCards].slice(0, SESSION_MAX);
 }
 
-export function BldDrillModal({ targets, label, bldSrsData, onRate, onClose }: Props) {
+export function BldDrillModal({ targets, label, bldSrsData, cubeScheme, onRate, onClose }: Props) {
+  const scheme = getFaceScheme(cubeScheme);
   const queue = useMemo(() => buildQueue(targets, bldSrsData), [targets, bldSrsData]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState<"question" | "answer">("question");
@@ -125,7 +114,8 @@ export function BldDrillModal({ targets, label, bldSrsData, onRate, onClose }: P
             <div className="drillCard">
               {/* ── BLD letter display ── */}
               {(() => {
-                const face = getFace(current.position);
+                const f = current.position[0] ?? "U";
+                const face = scheme[f] ?? scheme["U"];
                 const faceName = current.faceName.replace(/ \([A-Z] sticker\)$/, "");
                 return (
                   <div className="bldDrillThumb">
@@ -135,7 +125,7 @@ export function BldDrillModal({ targets, label, bldSrsData, onRate, onClose }: P
                       </span>
                     </div>
                     <div className="bldDrillMeta">
-                      <span className="bldDrillFaceBadge" style={{ background: face.bg }}>
+                      <span className="bldDrillFaceBadge" style={{ background: face.bg, color: face.text }}>
                         {face.label}
                       </span>
                       <span className="bldDrillPos">{current.position}</span>

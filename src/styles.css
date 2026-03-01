@@ -4645,13 +4645,49 @@ code {
   .forecastTile { grid-column: span 1; }
 }
 
-/* ── OH Mode ────────────────────────────────────── */
+/* ── OH Mode + Cube Scheme Controls ─────────────── */
 .workspacePracticeHeader {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 4px;
+}
+
+.practiceHeaderControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.cubeSchemeToggle {
+  display: inline-flex;
+  border: 1px solid var(--line-2);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.cubeSchemeBtn {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--muted-1);
+  cursor: pointer;
+  transition: background 150ms, color 150ms;
+  letter-spacing: 0.02em;
+}
+
+.cubeSchemeBtn:hover {
+  color: var(--ink);
+}
+
+.cubeSchemeBtn--active {
+  background: var(--accent-ui);
+  color: #fff;
 }
 
 .workspacePracticeHeader .workspaceSectionKicker {
@@ -4677,7 +4713,6 @@ code {
   white-space: nowrap;
   transition: background 150ms, border-color 150ms, color 150ms;
   flex-shrink: 0;
-  margin-top: 4px;
 }
 
 .ohToggle:hover {

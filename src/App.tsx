@@ -14,8 +14,9 @@ import type { SRSCard, SRSRating } from "./utils/srs";
 import { loadBldSRS, saveBldSRS, getBldCard } from "./utils/bld-srs";
 import { loadStreaks, recordPractice } from "./utils/streaks";
 import type { StreakData } from "./utils/streaks";
-import { loadPrefs, setPreferredAlg, clearPreferredAlg, toggleOhMode } from "./utils/prefs";
+import { loadPrefs, setPreferredAlg, clearPreferredAlg, toggleOhMode, setCubeScheme } from "./utils/prefs";
 import type { PrefsData } from "./utils/prefs";
+import type { CubeScheme } from "./utils/faceColors";
 import { BldSection } from "./components/BldSection";
 
 const algs = algsRaw as AlgItem[];
@@ -1823,7 +1824,7 @@ export default function App() {
             aria-label={appSection === "study" ? "Algorithm catalog" : `${activePrimaryLabel} workspace`}
           >
             {appSection === "bld" ? (
-              <BldSection bldSrsData={bldSrsData} onRate={handleBldRate} />
+              <BldSection bldSrsData={bldSrsData} cubeScheme={prefs.cubeScheme} onRate={handleBldRate} />
             ) : appSection !== "study" ? (
               <WorkspaceScaffold
                 appSection={appSection}
@@ -1841,6 +1842,8 @@ export default function App() {
                 reviewForecast={reviewForecast}
                 ohMode={prefs.ohMode}
                 onToggleOhMode={() => setPrefs((p) => toggleOhMode(p))}
+                cubeScheme={prefs.cubeScheme}
+                onSetCubeScheme={(s: CubeScheme) => setPrefs((p) => setCubeScheme(p, s))}
                 onStartTodayQueue={appSection === "practice" ? () => setDrillSet("TODAY") : undefined}
                 onStartDrill={appSection === "practice" ? (s: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L" | "F2L_EXEC") => setDrillSet(s) : undefined}
                 onStartTimedBlock={appSection === "practice" ? () => setTimedBlockOpen(true) : undefined}

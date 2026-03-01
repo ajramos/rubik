@@ -2,6 +2,7 @@ import React from "react";
 import { NotationReference } from "./NotationReference";
 import { TriggerLibrary } from "./TriggerLibrary";
 import type { StreakData } from "../utils/streaks";
+import type { CubeScheme } from "../utils/faceColors";
 
 type AppSection = "practice" | "progress" | "reference";
 
@@ -39,6 +40,8 @@ type Props = {
   reviewForecast: DayForecast[];
   ohMode?: boolean;
   onToggleOhMode?: () => void;
+  cubeScheme?: CubeScheme;
+  onSetCubeScheme?: (s: CubeScheme) => void;
   onStartTodayQueue?: () => void;
   onStartDrill?: (set: "OLL" | "PLL" | "OLL_EXEC" | "PLL_EXEC" | "F2L" | "F2L_EXEC") => void;
   onStartTimedBlock?: () => void;
@@ -82,6 +85,8 @@ export function WorkspaceScaffold({
   reviewForecast,
   ohMode = false,
   onToggleOhMode,
+  cubeScheme = "wca",
+  onSetCubeScheme,
   onStartTodayQueue,
   onStartDrill,
   onStartTimedBlock,
@@ -96,14 +101,32 @@ export function WorkspaceScaffold({
               <div className="workspaceSectionKicker">Practice</div>
               <h2 className="workspaceSectionTitle">Session Modes</h2>
             </div>
-            <button
-              type="button"
-              className={`ohToggle ${ohMode ? "ohToggle--on" : ""}`}
-              onClick={onToggleOhMode}
-              title="One-Handed mode — drills use your preferred (OH) alg"
-            >
-              🤚 OH {ohMode ? "ON" : "OFF"}
-            </button>
+            <div className="practiceHeaderControls">
+              <div className="cubeSchemeToggle" title="Cube colour scheme">
+                <button
+                  type="button"
+                  className={`cubeSchemeBtn ${cubeScheme === "wca" ? "cubeSchemeBtn--active" : ""}`}
+                  onClick={() => onSetCubeScheme?.("wca")}
+                >
+                  WCA
+                </button>
+                <button
+                  type="button"
+                  className={`cubeSchemeBtn ${cubeScheme === "yellow-top" ? "cubeSchemeBtn--active" : ""}`}
+                  onClick={() => onSetCubeScheme?.("yellow-top")}
+                >
+                  🟡 Top
+                </button>
+              </div>
+              <button
+                type="button"
+                className={`ohToggle ${ohMode ? "ohToggle--on" : ""}`}
+                onClick={onToggleOhMode}
+                title="One-Handed mode — drills use your preferred (OH) alg"
+              >
+                🤚 OH {ohMode ? "ON" : "OFF"}
+              </button>
+            </div>
           </div>
           <div className="workspaceSectionGrid">
             <article className={`workspaceTile todayQueueTile ${ollDueCount + pllDueCount === 0 ? "todayQueueTile--empty" : "todayQueueTile--due"}`}>
@@ -443,7 +466,7 @@ export function WorkspaceScaffold({
           Notation, triggers, fingertricks, and method notes for quick lookup.
         </p>
 
-        <NotationReference />
+        <NotationReference cubeScheme={cubeScheme} />
 
         <TriggerLibrary />
 

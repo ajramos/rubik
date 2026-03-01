@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import type { CubeScheme } from "../utils/faceColors";
+import { getFaceScheme } from "../utils/faceColors";
 
 /**
  * SpeffzNet — unfolded cube net using CSS divs for rich visual styling.
@@ -24,24 +26,6 @@ type Sticker = { l: string; buf?: boolean } | null;  // null = centre cell
 
 // ── Data ──────────────────────────────────────────────────────────────────
 
-/** Standard Rubik's cube face colours (slightly saturated for visibility). */
-const FACE_BG: Record<string, string> = {
-  U: "#cccccc",   // white / light grey
-  F: "#28b558",   // green
-  R: "#de4035",   // red
-  B: "#3c6fd4",   // blue
-  L: "#e07a20",   // orange
-  D: "#d0b012",   // yellow
-};
-
-const FACE_TITLE: Record<string, string> = {
-  U: "U — Up (white)",
-  F: "F — Front (green)",
-  R: "R — Right (red)",
-  B: "B — Back (blue)",
-  L: "L — Left (orange)",
-  D: "D — Down (yellow)",
-};
 
 /**
  * Face grids — [row][col].
@@ -95,20 +79,23 @@ const FACE_ORDER = ["U", "L", "F", "R", "B", "D"] as const;
 
 // ── Component ─────────────────────────────────────────────────────────────
 
-export function SpeffzNet() {
+export function SpeffzNet({ cubeScheme = "wca" }: { cubeScheme?: CubeScheme }) {
   const [hl, setHl] = useState<string | null>(null);
+  const scheme = getFaceScheme(cubeScheme);
 
   return (
     <div className="speffzNetWrap">
       {/* Cube net */}
       <div className="speffzNetScroll">
         <div className="speffzNet">
-          {FACE_ORDER.map((face) => (
+          {FACE_ORDER.map((face) => {
+            const faceMeta = scheme[face];
+            return (
             <div
               key={face}
               className={`speffzFace speffzFace--${face}`}
-              style={{ "--face-bg": FACE_BG[face] } as React.CSSProperties}
-              title={FACE_TITLE[face]}
+              style={{ "--face-bg": faceMeta?.bright ?? "#ccc" } as React.CSSProperties}
+              title={faceMeta?.label ?? face}
             >
               {GRIDS[face].map((row, r) =>
                 row.map((cell, c) => {
@@ -138,7 +125,8 @@ export function SpeffzNet() {
                 })
               )}
             </div>
-          ))}
+          );
+          })}
         </div>
       </div>
 
@@ -148,8 +136,8 @@ export function SpeffzNet() {
           <span
             key={f}
             className="speffzFaceKeyChip"
-            style={{ background: FACE_BG[f] }}
-            title={FACE_TITLE[f]}
+            style={{ background: scheme[f]?.bright ?? "#ccc" }}
+            title={scheme[f]?.label ?? f}
           >
             {f}
           </span>

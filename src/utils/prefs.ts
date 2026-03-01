@@ -1,8 +1,11 @@
+import type { CubeScheme } from "./faceColors";
+
 const PREFS_KEY = "rubik-prefs-v1";
 
 export type PrefsData = {
   preferredAlgs: Record<string, string>; // case ID → chosen alg string
   ohMode: boolean;                        // One-Handed mode
+  cubeScheme: CubeScheme;                 // Cube face colour scheme
 };
 
 export function loadPrefs(): PrefsData {
@@ -10,10 +13,14 @@ export function loadPrefs(): PrefsData {
     const raw = localStorage.getItem(PREFS_KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as Partial<PrefsData>;
-      return { preferredAlgs: parsed.preferredAlgs ?? {}, ohMode: parsed.ohMode ?? false };
+      return {
+        preferredAlgs: parsed.preferredAlgs ?? {},
+        ohMode: parsed.ohMode ?? false,
+        cubeScheme: parsed.cubeScheme ?? "wca",
+      };
     }
   } catch {}
-  return { preferredAlgs: {}, ohMode: false };
+  return { preferredAlgs: {}, ohMode: false, cubeScheme: "wca" };
 }
 
 export function savePrefs(data: PrefsData): void {
@@ -35,6 +42,12 @@ export function clearPreferredAlg(data: PrefsData, id: string): PrefsData {
 
 export function toggleOhMode(data: PrefsData): PrefsData {
   const updated = { ...data, ohMode: !data.ohMode };
+  savePrefs(updated);
+  return updated;
+}
+
+export function setCubeScheme(data: PrefsData, scheme: CubeScheme): PrefsData {
+  const updated = { ...data, cubeScheme: scheme };
   savePrefs(updated);
   return updated;
 }

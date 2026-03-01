@@ -1,14 +1,7 @@
 import React, { useState } from "react";
 import { MovePreviewModal } from "./MovePreviewModal";
-
-const FACE_COLOR: Record<string, string> = {
-  U: "#f0f0ee", D: "#f5c518",
-  R: "#c41e3a", L: "#ff6000",
-  F: "#009b48", B: "#0046ad",
-};
-const FACE_TEXT_COLOR: Record<string, string> = {
-  U: "#333", D: "#333", R: "#fff", L: "#fff", F: "#fff", B: "#fff",
-};
+import type { CubeScheme } from "../utils/faceColors";
+import { getFaceScheme } from "../utils/faceColors";
 
 const FACE_MOVES = [
   { symbol: "R", name: "Right" },
@@ -49,7 +42,9 @@ const ROTATIONS: { symbol: RotType; face: string; desc: string }[] = [
   { symbol: "z", face: "F", desc: "Whole cube rotates like F" },
 ];
 
-function SliceDiagram({ type }: { type: SliceType }) {
+type SchemeProps = { scheme: ReturnType<typeof getFaceScheme> };
+
+function SliceDiagram({ type, scheme }: { type: SliceType } & SchemeProps) {
   const configs = {
     M: { direction: "col" as const, a: "L", b: "R" },
     E: { direction: "row" as const, a: "U", b: "D" },
@@ -60,36 +55,36 @@ function SliceDiagram({ type }: { type: SliceType }) {
   return (
     <div className={`notationSliceDiag notationSliceDiag--${direction}`}>
       <div className="notationSliceBand notationSliceBand--outer"
-        style={{ background: FACE_COLOR[a], color: FACE_TEXT_COLOR[a] }}>
+        style={{ background: scheme[a]?.bright, color: scheme[a]?.brightText }}>
         {a}
       </div>
       <div className="notationSliceBand notationSliceBand--active">
         <span className="notationSliceActiveLabel">{type}</span>
       </div>
       <div className="notationSliceBand notationSliceBand--outer"
-        style={{ background: FACE_COLOR[b], color: FACE_TEXT_COLOR[b] }}>
+        style={{ background: scheme[b]?.bright, color: scheme[b]?.brightText }}>
         {b}
       </div>
     </div>
   );
 }
 
-function RotDiagram({ face }: { face: string }) {
+function RotDiagram({ face, scheme }: { face: string } & SchemeProps) {
   return (
     <div className="notationRotDiag"
-      style={{ background: FACE_COLOR[face], color: FACE_TEXT_COLOR[face] }}>
+      style={{ background: scheme[face]?.bright, color: scheme[face]?.brightText }}>
       <span className="notationRotFace">{face}</span>
       <span className="notationRotArrow">↻</span>
     </div>
   );
 }
 
-function FaceBadge({ face, size = 28 }: { face: string; size?: number }) {
+function FaceBadge({ face, size = 28, scheme }: { face: string; size?: number } & SchemeProps) {
   return (
     <span className="notationFaceBadge"
       style={{
-        background: FACE_COLOR[face],
-        color: FACE_TEXT_COLOR[face],
+        background: scheme[face]?.bright,
+        color: scheme[face]?.brightText,
         width: size,
         height: size,
         fontSize: size * 0.43,
@@ -99,10 +94,10 @@ function FaceBadge({ face, size = 28 }: { face: string; size?: number }) {
   );
 }
 
-function CubeNet() {
+function CubeNet({ scheme }: SchemeProps) {
   const cell = (face: string) => (
     <div key={face} className="notationNetCell"
-      style={{ background: FACE_COLOR[face], color: FACE_TEXT_COLOR[face] }}>
+      style={{ background: scheme[face]?.bright, color: scheme[face]?.brightText }}>
       {face}
     </div>
   );
@@ -115,8 +110,9 @@ function CubeNet() {
   );
 }
 
-export function NotationReference() {
+export function NotationReference({ cubeScheme = "wca" }: { cubeScheme?: CubeScheme }) {
   const [preview, setPreview] = useState<string | null>(null);
+  const scheme = getFaceScheme(cubeScheme);
 
   return (
     <>
@@ -126,11 +122,11 @@ export function NotationReference() {
         <div className="notationBlock">
           <div className="notationBlockTitle">Face Orientation</div>
           <div className="notationOrientationLayout">
-            <CubeNet />
+            <CubeNet scheme={scheme} />
             <div className="notationFaceList">
               {FACE_MOVES.map(({ symbol, name }) => (
                 <div key={symbol} className="notationFaceListRow">
-                  <FaceBadge face={symbol} />
+                  <FaceBadge face={symbol} scheme={scheme} />
                   <span className="notationFaceListSymbol">{symbol}</span>
                   <span className="notationFaceListName">{name}</span>
                 </div>
@@ -167,7 +163,7 @@ export function NotationReference() {
           <div className="notationMoveGrid">
             {FACE_MOVES.map(({ symbol, name }) => (
               <div key={symbol} className="notationMoveRow">
-                <FaceBadge face={symbol} />
+                <FaceBadge face={symbol} scheme={scheme} />
                 <span className="notationFaceName">{name}</span>
                 <div className="notationMoveChips">
                   {[symbol, `${symbol}'`, `${symbol}2`].map((move) => (
@@ -200,7 +196,7 @@ export function NotationReference() {
           <div className="notationMoveGrid">
             {WIDE_MOVES.map(({ symbol, wide, name }) => (
               <div key={wide} className="notationMoveRow">
-                <FaceBadge face={symbol} />
+                <FaceBadge face={symbol} scheme={scheme} />
                 <span className="notationFaceName">{name}</span>
                 <div className="notationMoveChips">
                   {[wide, `${wide}'`, `${wide}2`].map((move) => (
@@ -237,7 +233,7 @@ export function NotationReference() {
                 tabIndex={0}
                 onKeyDown={(e) => e.key === "Enter" && setPreview(symbol)}
               >
-                <SliceDiagram type={symbol} />
+                <SliceDiagram type={symbol} scheme={scheme} />
                 <div className="notationDiagCardBody">
                   <span className="notationDiagSymbol">{symbol}</span>
                   <span className="notationDiagDesc">{desc}</span>
@@ -264,7 +260,7 @@ export function NotationReference() {
                 tabIndex={0}
                 onKeyDown={(e) => e.key === "Enter" && setPreview(symbol)}
               >
-                <RotDiagram face={face} />
+                <RotDiagram face={face} scheme={scheme} />
                 <div className="notationDiagCardBody">
                   <span className="notationDiagSymbol">{symbol}</span>
                   <span className="notationDiagDesc">{desc}</span>
