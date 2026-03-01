@@ -4830,14 +4830,18 @@ code {
 }
 
 .bldAlgRowCode {
+  display: inline-block;
   font-family: "IBM Plex Mono", monospace;
   font-size: 13px;
   font-weight: 600;
   color: var(--ink);
   background: var(--surface-2);
+  border: 1px solid var(--line);
   padding: 3px 8px;
   border-radius: 6px;
+  box-shadow: none;
   word-break: break-all;
+  line-height: 1.5;
 }
 
 .bldAlgRowCode--core {
@@ -4881,14 +4885,21 @@ code {
   margin-top: 10px;
 }
 
-/* Keep for backward compat in SpeffzNet / inline use */
+/* Inline alg chip — overrides global code{} dark theme */
 .bldTableAlg {
+  display: inline-block;
   font-family: "IBM Plex Mono", monospace;
   font-size: 11.5px;
-  background: var(--surface-2);
-  border-radius: 3px;
-  padding: 2px 5px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface-3);
+  border: 1px solid var(--line-2);
+  border-radius: 4px;
+  padding: 2px 7px;
   white-space: nowrap;
+  box-shadow: none;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
 }
 .bldTableAlgInline {
   font-family: "IBM Plex Mono", monospace;
