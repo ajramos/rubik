@@ -1397,37 +1397,67 @@ export default function App() {
     return { new: newCount, due, learning, learned, total: pllCases.length };
   }, [pllCases, srsData]);
 
+  const bldTargets = useMemo(
+    () => [...SPEFFZ_EDGES, ...SPEFFZ_CORNERS].filter((t) => !t.isBuffer),
+    []
+  );
+
+  const bldStats = useMemo(() => {
+    let newCount = 0, due = 0, learning = 0, learned = 0;
+    for (const t of bldTargets) {
+      const card = bldSrsData[t.id];
+      if (!card) { newCount++; continue; }
+      if (isDue(card)) { due++; continue; }
+      if (card.reps <= 2) learning++; else learned++;
+    }
+    return { new: newCount, due, learning, learned, total: bldTargets.length };
+  }, [bldTargets, bldSrsData]);
+
   const reviewForecast = useMemo(() => {
     const todayStr = new Date().toISOString().slice(0, 10);
     const base = new Date();
-    const all = [...ollCases, ...pllCases];
     return Array.from({ length: 7 }, (_, i) => {
       const d = new Date(base);
       d.setDate(d.getDate() + i);
       const dateStr = d.toISOString().slice(0, 10);
-      const count = all.filter((c) => {
+      const ollPllCount = [...ollCases, ...pllCases].filter((c) => {
         const card = srsData[c.id];
         if (!card) return false;
         return i === 0 ? card.dueDate <= todayStr : card.dueDate === dateStr;
       }).length;
+      const bldCount = bldTargets.filter((t) => {
+        const card = bldSrsData[t.id];
+        if (!card) return false;
+        return i === 0 ? card.dueDate <= todayStr : card.dueDate === dateStr;
+      }).length;
       const label = i === 0 ? "Today" : ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"][d.getDay()];
-      return { label, count, isToday: i === 0 };
+      return { label, count: ollPllCount + bldCount, isToday: i === 0 };
     });
-  }, [ollCases, pllCases, srsData]);
+  }, [ollCases, pllCases, srsData, bldTargets, bldSrsData]);
 
   const weakCases = useMemo(() => {
-    return [...ollCases, ...pllCases]
+    const ollPll = [...ollCases, ...pllCases]
       .filter((c) => !!srsData[c.id])
-      .sort((a, b) => srsData[a.id]!.easeFactor - srsData[b.id]!.easeFactor)
-      .slice(0, 8)
       .map((c) => ({
         id: c.id,
         label: formatCaseNameForDisplay(c),
-        set: c.set as "OLL" | "PLL",
+        set: c.set as "OLL" | "PLL" | "BLD",
         easeFactor: srsData[c.id]!.easeFactor,
         reps: srsData[c.id]!.reps,
       }));
-  }, [ollCases, pllCases, srsData]);
+    const bld = bldTargets
+      .filter((t) => !!bldSrsData[t.id])
+      .map((t) => ({
+        id: t.id,
+        label: `${t.letter} · ${t.faceName}`,
+        set: "BLD" as const,
+        easeFactor: bldSrsData[t.id]!.easeFactor,
+        reps: bldSrsData[t.id]!.reps,
+      }));
+    return [...ollPll, ...bld]
+      .sort((a, b) => a.easeFactor - b.easeFactor)
+      .slice(0, 8);
+  }, [ollCases, pllCases, srsData, bldTargets, bldSrsData]);
 
   function handleRate(id: string, rating: SRSRating) {
     const card = getSRSCard(id, srsData);
@@ -1866,6 +1896,7 @@ export default function App() {
                 pllDueCount={pllDueCount}
                 ollStats={ollStats}
                 pllStats={pllStats}
+                bldStats={bldStats}
                 weakCases={weakCases}
                 streaks={streaks}
                 reviewForecast={reviewForecast}
