@@ -4721,8 +4721,9 @@ code {
 }
 
 
+
 /* ═══════════════════════════════════════════════════════════════
-   BLD (Blindfolded) — minimal additions on top of existing theme
+   BLD (Blindfolded) — additions on top of existing theme
    ═══════════════════════════════════════════════════════════════ */
 
 /* Card color variant — purple, matching --accent-4lll */
@@ -4731,22 +4732,6 @@ code {
     linear-gradient(135deg, rgba(88, 64, 176, 0.06), transparent 50%),
     var(--surface-2);
   border-color: rgba(88, 64, 176, 0.14);
-}
-
-/* Method badge next to drill title */
-.bldMethodBadge {
-  display: inline-block;
-  margin-left: 8px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #5840b0;
-  background: rgba(88, 64, 176, 0.1);
-  border: 1px solid rgba(88, 64, 176, 0.22);
-  border-radius: 4px;
-  padding: 2px 7px;
-  vertical-align: middle;
 }
 
 /* Buffer note row below the section lead */
@@ -4762,141 +4747,41 @@ code {
 .bldBufferNote strong { color: var(--ink); }
 .bldBufferSep { color: var(--muted-2); }
 
-/* Step list inside the "how it works" tile */
-.bldStepList {
-  margin: 8px 0 0 16px;
-  padding: 0;
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.bldStepList li + li { margin-top: 2px; }
+/* ── BLD letter display inside the drill modal (replaces MiniTwisty) ── */
 
-/* ── Drill view ── */
-
-.bldDrillHeader {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
-}
-
-.bldDrillBack {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--muted);
-  background: none;
-  border: 1px solid var(--line-2);
-  border-radius: 5px;
-  padding: 4px 10px;
-  cursor: pointer;
-  transition: color 0.12s, border-color 0.12s;
-  white-space: nowrap;
-}
-.bldDrillBack:hover { color: var(--ink); border-color: var(--line); }
-
-.bldDrillHeaderTitle {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.bldDrillCard {
+.bldDrillThumb {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  text-align: center;
-  padding: 24px 8px 16px;
+  gap: 4px;
+  padding: 8px 0 4px;
 }
 
 .bldDrillLetter {
   font-family: "Space Grotesk", sans-serif;
-  font-size: 80px;
+  font-size: 72px;
   font-weight: 700;
   color: #5840b0;
   line-height: 1;
 }
 
-.bldDrillLetterSmall {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--ink);
-}
-
 .bldDrillPos {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--ink);
 }
 
 .bldDrillFaceName {
-  font-size: 13px;
-  color: var(--muted);
-}
-
-.bldDrillNote {
   font-size: 12px;
-  color: var(--muted-2);
-  font-style: italic;
-  margin: 0;
-  max-width: 340px;
-}
-
-.bldDrillHint {
-  font-size: 13px;
   color: var(--muted);
-  margin: 4px 0 8px;
 }
 
-.bldDrillAlgBlock {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  width: 100%;
-  max-width: 460px;
-}
-
-.bldDrillAlgLabel {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted-2);
-}
-
-.bldDrillAlg {
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 13.5px;
-  color: var(--ink);
-  background: var(--surface-1);
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 7px 14px;
-  text-align: center;
-  word-break: break-all;
-  max-width: 100%;
-}
-
-/* ── Reference section ── */
+/* ── Reference section (below landing card) ── */
 
 .bldRefSection {
   margin-top: 10px;
 }
-
-.bldRefTitle {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink);
-  margin: 16px 0 0;
-}
-.bldRefSection .bldRefTitle:first-of-type { margin-top: 0; }
 
 .bldTableScroll {
   margin-top: 10px;
@@ -4964,7 +4849,7 @@ code {
   line-height: 1.5;
 }
 
-/* SRS status badges */
+/* SRS status badges in reference table */
 .bldSrsStatus {
   font-size: 10px;
   font-weight: 600;
