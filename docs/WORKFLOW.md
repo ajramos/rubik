@@ -47,35 +47,22 @@ docs(workflow): document release commands
 
 ## CI/CD — Cloud Build + Cloud Run
 
-Two Cloud Build triggers fire on push:
+A Cloud Build trigger fires on push to `main`:
 
-| Branch | Trigger | Environment | Service |
-|--------|---------|-------------|---------|
-| `develop` | `cloudbuild-staging.yaml` | Staging | `rubik-staging` |
-| `main` | `cloudbuild-production.yaml` | Production | `rubik` |
+| Branch | Build config | Service |
+|--------|--------------|---------|
+| `main` | `cloudbuild-production.yaml` | `rubik` (europe-west1) |
 
-Each pipeline: build Docker image → push to GCR → deploy to Cloud Run → set public IAM.
+Pipeline: build Docker image → push to GCR → deploy to Cloud Run → set public IAM.
 
-The same image tag (`gcr.io/$PROJECT_ID/rubik:$COMMIT_SHA`) is used in both environments.
+Image tag: `gcr.io/rubik-atlas/rubik:$COMMIT_SHA`
+
+The trigger must be created manually in the Cloud Build console (GitHub 2nd gen connections
+do not support CLI creation reliably). See `DEPLOYMENT.md` for exact settings.
 
 ---
 
 ## Release commands
-
-### `/release:staging`
-
-Use inside Claude Code (or Cursor) to deploy `develop` to staging.
-
-What it does:
-1. Verifies you're on `develop` with a clean state
-2. Runs `npm run build` locally
-3. Commits any pending changes with a semantic message
-4. Pushes to `origin/develop`
-5. Reports the staging URL and Cloud Build link
-
-**Deployment is automatic** — pushing to `develop` triggers Cloud Build.
-
----
 
 ### `/release:production`
 
@@ -103,17 +90,18 @@ What it does:
 First-time setup of GCP infrastructure:
 
 ```bash
-# Copy templates and fill in your values
-cp .env.staging.example .env.staging
+# Copy template and fill in your values
 cp .env.production.example .env.production
-# Edit both files with your GCP project, URLs, etc.
+# Edit with your GCP project, region, GitHub repo, etc.
 
-# Run setup (enable APIs, create triggers, configure IAM)
-./scripts/setup-environment.sh staging all
+# Run setup (enable APIs, create rubik-cloudbuild SA, configure IAM)
 ./scripts/setup-environment.sh production all
 ```
 
-See `scripts/setup-environment.sh` for details.
+After `all` completes, create the Cloud Build trigger manually in the console
+(see `DEPLOYMENT.md` for the exact settings).
+
+See `scripts/setup-environment.sh` for details on individual commands.
 
 ---
 
@@ -129,4 +117,3 @@ gcloud run services update-traffic rubik \
   --region=europe-west1
 ```
 
-For staging, replace `rubik` with `rubik-staging`.

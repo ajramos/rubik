@@ -5,11 +5,11 @@
 #   ./scripts/setup-environment.sh <staging|production> [command]
 #
 # Commands:
-#   all       — Run apis, secrets, triggers, iam (default)
+#   all       — Run apis, secrets, iam (default)
 #   apis      — Enable required GCP APIs
 #   secrets   — Create secrets in Secret Manager
-#   triggers  — Create Cloud Build triggers
-#   iam       — Grant IAM roles to service accounts
+#   iam       — Create rubik-cloudbuild SA and grant IAM roles
+#   triggers  — Print manual trigger creation instructions (console only)
 #
 # Prerequisites:
 #   - gcloud CLI installed and authenticated (gcloud auth login)
@@ -57,7 +57,6 @@ else
 fi
 
 PROJECT_NUMBER=$(gcloud projects describe "$GCP_PROJECT_ID" --format="value(projectNumber)")
-CLOUDBUILD_SA="${CLOUD_BUILD_SERVICE_ACCOUNT:-${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com}"
 
 echo "────────────────────────────────────────────────────────"
 echo "  Environment : $ENV"
@@ -115,73 +114,43 @@ setup_secrets() {
 }
 
 # ─── triggers ────────────────────────────────────────────────────────────────
+# Cloud Build triggers with GitHub 2nd gen connections must be created manually
+# via the console — the CLI does not support this reliably.
 setup_triggers() {
-  section "Creating Cloud Build trigger for $ENV"
-
-  # Build substitutions string from env vars
-  # Add _VITE_* vars here when the project needs them:
-  SUBSTITUTIONS="_ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}"
-  if [[ -n "${CLOUD_BUILD_SERVICE_ACCOUNT:-}" ]]; then
-    SUBSTITUTIONS="${SUBSTITUTIONS},_CLOUD_BUILD_SERVICE_ACCOUNT=${CLOUD_BUILD_SERVICE_ACCOUNT}"
-  fi
-
-  TRIGGER_NAME="rubik-${ENV}"
-
-  echo "  Trigger name   : $TRIGGER_NAME"
-  echo "  Branch pattern : $BRANCH_PATTERN"
-  echo "  Build config   : $BUILD_CONFIG"
-  echo "  Substitutions  : $SUBSTITUTIONS"
+  section "Cloud Build trigger — create manually in the console"
+  echo "  URL            : https://console.cloud.google.com/cloud-build/triggers?project=$GCP_PROJECT_ID"
   echo
-
-  # Check for GitHub 2nd gen connection
-  if ! gcloud builds connections describe "github-${GITHUB_REPO_OWNER}" \
-       --region="$GCP_REGION" --project="$GCP_PROJECT_ID" &>/dev/null; then
-    echo "⚠️  GitHub 2nd gen connection not found."
-    echo "   Create it manually in the Cloud Build console:"
-    echo "   https://console.cloud.google.com/cloud-build/repositories?project=$GCP_PROJECT_ID"
-    echo "   Then re-run this script with: $0 $ENV triggers"
-    return 0
-  fi
-
-  # Delete existing trigger if present (idempotent re-run)
-  if gcloud builds triggers describe "$TRIGGER_NAME" \
-     --region="$GCP_REGION" --project="$GCP_PROJECT_ID" &>/dev/null; then
-    echo "  Deleting existing trigger: $TRIGGER_NAME"
-    gcloud builds triggers delete "$TRIGGER_NAME" \
-      --region="$GCP_REGION" --project="$GCP_PROJECT_ID" --quiet
-  fi
-
-  # Create trigger (GitHub 2nd gen)
-  if gcloud beta builds triggers create github \
-    --name="$TRIGGER_NAME" \
-    --region="$GCP_REGION" \
-    --repo-owner="$GITHUB_REPO_OWNER" \
-    --repo-name="$GITHUB_REPO_NAME" \
-    --branch-pattern="$BRANCH_PATTERN" \
-    --build-config="$BUILD_CONFIG" \
-    --substitutions="$SUBSTITUTIONS" \
-    --project="$GCP_PROJECT_ID" 2>/dev/null; then
-    echo "✓ Trigger created: $TRIGGER_NAME"
-  else
-    echo
-    echo "⚠️  CLI trigger creation failed (common with GitHub 2nd gen)."
-    echo "   Create it manually in the Cloud Build console with these settings:"
-    echo
-    echo "   Name           : $TRIGGER_NAME"
-    echo "   Repository     : github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}"
-    echo "   Branch         : $BRANCH_PATTERN"
-    echo "   Build config   : $BUILD_CONFIG"
-    echo "   Substitutions  : $SUBSTITUTIONS"
-    echo "   Region         : $GCP_REGION"
-    echo
-    echo "   Console URL: https://console.cloud.google.com/cloud-build/triggers?project=$GCP_PROJECT_ID"
-  fi
+  echo "  Name           : rubik-${ENV}"
+  echo "  Region         : $GCP_REGION"
+  echo "  Event          : Push to a branch"
+  echo "  Repository     : github.com/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}"
+  echo "  Branch         : $BRANCH_PATTERN"
+  echo "  Build config   : $BUILD_CONFIG"
+  echo "  Service account: rubik-cloudbuild@${GCP_PROJECT_ID}.iam.gserviceaccount.com"
+  echo "  Substitutions  : _ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}"
+  echo
+  echo "  ⚠️  Run 'iam' first so the rubik-cloudbuild SA exists before creating the trigger."
 }
 
 # ─── iam ─────────────────────────────────────────────────────────────────────
 setup_iam() {
-  section "Granting IAM roles"
+  section "Configuring IAM"
 
+  DEDICATED_SA="rubik-cloudbuild@${GCP_PROJECT_ID}.iam.gserviceaccount.com"
+
+  # Create dedicated SA if it doesn't exist
+  if ! gcloud iam service-accounts describe "$DEDICATED_SA" \
+       --project="$GCP_PROJECT_ID" &>/dev/null; then
+    echo "  Creating service account: rubik-cloudbuild"
+    gcloud iam service-accounts create rubik-cloudbuild \
+      --display-name="Rubik Cloud Build" \
+      --project="$GCP_PROJECT_ID"
+  else
+    echo "  Service account already exists: rubik-cloudbuild"
+  fi
+
+  # Roles needed to build, push to GCR, deploy to Cloud Run, and write logs.
+  # secretmanager.secretAccessor is included for future use; remove if not needed.
   roles=(
     roles/cloudbuild.builds.builder
     roles/run.admin
@@ -193,22 +162,15 @@ setup_iam() {
   )
 
   for role in "${roles[@]}"; do
-    echo "  Granting $role to $CLOUDBUILD_SA"
+    echo "  Granting $role to rubik-cloudbuild"
     gcloud projects add-iam-policy-binding "$GCP_PROJECT_ID" \
-      --member="serviceAccount:${CLOUDBUILD_SA}" \
+      --member="serviceAccount:${DEDICATED_SA}" \
       --role="$role" \
+      --condition=None \
       --quiet
   done
 
-  # Also grant Cloud Run's default compute SA access to secrets
-  COMPUTE_SA="${PROJECT_NUMBER}-compute@developer.gserviceaccount.com"
-  echo "  Granting secretmanager.secretAccessor to Compute SA"
-  gcloud projects add-iam-policy-binding "$GCP_PROJECT_ID" \
-    --member="serviceAccount:${COMPUTE_SA}" \
-    --role="roles/secretmanager.secretAccessor" \
-    --quiet
-
-  echo "✓ IAM configured"
+  echo "✓ IAM configured — SA: $DEDICATED_SA"
 }
 
 # ─── Run ─────────────────────────────────────────────────────────────────────
@@ -216,16 +178,17 @@ case "$CMD" in
   all)
     setup_apis
     setup_secrets
-    setup_triggers
     setup_iam
+    echo
+    setup_triggers  # print manual instructions last
     ;;
   apis)     setup_apis ;;
   secrets)  setup_secrets ;;
-  triggers) setup_triggers ;;
   iam)      setup_iam ;;
+  triggers) setup_triggers ;;
   *)
     echo "Unknown command: $CMD"
-    echo "Valid commands: all, apis, secrets, triggers, iam"
+    echo "Valid commands: all, apis, secrets, iam, triggers"
     exit 1
     ;;
 esac

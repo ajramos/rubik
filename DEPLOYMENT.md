@@ -2,13 +2,14 @@
 
 ## Overview
 
-| | Staging | Production |
-|-|---------|------------|
-| Branch | `develop` | `main` |
-| Service | `rubik-staging` | `rubik` |
-| URL | *(set when configured)* | *(set when configured)* |
-| Cloud Build config | `cloudbuild-staging.yaml` | `cloudbuild-production.yaml` |
-| Max instances | 5 | 10 |
+| | Production |
+|-|------------|
+| Branch | `main` |
+| Service | `rubik` |
+| Region | `europe-west1` |
+| URL | *(run `gcloud run services describe rubik --region=europe-west1 --project=rubik-atlas --format="value(status.url)"`)* |
+| Cloud Build config | `cloudbuild-production.yaml` |
+| Max instances | 10 |
 
 ## Docker image
 
@@ -49,7 +50,6 @@ gcloud run services update-traffic rubik \
   --project=rubik-atlas
 ```
 
-For staging, replace `rubik` → `rubik-staging`.
 
 ### Git rollback
 
@@ -63,11 +63,31 @@ This triggers a new Cloud Build which redeploys the reverted state.
 ## First-time infrastructure setup
 
 ```bash
-# Prerequisites: gcloud CLI authenticated, .env.staging and .env.production filled in
+# Prerequisites: gcloud CLI authenticated, .env.production filled in
 
-./scripts/setup-environment.sh staging all
 ./scripts/setup-environment.sh production all
 ```
+
+`all` enables APIs, configures secrets, creates the `rubik-cloudbuild` service account, and
+grants it the required IAM roles. It also prints the trigger settings to create manually.
+
+### Manual trigger creation (required after `iam`)
+
+Cloud Build triggers with GitHub 2nd gen connections must be created via the console
+(CLI does not support this reliably):
+
+**URL**: https://console.cloud.google.com/cloud-build/triggers?project=rubik-atlas
+
+| Field | Value |
+|-------|-------|
+| Name | `rubik-production` |
+| Region | `europe-west1` |
+| Event | Push to a branch |
+| Repository | `ajramos/rubik` |
+| Branch | `^main$` |
+| Build config | `cloudbuild-production.yaml` |
+| Service account | `rubik-cloudbuild@rubik-atlas.iam.gserviceaccount.com` |
+| Substitutions | `_ALLOWED_ORIGINS` = `*` |
 
 See `docs/WORKFLOW.md` for the full workflow documentation.
 
