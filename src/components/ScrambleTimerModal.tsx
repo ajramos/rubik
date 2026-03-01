@@ -9,28 +9,20 @@ import {
   generateScramble,
 } from "../utils/timer";
 import type { Penalty, Solve, TimerData } from "../utils/timer";
+import type { CubeScheme } from "../utils/faceColors";
+import { getFaceScheme } from "../utils/faceColors";
 
 type Phase = "idle" | "holding" | "ready" | "inspection" | "solving" | "result";
 
-// Same palette as NotationReference — U=white, D=yellow, R=red, L=orange, F=green, B=blue
-// Text colors adapted for use on light background (bg colors are used as text color here)
-const FACE_COLORS: Record<string, string> = {
-  U: "#555",     // white face chip → dark gray text (unreadable as text on light bg)
-  D: "#c8980a",  // yellow, darkened for contrast on light bg
-  R: "#c41e3a",  // red
-  L: "#d45000",  // orange, slightly darkened
-  F: "#007a3a",  // green, darkened
-  B: "#0046ad",  // blue
-};
-
-function ScrambleDisplay({ scramble }: { scramble: string }) {
+function ScrambleDisplay({ scramble, cubeScheme }: { scramble: string; cubeScheme: CubeScheme }) {
+  const scheme = getFaceScheme(cubeScheme);
   if (!scramble) return <p className="scrambleText scrambleText--loading">Generating…</p>;
   const tokens = scramble.split(" ");
   return (
     <p className="scrambleText">
       {tokens.map((tok, i) => {
-        const face = tok[0];
-        const color = FACE_COLORS[face];
+        const face = tok[0] ?? "";
+        const color = scheme[face]?.bg;
         return (
           <span key={i}>
             {i > 0 && " "}
@@ -112,10 +104,11 @@ const SessionChart = memo(function SessionChart({ solves }: { solves: Solve[] })
 });
 
 type Props = {
+  cubeScheme: CubeScheme;
   onClose: () => void;
 };
 
-export function ScrambleTimerModal({ onClose }: Props) {
+export function ScrambleTimerModal({ cubeScheme, onClose }: Props) {
   const [phase, setPhase] = useState<Phase>("idle");
   const [scramble, setScramble] = useState<string>("");
   const [startTime, setStartTime] = useState<number>(0);
@@ -325,7 +318,7 @@ export function ScrambleTimerModal({ onClose }: Props) {
           <div className="scrambleMain">
             {!isSolving && (
               <div className="scrambleTextWrap">
-                <ScrambleDisplay scramble={scramble} />
+                <ScrambleDisplay scramble={scramble} cubeScheme={cubeScheme} />
               </div>
             )}
 

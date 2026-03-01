@@ -11,7 +11,7 @@ const PRIMARY_MENU_ITEMS: Array<{ key: AppSection; label: string; status?: "beta
   { key: "practice", label: "Practice" },
   { key: "progress", label: "Progress" },
   { key: "reference", label: "Reference" },
-  { key: "bld", label: "BLD", status: "beta" },
+  { key: "bld", label: "Blindfolded Training" },
 ];
 
 const LEARNING_TRACKS = [

@@ -875,6 +875,23 @@ body {
   transform: translateX(2px);
 }
 
+.homeNavCardBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  margin-left: 6px;
+  border-radius: 9px;
+  background: var(--accent-yellow);
+  color: #1a2332;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: middle;
+}
+
 /* Stats strip */
 .homeStatsStrip {
   display: flex;

@@ -12,6 +12,7 @@ import { ScrambleTimerModal } from "./components/ScrambleTimerModal";
 import { loadSRS, saveSRS, scheduleCard, getSRSCard, isDue } from "./utils/srs";
 import type { SRSCard, SRSRating } from "./utils/srs";
 import { loadBldSRS, saveBldSRS, getBldCard } from "./utils/bld-srs";
+import { SPEFFZ_EDGES, SPEFFZ_CORNERS } from "./data/bld-data";
 import { loadStreaks, recordPractice } from "./utils/streaks";
 import type { StreakData } from "./utils/streaks";
 import { loadPrefs, setPreferredAlg, clearPreferredAlg, toggleOhMode, setCubeScheme } from "./utils/prefs";
@@ -105,7 +106,7 @@ const APP_SECTION_LABELS: Record<AppSection, string> = {
   practice: "Practice",
   progress: "Progress",
   reference: "Reference",
-  bld: "BLD",
+  bld: "Blindfolded Training",
 };
 
 const SET_META: Record<Exclude<AlgSet, "F2L">, { short: string; long: string; description: string }> = {
@@ -1355,6 +1356,12 @@ export default function App() {
     () => pllCases.filter((c) => { const card = srsData[c.id]; return !!card && isDue(card); }).length,
     [pllCases, srsData]
   );
+  const bldDueCount = useMemo(() => {
+    const allTargets = [...SPEFFZ_EDGES, ...SPEFFZ_CORNERS];
+    return allTargets.filter(
+      (t) => !t.isBuffer && (!bldSrsData[t.id] || isDue(getBldCard(t.id, bldSrsData)))
+    ).length;
+  }, [bldSrsData]);
   const todayDueCases = useMemo(() => {
     const due = [...ollCases, ...pllCases, ...f2lDrillCases].filter((c) => {
       const card = srsData[c.id];
@@ -1836,6 +1843,7 @@ export default function App() {
             {appSection === "home" ? (
               <HomeSection
                 totalDueCount={ollDueCount + pllDueCount}
+                bldDueCount={bldDueCount}
                 currentStreak={streaks.currentStreak}
                 ollLearned={ollStats.learned}
                 ollTotal={ollStats.total}
@@ -2351,7 +2359,7 @@ export default function App() {
       )}
 
       {scrambleTimerOpen && (
-        <ScrambleTimerModal onClose={() => setScrambleTimerOpen(false)} />
+        <ScrambleTimerModal cubeScheme={prefs.cubeScheme} onClose={() => setScrambleTimerOpen(false)} />
       )}
     </div>
   );
