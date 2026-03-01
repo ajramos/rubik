@@ -31,14 +31,28 @@ export function MiniTwisty({
     () => (setupAlg ? normalizeAlg(setupAlg) : undefined),
     [setupAlg]
   );
+  const isExactF2LRecognition = set === "F2L" && exactF2L && !!cleanedSetupAlg;
+  // For exact F2L thumbnails, render the recognition/setup position as the
+  // final frame to avoid "all cards look the same" previews.
+  const effectiveAlg = useMemo(
+    () =>
+      isExactF2LRecognition && cleanedSetupAlg
+        ? cleanedSetupAlg
+        : cleanedAlg,
+    [isExactF2LRecognition, cleanedSetupAlg, cleanedAlg]
+  );
   const displayOrientation = useMemo(
     () => (experimentalStickeringOverride === "F2L" ? undefined : DISPLAY_ORIENTATION),
     [experimentalStickeringOverride]
   );
-  const setupWithOrientation = useMemo(
-    () => [displayOrientation, cleanedSetupAlg].filter(Boolean).join(" ") || undefined,
-    [cleanedSetupAlg, displayOrientation]
+  const effectiveSetupWithOrientation = useMemo(
+    () =>
+      isExactF2LRecognition
+        ? displayOrientation || undefined
+        : [displayOrientation, cleanedSetupAlg].filter(Boolean).join(" ") || undefined,
+    [isExactF2LRecognition, displayOrientation, cleanedSetupAlg]
   );
+  const shouldCaptureStartState = !!cleanedSetupAlg && !isExactF2LRecognition;
   const f2lStylized = set === "F2L" && !exactF2L;
   const captureSize = set === "F2L" && exactF2L ? 240 : size;
   const experimentalStickering = experimentalStickeringOverride ?? (f2lStylized ? "LS" : undefined);
@@ -46,12 +60,13 @@ export function MiniTwisty({
   const foundationDisplay = f2lStylized ? "none" : undefined;
   const cacheKey = useMemo(
     () =>
-      cleanedAlg
-        ? `runtime-thumb:v7:${set}:${captureSize}:${exactF2L ? "exact" : "styled"}:${visualization ?? ""}:${experimentalStickering ?? ""}:${foundationDisplay ?? ""}:${displayOrientation ?? ""}:${cleanedAlg}:${cleanedSetupAlg ?? ""}`
+      effectiveAlg
+        ? `runtime-thumb:v9:${set}:${captureSize}:${exactF2L ? "exact" : "styled"}:${visualization ?? ""}:${experimentalStickering ?? ""}:${foundationDisplay ?? ""}:${displayOrientation ?? ""}:${effectiveAlg}:${effectiveSetupWithOrientation ?? ""}:${shouldCaptureStartState ? "start" : "end"}`
         : null,
     [
-      cleanedAlg,
-      cleanedSetupAlg,
+      effectiveAlg,
+      effectiveSetupWithOrientation,
+      shouldCaptureStartState,
       displayOrientation,
       experimentalStickering,
       visualization,
@@ -67,7 +82,7 @@ export function MiniTwisty({
   const [renderError, setRenderError] = React.useState(false);
 
   React.useEffect(() => {
-    if ((!preferRuntime && thumb) || !cleanedAlg || !cacheKey) return;
+    if ((!preferRuntime && thumb) || !effectiveAlg || !cacheKey) return;
     if (runtimeThumbCache.has(cacheKey)) {
       setRuntimeThumb(runtimeThumbCache.get(cacheKey)!);
       return;
@@ -105,13 +120,13 @@ export function MiniTwisty({
         const player = document.createElement("twisty-player") as any;
         const applyPlayerAttrs = () => {
           player.setAttribute("puzzle", "3x3x3");
-          player.setAttribute("alg", cleanedAlg);
-          if (setupWithOrientation) {
-            player.setAttribute("experimental-setup-alg", setupWithOrientation);
+          player.setAttribute("alg", effectiveAlg);
+          if (effectiveSetupWithOrientation) {
+            player.setAttribute("experimental-setup-alg", effectiveSetupWithOrientation);
           } else {
             player.removeAttribute("experimental-setup-alg");
           }
-          player.setAttribute("experimental-setup-anchor", cleanedSetupAlg ? "start" : "end");
+          player.setAttribute("experimental-setup-anchor", shouldCaptureStartState ? "start" : "end");
           player.setAttribute("control-panel", "none");
           player.setAttribute("background", "none");
           player.setAttribute("hint-facelets", "none");
@@ -147,7 +162,7 @@ export function MiniTwisty({
         await wait(renderWait);
         await raf();
 
-        if (cleanedSetupAlg && typeof player.jumpToStart === "function") {
+        if (shouldCaptureStartState && typeof player.jumpToStart === "function") {
           try {
             player.jumpToStart({ flash: false });
           } catch {
@@ -200,11 +215,12 @@ export function MiniTwisty({
   }, [
     preferRuntime,
     thumb,
-    cleanedAlg,
+    effectiveAlg,
     cacheKey,
     captureSize,
-    setupWithOrientation,
+    effectiveSetupWithOrientation,
     cleanedSetupAlg,
+    shouldCaptureStartState,
     experimentalStickering,
     visualization,
     foundationDisplay,
@@ -224,13 +240,13 @@ export function MiniTwisty({
           className="miniImage"
           style={{ width: "100%", height: "100%", display: "block" }}
         />
-      ) : cleanedAlg && !renderError ? (
+      ) : effectiveAlg && !renderError ? (
         <div className="miniPlaceholder">
           <span className="miniPlaceholderLabel">Rendering...</span>
         </div>
       ) : (
         <div className="miniPlaceholder">
-          <span className="miniPlaceholderLabel">{cleanedAlg ? "Preview error" : "No image"}</span>
+          <span className="miniPlaceholderLabel">{effectiveAlg ? "Preview error" : "No image"}</span>
         </div>
       )}
     </div>

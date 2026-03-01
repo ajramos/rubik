@@ -71,6 +71,7 @@ body {
 .app {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   padding: 16px 16px 32px;
   overflow-x: clip;
 }
@@ -263,6 +264,10 @@ body {
   align-items: start;
 }
 
+.workspace > * {
+  min-width: 0;
+}
+
 /* ── RAIL ───────────────────────────────────────────── */
 
 .rail {
@@ -271,6 +276,7 @@ body {
   position: sticky;
   top: 14px;
   max-height: calc(100vh - 28px);
+  max-height: calc(100dvh - 28px);
   overflow-y: auto;
   scrollbar-width: none;
 }
@@ -425,10 +431,12 @@ body {
   display: grid;
   gap: 6px;
   margin-bottom: 12px;
+  min-width: 0;
 }
 
 .mainMenuItem {
   width: 100%;
+  min-width: 0;
   border: 1px solid var(--line-2);
   background: var(--surface-2);
   border-radius: var(--radius-sm);
@@ -458,6 +466,8 @@ body {
 }
 
 .mainMenuLabel {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-family: "Space Grotesk", sans-serif;
   font-weight: 700;
   font-size: 13px;
@@ -510,6 +520,13 @@ body {
   gap: 8px;
   align-items: center;
   margin-bottom: 8px;
+}
+
+.studyMapHeading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
 }
 
 .studyMapTitle {
@@ -1224,6 +1241,10 @@ body {
   align-items: start;
 }
 
+.catalogHeaderTop > div {
+  min-width: 0;
+}
+
 .catalogEyebrow {
   font-family: "IBM Plex Mono", monospace;
   text-transform: uppercase;
@@ -1248,6 +1269,8 @@ body {
 }
 
 .catalogBreadcrumbItem {
+  display: inline-flex;
+  min-width: 0;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: var(--surface-3);
@@ -1257,6 +1280,9 @@ body {
   color: var(--muted);
   letter-spacing: 0.03em;
   max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .catalogBreadcrumbItem.isCurrent {
@@ -1506,6 +1532,8 @@ body {
   margin: 0 2px 0;
   display: flex;
   gap: 7px;
+  width: 100%;
+  min-width: 0;
   overflow-x: auto;
   padding: 2px 2px 4px;
   scrollbar-width: none;
@@ -2179,12 +2207,16 @@ body {
   backdrop-filter: blur(12px) saturate(0.7);
   display: grid;
   place-items: center;
-  padding: 16px;
+  padding-top: max(16px, env(safe-area-inset-top));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  padding-left: max(16px, env(safe-area-inset-left));
 }
 
 .modal {
   width: min(1180px, 97vw);
   max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
   overflow: auto;
   position: relative;
   isolation: isolate;
@@ -2757,20 +2789,46 @@ code {
 }
 
 @media (max-width: 760px) {
-  .app { padding: 10px 10px 24px; overflow-x: hidden; }
+  .app {
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-right: max(10px, env(safe-area-inset-right));
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+    padding-left: max(10px, env(safe-area-inset-left));
+    overflow-x: hidden;
+  }
 
   .heroLeft { flex-wrap: wrap; gap: 8px; }
   .heroBrand { font-size: 15px; }
 
+  .railPanel { padding: 10px; }
   .rail { grid-template-columns: 1fr; }
+  .rail--study .railPanel:not(.railPanel--nav) { display: none; }
 
-  .mainMenu { grid-template-columns: 1fr 1fr; }
+  .mainMenu { grid-template-columns: 1fr; gap: 5px; }
+  .mainMenuItem {
+    padding: 8px 10px;
+    min-height: 40px;
+    align-items: center;
+  }
+  .mainMenuLabel {
+    font-size: 12px;
+    line-height: 1.1;
+  }
 
-  .studyMapHeader { flex-direction: column; align-items: flex-start; }
+  .studyMapHeader { align-items: center; margin-bottom: 6px; }
+  .studyMapHeading { min-width: 0; }
+  .studyMap { padding: 7px; }
+  .studyMapMeta { font-size: 10px; }
+  .rail--study .studyMapMeta { display: none; }
+  .rail--study .studyTree {
+    max-height: none;
+    overflow: visible;
+  }
 
-  .treeLine--indent,
-  .treeLine--indent2,
-  .treeLine--indent3 { padding-left: 0; }
+  .treeLine--indent  { padding-left: 8px; }
+  .treeLine--indent2 { padding-left: 14px; }
+  .treeLine--indent3 { padding-left: 20px; }
+  .treeLine--indent4 { padding-left: 24px; }
 
   .treeInlineTabs { margin: 0; }
 
@@ -2812,6 +2870,7 @@ code {
   .modal {
     width: min(100%, 98vw);
     max-width: 98vw;
+    max-height: calc(100dvh - 24px);
     margin: 0 auto;
     padding: 10px;
   }
@@ -2861,7 +2920,10 @@ code {
   .treeButton {
     white-space: normal;
     overflow-wrap: anywhere;
+    font-size: 11px;
+    padding: 7px 8px;
   }
+  .treeButton--small { font-size: 10px; }
 
   .treeInlineTabs {
     margin-left: 0;
@@ -2874,6 +2936,7 @@ code {
   }
 
   .treeNode {
+    width: 100%;
     max-width: 100%;
     white-space: normal;
     overflow-wrap: anywhere;
@@ -3039,12 +3102,16 @@ code {
   backdrop-filter: blur(10px) saturate(0.8);
   display: grid;
   place-items: center;
-  padding: 16px;
+  padding-top: max(16px, env(safe-area-inset-top));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  padding-left: max(16px, env(safe-area-inset-left));
 }
 
 .drillModal {
   width: min(480px, 97vw);
   max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
   overflow: auto;
   background: var(--surface-1);
   border-radius: var(--radius-lg);
@@ -4556,13 +4623,17 @@ code {
   flex-direction: column;
   background: var(--bg);
   overflow: hidden;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .scrambleTimerHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px;
+  padding-top: max(14px, env(safe-area-inset-top));
+  padding-right: max(20px, env(safe-area-inset-right));
+  padding-bottom: 14px;
+  padding-left: max(20px, env(safe-area-inset-left));
   border-bottom: 1px solid var(--line);
   background: var(--surface-1);
   flex-shrink: 0;
@@ -4872,6 +4943,26 @@ code {
   }
   .timerStatRow { flex-direction: row; }
   .scrambleMain { padding: 20px 16px; gap: 16px; }
+  .timerDisplay {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 14px 10px;
+    font-size: clamp(40px, 14vw, 72px);
+  }
+  .timerDisplay--inspection {
+    font-size: clamp(52px, 18vw, 96px);
+  }
+  .timerPenaltyRow {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .timerPenaltyBtn,
+  .timerNextBtn {
+    flex: 1 1 104px;
+    min-width: 0;
+  }
 }
 
 /* ── REVIEW FORECAST ─────────────────────────────────── */

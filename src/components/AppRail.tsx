@@ -61,7 +61,7 @@ export function AppRail({
   onLastLayerSetChange,
 }: Props) {
   return (
-    <aside className="rail" aria-label="Learning modules">
+    <aside className={`rail rail--${appSection}`} aria-label="Learning modules">
       <section className="railPanel railPanel--nav">
         <div className="railHeader">
           <div className="railTitle">Navigation</div>
@@ -92,11 +92,13 @@ export function AppRail({
         {appSection === "study" && (
           <div className="studyMap">
             <div className="studyMapHeader">
-              <span className="studyMapTitle">Study Map</span>
-              <span className="studyMapMeta">3x3 › CFOP</span>
+              <div className="studyMapHeading">
+                <span className="studyMapTitle">Study Map</span>
+                <span className="studyMapMeta">3x3 › CFOP</span>
+              </div>
             </div>
 
-            <div className="studyTree">
+            <div id="study-map-tree" className="studyTree">
               <div className="treeLine">
                 <span className="treeNode treeNode--root">3x3</span>
               </div>
