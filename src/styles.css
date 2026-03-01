@@ -4909,23 +4909,34 @@ code {
   gap: 10px;
   flex-wrap: wrap;
   margin: 12px 0 16px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   background: var(--accent-ui-bg);
   border: 1px solid var(--accent-ui-border);
   border-radius: var(--radius-sm);
 }
 .bldYpermLabel {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   color: var(--accent-ui);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .bldYpermCode {
+  /* override global code {} which has dark bg + block display */
+  display: inline;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
   font-family: "IBM Plex Mono", monospace;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 600;
   color: var(--ink);
+  white-space: normal;
+  word-break: break-all;
+  line-height: 1.5;
 }
 
 .bldRefTabs {
@@ -4996,31 +5007,33 @@ code {
 
 .bldRefRow {
   display: grid;
-  grid-template-columns: 28px 52px 1fr auto auto;
+  grid-template-columns: 32px 56px 1fr auto auto;
   align-items: center;
-  gap: 8px;
-  padding: 5px 12px;
+  gap: 10px;
+  padding: 7px 14px;
   border-bottom: 1px solid var(--line);
+  transition: background 100ms;
 }
 .bldRefRow:last-child { border-bottom: none; }
 .bldRefRow:hover { background: var(--surface-2); }
-.bldRefRow--buffer { opacity: 0.45; }
+.bldRefRow--buffer { opacity: 0.38; }
 
 .bldRefLetter {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 800;
   line-height: 1;
 }
 .bldRefPos {
   font-family: "IBM Plex Mono", monospace;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 11.5px;
+  font-weight: 700;
   color: var(--ink);
   white-space: nowrap;
+  letter-spacing: 0.04em;
 }
 .bldRefFaceName {
-  font-size: 11px;
+  font-size: 11.5px;
   color: var(--muted);
   white-space: nowrap;
   overflow: hidden;
@@ -5031,10 +5044,22 @@ code {
   justify-content: flex-end;
 }
 .bldRefSrs {
-  min-width: 48px;
+  min-width: 10px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
+
+/* SRS dot — replaces text chip in reference rows */
+.bldSrsDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.bldSrsDot--new     { background: var(--muted-2); opacity: 0.5; }
+.bldSrsDot--due     { background: #c8980a; }
+.bldSrsDot--learned { background: var(--accent-green, #0f6630); }
 
 /* SRS status badges in reference table */
 .bldSrsStatus {

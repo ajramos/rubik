@@ -88,9 +88,10 @@ function FaceGroup({
               </span>
               <span className="bldRefSrs">
                 {!t.isBuffer && (
-                  <span className={`bldSrsStatus bldSrsStatus--${statusOf(t, srsData)}`}>
-                    {statusOf(t, srsData)}
-                  </span>
+                  <span
+                    className={`bldSrsDot bldSrsDot--${statusOf(t, srsData)}`}
+                    title={statusOf(t, srsData)}
+                  />
                 )}
               </span>
             </div>
