@@ -4863,3 +4863,79 @@ code {
 .bldSrsStatus--due   { color: #a07800; background: rgba(160, 120, 0, 0.1); }
 .bldSrsStatus--learned { color: var(--accent-green, #0f6630); background: rgba(15, 102, 48, 0.1); }
 
+
+/* ── Speffz cube net diagram ─────────────────────────────────────────────── */
+
+.speffzNetWrap {
+  margin: 0 0 8px;
+}
+
+/* Face colour legend row */
+.speffzNetFaceLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.speffzNetFaceChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  letter-spacing: 0.03em;
+}
+
+/* Scrollable SVG wrapper — the net is ~344px wide, scrolls on small screens */
+.speffzNetSvgWrap {
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-2);
+  background: var(--surface-3);
+  padding: 8px;
+  margin-bottom: 8px;
+}
+.speffzNetSvg {
+  display: block;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+}
+
+/* Legend row below SVG */
+.speffzNetLegend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.speffzNetLegendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.speffzNetLegendSep {
+  color: var(--muted-2);
+  font-size: 10px;
+}
+.speffzNetLegendHint {
+  font-style: italic;
+  color: var(--muted-2);
+}
+
+/* Explanatory note below legend */
+.speffzNetNote {
+  font-size: 11.5px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0 0 4px;
+}
+.speffzNetNote strong {
+  color: var(--ink);
+  font-weight: 600;
+}
