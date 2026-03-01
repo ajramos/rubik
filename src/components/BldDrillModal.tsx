@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import type { SRSCard, SRSRating } from "../utils/srs";
 import { isDue } from "../utils/srs";
 import type { BldTarget } from "../data/bld-data";
+import { Y_PERM } from "../data/bld-data";
 
 const SESSION_MAX = 20;
 
@@ -21,6 +22,21 @@ const RATING_CONFIG: { rating: SRSRating; label: string; mod: string }[] = [
   { rating: 3, label: "Good", mod: "good" },
   { rating: 4, label: "Easy", mod: "easy" },
 ];
+
+// Face color palette — matches NotationReference + BLD theme
+const FACE_COLORS: Record<string, { bg: string; label: string }> = {
+  U: { bg: "#6b7280", label: "U-face" },
+  D: { bg: "#c8980a", label: "D-face" },
+  R: { bg: "#c41e3a", label: "R-face" },
+  L: { bg: "#d45000", label: "L-face" },
+  F: { bg: "#007a3a", label: "F-face" },
+  B: { bg: "#0046ad", label: "B-face" },
+};
+
+function getFace(position: string) {
+  const f = position[0] ?? "U";
+  return FACE_COLORS[f] ?? { bg: "#6b7280", label: `${f}-face` };
+}
 
 function buildQueue(targets: BldTarget[], srsData: Record<string, SRSCard>): BldTarget[] {
   const active = targets.filter((t) => !t.isBuffer);
@@ -54,6 +70,7 @@ export function BldDrillModal({ targets, label, bldSrsData, onRate, onClose }: P
   const current = queue[currentIndex];
   const isComplete = currentIndex >= queue.length;
   const countByRating = (r: SRSRating) => results.filter((x) => x.rating === r).length;
+  const isCorner = current?.id.startsWith("corner_");
 
   function handleRate(rating: SRSRating) {
     if (!current) return;
@@ -106,21 +123,38 @@ export function BldDrillModal({ targets, label, bldSrsData, onRate, onClose }: P
             </div>
 
             <div className="drillCard">
-              {/* BLD letter display replaces MiniTwisty */}
-              <div className="bldDrillThumb">
-                <div className="bldDrillLetter">{current.letter}</div>
-                <div className="bldDrillPos">{current.position}</div>
-                <div className="bldDrillFaceName">{current.faceName}</div>
-              </div>
+              {/* ── BLD letter display ── */}
+              {(() => {
+                const face = getFace(current.position);
+                const faceName = current.faceName.replace(/ \([A-Z] sticker\)$/, "");
+                return (
+                  <div className="bldDrillThumb">
+                    <div className="bldDrillLetterWrap">
+                      <span className="bldDrillLetter" style={{ color: face.bg }}>
+                        {current.letter}
+                      </span>
+                    </div>
+                    <div className="bldDrillMeta">
+                      <span className="bldDrillFaceBadge" style={{ background: face.bg }}>
+                        {face.label}
+                      </span>
+                      <span className="bldDrillPos">{current.position}</span>
+                      <span className="bldDrillFaceName">{faceName}</span>
+                    </div>
+                  </div>
+                );
+              })()}
 
               {phase === "question" ? (
                 <div className="drillQuestion">
                   {current.note && (
-                    <p className="drillQuestionHint" style={{ fontStyle: "normal", color: "var(--muted-2)" }}>
-                      {current.note}
-                    </p>
+                    <p className="bldDrillNote">{current.note}</p>
                   )}
-                  <p className="drillQuestionHint">Recall the setup alg and commutator for this position.</p>
+                  <p className="drillQuestionHint">
+                    {isCorner
+                      ? "Recall the setup move and execute: setup · Y-perm · undo"
+                      : "Recall the setup move and execute: setup · M2 · undo"}
+                  </p>
                   <button
                     className="drillRevealBtn"
                     type="button"
@@ -131,14 +165,41 @@ export function BldDrillModal({ targets, label, bldSrsData, onRate, onClose }: P
                 </div>
               ) : (
                 <div className="drillAnswer">
-                  {current.setupAlg && (
-                    <>
-                      <div className="drillCaseId">SETUP</div>
-                      <code className="drillAlg">{current.setupAlg}</code>
-                    </>
-                  )}
-                  <div className="drillCaseId">FULL ALG</div>
-                  <code className="drillAlg">{current.fullAlg}</code>
+                  <div className="bldAlgBreakdown">
+                    {current.setupAlg ? (
+                      <>
+                        <div className="bldAlgRow">
+                          <span className="bldAlgRowLabel">Setup</span>
+                          <code className="bldAlgRowCode">{current.setupAlg}</code>
+                        </div>
+                        <div className="bldAlgRow">
+                          <span className="bldAlgRowLabel">{isCorner ? "Y-perm" : "M2"}</span>
+                          <code className="bldAlgRowCode bldAlgRowCode--core">
+                            {isCorner ? Y_PERM : "M2"}
+                          </code>
+                        </div>
+                        <div className="bldAlgRow">
+                          <span className="bldAlgRowLabel">Undo</span>
+                          <code className="bldAlgRowCode bldAlgRowCode--undo">
+                            {current.fullAlg.split("  ").at(-1) ?? ""}
+                          </code>
+                        </div>
+                        <div className="bldAlgDivider" />
+                      </>
+                    ) : (
+                      <div className="bldAlgRow">
+                        <span className="bldAlgRowLabel">{isCorner ? "Y-perm" : "M2"}</span>
+                        <code className="bldAlgRowCode bldAlgRowCode--core">
+                          {isCorner ? Y_PERM : "M2"}
+                        </code>
+                      </div>
+                    )}
+                    <div className="bldAlgRow bldAlgRow--full">
+                      <span className="bldAlgRowLabel">Full</span>
+                      <code className="drillAlg">{current.fullAlg}</code>
+                    </div>
+                  </div>
+
                   <div className="ratingRow">
                     {RATING_CONFIG.map(({ rating, label: lbl, mod }) => (
                       <button

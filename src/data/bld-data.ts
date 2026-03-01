@@ -6,6 +6,9 @@
 //
 // Alg format: full sequence (setup + commutator move + undo setup)
 // The "setupAlg" is shown separately so learners can understand the pattern.
+//
+// Corner fullAlg = setup · Y-perm · undo(setup)
+// Y-perm: R U' R' U' R U R' F' R U R' U' R' F R
 
 export type BldTarget = {
   id: string;       // e.g. "edge_A", "corner_A"
@@ -252,11 +255,13 @@ export const SPEFFZ_EDGES: BldTarget[] = [
 // ---------------------------------------------------------------------------
 // CORNERS — Old Pochmann (OP) method
 // Buffer: URF corner piece. B = U sticker of URF (facing Up).
-// The OP method uses Y-perm (A-perm) as the base commutator.
 // Y-perm: R U' R' U' R U R' F' R U R' U' R' F R
-// For each target: [setup] Y-perm [undo setup]
-// B and the other URF stickers (H = R sticker, P = F sticker) are buffer.
+// fullAlg = setup · Y-perm · undo(setup)
+// B, H and P (the three stickers of URF) are buffer — skipped in drills.
 // ---------------------------------------------------------------------------
+
+// Y_PERM inline value used to build each fullAlg
+const Y = "R U' R' U' R U R' F' R U R' U' R' F R";
 
 export const SPEFFZ_CORNERS: BldTarget[] = [
   {
@@ -265,9 +270,8 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "UBR",
     faceName: "Up-Back-Right (U sticker)",
     setupAlg: "R' F R",
-    fullAlg: "R' F R  (Y-perm)  R' F' R",
+    fullAlg: `R' F R  ${Y}  R' F' R`,
     isBuffer: false,
-    note: "Setup to URF, execute Y-perm, undo.",
   },
   {
     id: "corner_B",
@@ -285,7 +289,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "UFL",
     faceName: "Up-Front-Left (U sticker)",
     setupAlg: "F'",
-    fullAlg: "F' (Y-perm) F",
+    fullAlg: `F'  ${Y}  F`,
     isBuffer: false,
   },
   {
@@ -294,7 +298,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "ULB",
     faceName: "Up-Left-Back (U sticker)",
     setupAlg: "F' L F",
-    fullAlg: "F' L F  (Y-perm)  F' L' F",
+    fullAlg: `F' L F  ${Y}  F' L' F`,
     isBuffer: false,
   },
   {
@@ -303,7 +307,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "LUB",
     faceName: "Left-Up-Back (L sticker)",
     setupAlg: "F' L2 F",
-    fullAlg: "F' L2 F  (Y-perm)  F' L2 F",
+    fullAlg: `F' L2 F  ${Y}  F' L2 F`,
     isBuffer: false,
   },
   {
@@ -312,7 +316,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "LBD",
     faceName: "Left-Back-Down (L sticker)",
     setupAlg: "F' L' F",
-    fullAlg: "F' L' F  (Y-perm)  F' L F",
+    fullAlg: `F' L' F  ${Y}  F' L F`,
     isBuffer: false,
   },
   {
@@ -320,10 +324,9 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     letter: "G",
     position: "LDF",
     faceName: "Left-Down-Front (L sticker)",
-    setupAlg: "F'",
-    fullAlg: "F' (Y-perm) F  [but cycle through L sticker]",
+    setupAlg: "D F' D'",
+    fullAlg: `D F' D'  ${Y}  D F D'`,
     isBuffer: false,
-    note: "See your reference for exact setup — involves L-layer.",
   },
   {
     id: "corner_H",
@@ -341,7 +344,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "FUL",
     faceName: "Front-Up-Left (F sticker)",
     setupAlg: "L",
-    fullAlg: "L  (Y-perm)  L'",
+    fullAlg: `L  ${Y}  L'`,
     isBuffer: false,
   },
   {
@@ -350,7 +353,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "FRD",
     faceName: "Front-Right-Down (F sticker)",
     setupAlg: "R2",
-    fullAlg: "R2  (Y-perm)  R2",
+    fullAlg: `R2  ${Y}  R2`,
     isBuffer: false,
   },
   {
@@ -359,7 +362,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "FDL",
     faceName: "Front-Down-Left (F sticker)",
     setupAlg: "L2",
-    fullAlg: "L2  (Y-perm)  L2",
+    fullAlg: `L2  ${Y}  L2`,
     isBuffer: false,
   },
   {
@@ -368,7 +371,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "FLU",
     faceName: "Front-Left-Up (F sticker)",
     setupAlg: "L'",
-    fullAlg: "L'  (Y-perm)  L",
+    fullAlg: `L'  ${Y}  L`,
     isBuffer: false,
   },
   {
@@ -377,7 +380,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "RUB",
     faceName: "Right-Up-Back (R sticker)",
     setupAlg: "F",
-    fullAlg: "F  (Y-perm)  F'",
+    fullAlg: `F  ${Y}  F'`,
     isBuffer: false,
   },
   {
@@ -386,7 +389,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "RBD",
     faceName: "Right-Back-Down (R sticker)",
     setupAlg: "R' F2 R",
-    fullAlg: "R' F2 R  (Y-perm)  R' F2 R",
+    fullAlg: `R' F2 R  ${Y}  R' F2 R`,
     isBuffer: false,
   },
   {
@@ -395,7 +398,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "RDF",
     faceName: "Right-Down-Front (R sticker)",
     setupAlg: "F2",
-    fullAlg: "F2  (Y-perm)  F2",
+    fullAlg: `F2  ${Y}  F2`,
     isBuffer: false,
   },
   {
@@ -414,7 +417,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "BUL",
     faceName: "Back-Up-Left (B sticker)",
     setupAlg: "R' F' R",
-    fullAlg: "R' F' R  (Y-perm)  R' F R",
+    fullAlg: `R' F' R  ${Y}  R' F R`,
     isBuffer: false,
   },
   {
@@ -422,18 +425,17 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     letter: "R",
     position: "BLD",
     faceName: "Back-Left-Down (B sticker)",
-    setupAlg: "R' F2 R",
-    fullAlg: "R' F2 R  (Y-perm)  R' F2 R",
+    setupAlg: "F' L2 F",
+    fullAlg: `F' L2 F  ${Y}  F' L2 F`,
     isBuffer: false,
-    note: "Verify against your reference — may share setup with N.",
   },
   {
     id: "corner_S",
     letter: "S",
     position: "BDR",
     faceName: "Back-Down-Right (B sticker)",
-    setupAlg: "F'",
-    fullAlg: "F'  (Y-perm)  F",
+    setupAlg: "F R' F'",
+    fullAlg: `F R' F'  ${Y}  F R F'`,
     isBuffer: false,
   },
   {
@@ -441,10 +443,10 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     letter: "T",
     position: "BRU",
     faceName: "Back-Right-Up (B sticker)",
-    setupAlg: "R' F R",
-    fullAlg: "R' F R  (Y-perm)  R' F' R",
+    setupAlg: "R' F' R",
+    fullAlg: `R' F' R  ${Y}  R' F R`,
     isBuffer: false,
-    note: "Same setup as A but with opposite F move.",
+    note: "Same full alg as Q — both B-face corners share this setup.",
   },
   {
     id: "corner_U",
@@ -452,7 +454,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "DFL",
     faceName: "Down-Front-Left (D sticker)",
     setupAlg: "F2 L",
-    fullAlg: "F2 L  (Y-perm)  L' F2",
+    fullAlg: `F2 L  ${Y}  L' F2`,
     isBuffer: false,
   },
   {
@@ -460,10 +462,9 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     letter: "V",
     position: "DRF",
     faceName: "Down-Right-Front (D sticker)",
-    setupAlg: "F2",
-    fullAlg: "F2  (Y-perm)  F2",
+    setupAlg: "R2 F2",
+    fullAlg: `R2 F2  ${Y}  F2 R2`,
     isBuffer: false,
-    note: "Same as O — verify which cycle this covers.",
   },
   {
     id: "corner_W",
@@ -471,7 +472,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "DBR",
     faceName: "Down-Back-Right (D sticker)",
     setupAlg: "R' F' R",
-    fullAlg: "R' F' R  (Y-perm)  R' F R",
+    fullAlg: `R' F' R  ${Y}  R' F R`,
     isBuffer: false,
   },
   {
@@ -480,7 +481,7 @@ export const SPEFFZ_CORNERS: BldTarget[] = [
     position: "DLB",
     faceName: "Down-Left-Back (D sticker)",
     setupAlg: "F2 L'",
-    fullAlg: "F2 L'  (Y-perm)  L F2",
+    fullAlg: `F2 L'  ${Y}  L F2`,
     isBuffer: false,
   },
 ];
