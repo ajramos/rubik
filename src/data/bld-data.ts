@@ -2,7 +2,8 @@
 // Speffz is the standard letter scheme used by most BLD solvers.
 //
 // EDGES — M2 method, buffer = UF sticker (Speffz letter C)
-// CORNERS — Old Pochmann (OP) method, buffer = URF sticker (Speffz letter B)
+// CORNERS — Old Pochmann (OP) method, using URF as corner buffer (Speffz letter B)
+// Note: some tutorials choose a different corner buffer/lettering convention.
 //
 // Alg format: full sequence (setup + commutator move + undo setup)
 // The "setupAlg" is shown separately so learners can understand the pattern.
@@ -255,6 +256,7 @@ export const SPEFFZ_EDGES: BldTarget[] = [
 // ---------------------------------------------------------------------------
 // CORNERS — Old Pochmann (OP) method
 // Buffer: URF corner piece. B = U sticker of URF (facing Up).
+// This is a valid OP convention; other guides may pick a different corner buffer.
 // Y-perm: R U' R' U' R U R' F' R U R' U' R' F R
 // fullAlg = setup · Y-perm · undo(setup)
 // B, H and P (the three stickers of URF) are buffer — skipped in drills.

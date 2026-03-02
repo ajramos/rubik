@@ -113,7 +113,8 @@ function ReferenceSection({ srsData, cubeScheme }: { srsData: Record<string, SRS
       </h3>
       <p className="workspaceSectionLead" style={{ marginTop: 4, marginBottom: 12 }}>
         Every non-center sticker gets a unique letter A–X. Each face has 4 edge stickers
-        and 4 corner stickers — the net below shows all 48 positions labeled.
+        and 4 corner stickers — the net below shows all 48 positions labeled. In this trainer,
+        UF (C/I) and URF (B/H/P) are the buffer stickers and appear faded.
       </p>
       <SpeffzNet cubeScheme={cubeScheme} />
 
@@ -181,13 +182,18 @@ export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
         <div className="workspaceSectionKicker">BLD · Speffz Scheme</div>
         <h2 className="workspaceSectionTitle">Blindfolded Training</h2>
         <p className="workspaceSectionLead">
-          M2 edges and Old Pochmann corners. Each sticker on the cube gets a unique letter (A–X)
-          in the Speffz scheme — the drills build your algorithm recall for each position.
+          This module trains letter-to-algorithm recall for 3BLD using one fixed convention:
+          M2 for edges + Old Pochmann for corners, with Speffz lettering (A-X).
         </p>
         <p className="bldBufferNote">
-          Edge buffer: <strong>UF → C</strong>
+          Trainer convention: edge buffer piece <strong>UF (C/I)</strong>
           <span className="bldBufferSep">·</span>
-          Corner buffer: <strong>URF → B</strong>
+          corner buffer piece <strong>URF (B/H/P)</strong>
+        </p>
+        <p className="bldConventionNote">
+          If your tutorial uses a different corner buffer or lettering, that is normal.
+          The core method is the same; only the letter map and setup list change.
+          For example, the Ruwix OP tutorial uses a ULB corner buffer in its own convention.
         </p>
 
         <div className="workspaceSectionGrid">
@@ -197,7 +203,10 @@ export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
             className={`workspaceTile todayQueueTile ${edgeDue > 0 ? "todayQueueTile--due" : ""}`}
           >
             <h3 className="todayQueueTitle">M2 Edges</h3>
-            <p>22 edge positions. See the letter — recall the setup alg — reveal and rate.</p>
+            <p>
+              22 non-buffer targets. Read the letter, recall setup, execute
+              <strong> setup · M2 · undo</strong>, then rate recall quality.
+            </p>
             {edgeDue === 0 ? (
               <div className="todayQueueDone">
                 <span className="todayQueueDoneIcon">✓</span>
@@ -224,7 +233,10 @@ export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
             className={`workspaceTile todayQueueTile ${cornerDue > 0 ? "todayQueueTile--due" : ""}`}
           >
             <h3 className="todayQueueTitle">OP Corners</h3>
-            <p>21 corner positions. See the letter — recall the Y-perm setup — reveal and rate.</p>
+            <p>
+              21 non-buffer targets. Read the letter, recall setup, execute
+              <strong> setup · Y-perm · undo</strong>, then rate recall quality.
+            </p>
             {cornerDue === 0 ? (
               <div className="todayQueueDone">
                 <span className="todayQueueDoneIcon">✓</span>
@@ -247,21 +259,45 @@ export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
           </article>
 
           {/* How it works */}
-          <article className="workspaceTile">
-            <h3>How M2/OP works</h3>
-            <p>
-              Each sticker has a letter (A–X). During memo, you scan the cube and note which
-              letter lands on each target. During execution, you run one alg per letter:
-              <strong> setup · M2 · undo</strong> for edges,{" "}
-              <strong>setup · Y-perm · undo</strong> for corners.
-              The buffer piece (UF / URF) acts as the anchor for every cycle.
+          <article className="workspaceTile bldGuideTile">
+            <h3>How This M2/OP Setup Works</h3>
+            <p className="bldGuideLead">
+              Keep method and convention separate: method is the process, convention is the chosen
+              buffer and letter map.
+            </p>
+            <img
+              className="bldGuideImage"
+              src="/bld-method-flow.svg"
+              alt="Flow chart of memo and execution using setup plus M2 or Y-perm plus undo."
+              loading="lazy"
+            />
+            <ol className="bldGuideSteps">
+              <li>
+                <strong>Memo:</strong> follow cycles from the buffer and convert targets into letters.
+                Skip buffer stickers.
+              </li>
+              <li>
+                <strong>Execute:</strong> for each edge letter do <strong>setup · M2 · undo</strong>;
+                for each corner letter do <strong>setup · Y-perm · undo</strong>.
+              </li>
+              <li>
+                <strong>Drill goal:</strong> instant letter-to-setup recall with clean execution and
+                no hesitation.
+              </li>
+            </ol>
+            <p className="bldGuideFootnote">
+              Scope of this trainer: single-target recall. Full blind solves also involve memo order,
+              cycle breaks, and parity handling.
             </p>
           </article>
 
           {/* Reference toggle */}
           <article className="workspaceTile">
             <h3>Algorithm Reference</h3>
-            <p>All positions grouped by face — letter, position, setup move, and SRS status at a glance.</p>
+            <p>
+              Full Speffz net + face-grouped targets with letter, sticker position, setup, and SRS
+              status.
+            </p>
             <button
               type="button"
               className="timedStartTileBtn"

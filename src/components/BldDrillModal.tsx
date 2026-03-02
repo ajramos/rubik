@@ -142,8 +142,8 @@ export function BldDrillModal({ targets, label, bldSrsData, cubeScheme, onRate, 
                   )}
                   <p className="drillQuestionHint">
                     {isCorner
-                      ? "Recall the setup move and execute: setup · Y-perm · undo"
-                      : "Recall the setup move and execute: setup · M2 · undo"}
+                      ? "Say the setup first, then execute without pauses: setup · Y-perm · undo."
+                      : "Say the setup first, then execute without pauses: setup · M2 · undo."}
                   </p>
                   <button
                     className="drillRevealBtn"
@@ -202,6 +202,10 @@ export function BldDrillModal({ targets, label, bldSrsData, cubeScheme, onRate, 
                       </button>
                     ))}
                   </div>
+                  <p className="bldRatingHint">
+                    Again = wrong/blank · Hard = correct but slow · Good = correct at normal pace ·
+                    Easy = instant.
+                  </p>
                 </div>
               )}
             </div>

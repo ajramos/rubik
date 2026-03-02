@@ -5186,6 +5186,52 @@ code {
 }
 .bldBufferNote strong { color: var(--ink); }
 .bldBufferSep { color: var(--muted-2); }
+.bldConventionNote {
+  margin: 8px 0 0;
+  max-width: 84ch;
+  font-size: calc(11.5px * var(--font-scale));
+  line-height: 1.5;
+  color: var(--muted-2);
+}
+
+.bldGuideTile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bldGuideLead {
+  margin-top: 0;
+}
+.bldGuideImage {
+  width: 100%;
+  max-width: 720px;
+  border-radius: 10px;
+  border: 1px solid var(--line-2);
+  background: #f6fbff;
+  box-shadow: 0 8px 24px rgba(26, 35, 50, 0.08);
+}
+.bldGuideSteps {
+  margin: 0;
+  padding-left: 22px;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.bldGuideSteps li {
+  font-size: calc(11.5px * var(--font-scale));
+  line-height: 1.45;
+  color: var(--muted);
+}
+.bldGuideSteps strong {
+  color: var(--ink);
+}
+.bldGuideFootnote {
+  margin: 0;
+  font-size: calc(11px * var(--font-scale));
+  color: var(--muted-2);
+  line-height: 1.5;
+}
 
 /* ── BLD letter display inside the drill modal (replaces MiniTwisty) ── */
 
@@ -5317,6 +5363,13 @@ code {
   font-style: italic;
   margin: 0 0 6px;
   text-align: center;
+}
+.bldRatingHint {
+  margin: 8px 0 0;
+  text-align: center;
+  font-size: calc(10px * var(--font-scale));
+  line-height: 1.45;
+  color: var(--muted-2);
 }
 
 /* ── Reference section (below landing card) ── */
