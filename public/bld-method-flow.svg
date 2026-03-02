@@ -1,86 +1,86 @@
-<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1200" height="560" viewBox="0 0 1200 560" fill="none" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="760" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#f4fbff"/>
-      <stop offset="1" stop-color="#eef6ff"/>
+    <linearGradient id="panel" x1="0" y1="0" x2="1200" y2="560" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f8fcff"/>
+      <stop offset="1" stop-color="#f1f7ff"/>
     </linearGradient>
-    <linearGradient id="cardA" x1="0" y1="0" x2="340" y2="170" gradientUnits="userSpaceOnUse">
+    <linearGradient id="stepA" x1="0" y1="0" x2="255" y2="146" gradientUnits="userSpaceOnUse">
       <stop stop-color="#e7f7f7"/>
-      <stop offset="1" stop-color="#d8ecec"/>
+      <stop offset="1" stop-color="#d9ecec"/>
     </linearGradient>
-    <linearGradient id="cardB" x1="0" y1="0" x2="340" y2="170" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#f4ebff"/>
-      <stop offset="1" stop-color="#e7dcff"/>
+    <linearGradient id="stepB" x1="0" y1="0" x2="255" y2="146" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f4ecff"/>
+      <stop offset="1" stop-color="#e7ddff"/>
     </linearGradient>
-    <linearGradient id="cardC" x1="0" y1="0" x2="340" y2="170" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#e8f5ff"/>
-      <stop offset="1" stop-color="#d7ebff"/>
+    <linearGradient id="stepC" x1="0" y1="0" x2="255" y2="146" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#e9f5ff"/>
+      <stop offset="1" stop-color="#d9ecff"/>
     </linearGradient>
-    <linearGradient id="cardD" x1="0" y1="0" x2="1120" y2="190" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#fff3da"/>
-      <stop offset="1" stop-color="#f9ead0"/>
+    <linearGradient id="stepD" x1="0" y1="0" x2="255" y2="146" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#edf7ef"/>
+      <stop offset="1" stop-color="#e2f1e5"/>
+    </linearGradient>
+    <linearGradient id="note" x1="0" y1="0" x2="1080" y2="130" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#fff5df"/>
+      <stop offset="1" stop-color="#f8ecd4"/>
     </linearGradient>
     <style>
-      .title { font: 700 42px "Inter", "Segoe UI", sans-serif; fill: #1a2332; letter-spacing: -0.5px; }
-      .subtitle { font: 500 20px "Inter", "Segoe UI", sans-serif; fill: #2f4d63; }
-      .stephead { font: 700 18px "Inter", "Segoe UI", sans-serif; fill: #1a2332; letter-spacing: 0.2px; }
-      .body { font: 500 16px "Inter", "Segoe UI", sans-serif; fill: #254055; }
-      .muted { font: 500 15px "Inter", "Segoe UI", sans-serif; fill: #36576f; }
-      .chip { font: 700 13px "IBM Plex Mono", monospace; fill: #1f3d53; letter-spacing: 0.4px; }
-      .footer { font: 600 15px "Inter", "Segoe UI", sans-serif; fill: #5e4b1b; }
+      .h1 { font: 700 35px "Inter", "Segoe UI", sans-serif; fill: #1b273a; letter-spacing: -0.4px; }
+      .lead { font: 500 19px "Inter", "Segoe UI", sans-serif; fill: #33516b; }
+      .head { font: 700 18px "Inter", "Segoe UI", sans-serif; fill: #1f2e45; }
+      .body { font: 500 15px "Inter", "Segoe UI", sans-serif; fill: #33516b; }
+      .mono { font: 700 13px "IBM Plex Mono", monospace; fill: #2a4660; letter-spacing: 0.3px; }
+      .note { font: 600 15px "Inter", "Segoe UI", sans-serif; fill: #57451f; }
+      .strong { font: 700 16px "Inter", "Segoe UI", sans-serif; fill: #3f3316; }
     </style>
   </defs>
 
-  <rect x="0" y="0" width="1200" height="760" rx="28" fill="url(#bg)"/>
-  <rect x="30" y="30" width="1140" height="700" rx="24" fill="#ffffff" stroke="#d4e3ef" stroke-width="2"/>
+  <rect x="0" y="0" width="1200" height="560" rx="18" fill="url(#panel)"/>
+  <rect x="1" y="1" width="1198" height="558" rx="17" stroke="#cfe0ef" stroke-width="2"/>
 
-  <text x="70" y="95" class="title">M2 + Old Pochmann (OP): Method Flow Used In This Trainer</text>
-  <text x="70" y="132" class="subtitle">Method stays the same across tutorials. Convention (letters and buffers) can change.</text>
+  <text x="40" y="60" class="h1">M2 + OP: Training Flow Used In This App</text>
+  <text x="40" y="95" class="lead">Some tutorials use different buffers or lettering. The process below stays the same.</text>
 
-  <rect x="70" y="180" width="240" height="34" rx="17" fill="#e5f1ff"/>
-  <text x="90" y="203" class="chip">TRAINING FLOW</text>
+  <rect x="40" y="130" width="140" height="30" rx="15" fill="#dceafe"/>
+  <text x="58" y="149" class="mono">FLOW</text>
 
-  <rect x="70" y="240" width="250" height="170" rx="18" fill="url(#cardA)" stroke="#b5d6d6"/>
-  <text x="92" y="277" class="stephead">1) Read Target Letter</text>
-  <text x="92" y="307" class="body">Find the sticker target for that</text>
-  <text x="92" y="331" class="body">letter in your active convention.</text>
-  <text x="92" y="365" class="muted">Skip buffer stickers.</text>
+  <rect x="40" y="180" width="255" height="146" rx="16" fill="url(#stepA)" stroke="#b4d5d5"/>
+  <text x="62" y="215" class="head">1) Read Letter</text>
+  <text x="62" y="247" class="body">Find the target sticker for that</text>
+  <text x="62" y="272" class="body">letter in your active mapping.</text>
+  <text x="62" y="302" class="body">Skip buffer stickers.</text>
 
-  <rect x="350" y="240" width="250" height="170" rx="18" fill="url(#cardB)" stroke="#c7b7f6"/>
-  <text x="372" y="277" class="stephead">2) Recall Setup</text>
-  <text x="372" y="307" class="body">Convert letter -&gt; setup move</text>
-  <text x="372" y="331" class="body">for that exact target.</text>
-  <text x="372" y="365" class="muted">No setup = direct core.</text>
+  <rect x="330" y="180" width="255" height="146" rx="16" fill="url(#stepB)" stroke="#c5b4f3"/>
+  <text x="352" y="215" class="head">2) Recall Setup</text>
+  <text x="352" y="247" class="body">Convert letter to setup move.</text>
+  <text x="352" y="272" class="body">If no setup exists, go direct.</text>
 
-  <rect x="630" y="240" width="250" height="170" rx="18" fill="url(#cardC)" stroke="#b7cdee"/>
-  <text x="652" y="277" class="stephead">3) Execute Core</text>
-  <text x="652" y="307" class="body">Edges: setup + M2 + undo.</text>
-  <text x="652" y="331" class="body">Corners: setup + Y-perm + undo.</text>
-  <text x="652" y="365" class="muted">Keep rhythm and accuracy.</text>
+  <rect x="620" y="180" width="255" height="146" rx="16" fill="url(#stepC)" stroke="#b5caea"/>
+  <text x="642" y="215" class="head">3) Execute Core</text>
+  <text x="642" y="247" class="body">Edges: setup + M2 + undo.</text>
+  <text x="642" y="272" class="body">Corners: setup + Y-perm + undo.</text>
 
-  <rect x="910" y="240" width="220" height="170" rx="18" fill="#edf6ef" stroke="#bcd7c0"/>
-  <text x="932" y="277" class="stephead">4) Rate Recall</text>
-  <text x="932" y="307" class="body">Again / Hard / Good / Easy</text>
-  <text x="932" y="331" class="body">updates your SRS queue.</text>
-  <text x="932" y="365" class="muted">Prioritize honest rating.</text>
+  <rect x="910" y="180" width="250" height="146" rx="16" fill="url(#stepD)" stroke="#b7d6bc"/>
+  <text x="932" y="215" class="head">4) Rate Recall</text>
+  <text x="932" y="247" class="body">Again / Hard / Good / Easy.</text>
+  <text x="932" y="272" class="body">Feed SRS with honest feedback.</text>
 
-  <path d="M323 325H342" stroke="#6ea0c7" stroke-width="4" stroke-linecap="round"/>
-  <path d="M334 316L345 325L334 334" stroke="#6ea0c7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M603 325H622" stroke="#7e91c8" stroke-width="4" stroke-linecap="round"/>
-  <path d="M614 316L625 325L614 334" stroke="#7e91c8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M883 325H902" stroke="#6c9f9f" stroke-width="4" stroke-linecap="round"/>
-  <path d="M894 316L905 325L894 334" stroke="#6c9f9f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M299 253H324" stroke="#6f9fc4" stroke-width="4" stroke-linecap="round"/>
+  <path d="M315 244L326 253L315 262" stroke="#6f9fc4" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M589 253H614" stroke="#7f92c8" stroke-width="4" stroke-linecap="round"/>
+  <path d="M605 244L616 253L605 262" stroke="#7f92c8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M879 253H904" stroke="#6f9f9f" stroke-width="4" stroke-linecap="round"/>
+  <path d="M895 244L906 253L895 262" stroke="#6f9f9f" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <rect x="70" y="455" width="1060" height="205" rx="18" fill="url(#cardD)" stroke="#e1cf9d"/>
-  <text x="95" y="496" class="stephead">Convention Used Here (Speffz + OP corner style)</text>
+  <rect x="40" y="362" width="1120" height="150" rx="16" fill="url(#note)" stroke="#e2d0a1"/>
+  <text x="64" y="400" class="head">Convention configured in this trainer</text>
 
-  <rect x="95" y="517" width="220" height="32" rx="10" fill="#ffffff" stroke="#dac68f"/>
-  <text x="111" y="538" class="chip">EDGE BUFFER: UF (C / I)</text>
+  <rect x="64" y="418" width="280" height="34" rx="10" fill="#fff" stroke="#ddca98"/>
+  <text x="80" y="440" class="mono">EDGE BUFFER: UF (C / I)</text>
 
-  <rect x="336" y="517" width="250" height="32" rx="10" fill="#ffffff" stroke="#dac68f"/>
-  <text x="352" y="538" class="chip">CORNER BUFFER: URF (B / H / P)</text>
+  <rect x="360" y="418" width="320" height="34" rx="10" fill="#fff" stroke="#ddca98"/>
+  <text x="376" y="440" class="mono">CORNER BUFFER: URF (B / H / P)</text>
 
-  <text x="95" y="579" class="body">Some tutorials use another corner buffer or another lettering scheme.</text>
-  <text x="95" y="605" class="body">That does not make them wrong. The method is still:</text>
-  <text x="95" y="631" class="footer">memo letters -&gt; setup -&gt; core move -&gt; undo -&gt; repeat.</text>
+  <text x="64" y="478" class="note">If your guide uses ULB or another lettering system, only the mapping changes.</text>
+  <text x="64" y="503" class="strong">Method stays: memo letters -> setup -> core move -> undo -> repeat.</text>
 </svg>

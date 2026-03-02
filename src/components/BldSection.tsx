@@ -6,6 +6,7 @@ import { BldDrillModal } from "./BldDrillModal";
 import { SpeffzNet } from "./SpeffzNet";
 import type { CubeScheme } from "../utils/faceColors";
 import { getFaceScheme } from "../utils/faceColors";
+import { detectTriggers, injectNamedTokens, splitNamedTokenSegments } from "../utils/triggers";
 
 type Props = {
   bldSrsData: Record<string, SRSCard>;
@@ -25,6 +26,23 @@ function statusOf(t: BldTarget, srsData: Record<string, SRSCard>): "new" | "due"
 }
 
 const FACE_ORDER = ["U", "L", "F", "R", "B", "D"] as const;
+
+function renderNamedTokens(value: string): React.ReactNode {
+  return splitNamedTokenSegments(value).map((segment, i) => {
+    if (segment.type === "token") {
+      return (
+        <span
+          key={i}
+          className={`algNamedToken algNamedToken--${segment.info.color}`}
+          data-moves={segment.info.moves}
+        >
+          {segment.text}
+        </span>
+      );
+    }
+    return <React.Fragment key={i}>{segment.text}</React.Fragment>;
+  });
+}
 
 function groupByFace(targets: BldTarget[]) {
   const groups: Record<string, BldTarget[]> = {};
@@ -74,7 +92,7 @@ function FaceGroup({
                 {t.isBuffer ? (
                   <em className="bldTableMuted">buffer</em>
                 ) : t.setupAlg ? (
-                  <code className="bldTableAlg">{t.setupAlg}</code>
+                  <code className="bldTableAlg">{renderNamedTokens(injectNamedTokens(t.setupAlg))}</code>
                 ) : type === "edge" ? (
                   <code className="bldTableAlg">— direct</code>
                 ) : (
@@ -102,6 +120,7 @@ function ReferenceSection({ srsData, cubeScheme }: { srsData: Record<string, SRS
   const edgeGroups = groupByFace(SPEFFZ_EDGES);
   const cornerGroups = groupByFace(SPEFFZ_CORNERS);
   const scheme = getFaceScheme(cubeScheme);
+  const yPermTriggers = detectTriggers(Y_PERM);
 
   return (
     <section className="workspaceSectionCard workspaceSectionCard--bld bldRefSection">
@@ -121,8 +140,17 @@ function ReferenceSection({ srsData, cubeScheme }: { srsData: Record<string, SRS
       {/* Y-perm reference */}
       <div className="bldYpermRef">
         <span className="bldYpermLabel">Y-perm (OP base commutator)</span>
-        <code className="bldYpermCode">{Y_PERM}</code>
+        <code className="bldYpermCode">{renderNamedTokens(injectNamedTokens(Y_PERM))}</code>
       </div>
+      {yPermTriggers.length > 0 && (
+        <div className="triggerChipRow bldYpermTriggers">
+          {yPermTriggers.map((t) => (
+            <span key={t.name} className={`triggerChip triggerChip--${t.color}`} data-moves={t.moves}>
+              {t.name}
+            </span>
+          ))}
+        </div>
+      )}
 
       {/* Tab switcher */}
       <div className="bldRefTabs">

@@ -2513,11 +2513,35 @@ code {
 /* Light context (card alg blocks — light bg) */
 .cardAlg       .algNamedToken--teal,
 .methodCardAlg .algNamedToken--teal,
-.f2lCardAlg    .algNamedToken--teal   { color: #0a6560; background: rgba(0,130,125,0.13); border-bottom-color: #0a8880; }
+.f2lCardAlg    .algNamedToken--teal,
+.bldTableAlg   .algNamedToken--teal,
+.bldYpermCode  .algNamedToken--teal,
+.bldAlgRowCode .algNamedToken--teal,
+.drillAlg      .algNamedToken--teal   { color: #0a6560; background: rgba(0,130,125,0.13); border-bottom-color: #0a8880; }
 
 .cardAlg       .algNamedToken--indigo,
 .methodCardAlg .algNamedToken--indigo,
-.f2lCardAlg    .algNamedToken--indigo { color: #3d28b8; background: rgba(75,55,200,0.12); border-bottom-color: #5040d0; }
+.f2lCardAlg    .algNamedToken--indigo,
+.bldTableAlg   .algNamedToken--indigo,
+.bldYpermCode  .algNamedToken--indigo,
+.bldAlgRowCode .algNamedToken--indigo,
+.drillAlg      .algNamedToken--indigo { color: #3d28b8; background: rgba(75,55,200,0.12); border-bottom-color: #5040d0; }
+
+.cardAlg       .algNamedToken--amber,
+.methodCardAlg .algNamedToken--amber,
+.f2lCardAlg    .algNamedToken--amber,
+.bldTableAlg   .algNamedToken--amber,
+.bldYpermCode  .algNamedToken--amber,
+.bldAlgRowCode .algNamedToken--amber,
+.drillAlg      .algNamedToken--amber  { color: #8a5f00; background: rgba(194, 128, 0, 0.13); border-bottom-color: #b87800; }
+
+.cardAlg       .algNamedToken--rose,
+.methodCardAlg .algNamedToken--rose,
+.f2lCardAlg    .algNamedToken--rose,
+.bldTableAlg   .algNamedToken--rose,
+.bldYpermCode  .algNamedToken--rose,
+.bldAlgRowCode .algNamedToken--rose,
+.drillAlg      .algNamedToken--rose   { color: #8a3a00; background: rgba(176, 76, 16, 0.12); border-bottom-color: #a94a12; }
 
 /* ── Inline trigger highlights (inside dark alg code block) ─────────── */
 .algAltPicker {
@@ -5205,18 +5229,18 @@ code {
   margin-top: 0;
 }
 .bldGuideImageWrap {
-  overflow-x: auto;
+  overflow: hidden;
   border-radius: 10px;
+  border: 1px solid var(--line-2);
+  background: #f4f8fd;
 }
 .bldGuideImage {
   display: block;
   width: 100%;
-  min-width: 860px;
-  max-width: none;
-  border-radius: 10px;
-  border: 1px solid var(--line-2);
-  background: #f6fbff;
-  box-shadow: 0 8px 24px rgba(26, 35, 50, 0.08);
+  max-width: 100%;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 .bldGuideSteps {
   margin: 0;
@@ -5243,6 +5267,17 @@ code {
 
 .bldReferenceTile {
   grid-column: 1 / -1;
+}
+
+@media (max-width: 980px) {
+  .bldGuideImageWrap {
+    overflow-x: auto;
+  }
+
+  .bldGuideImage {
+    min-width: 900px;
+    max-width: none;
+  }
 }
 
 /* ── BLD letter display inside the drill modal (replaces MiniTwisty) ── */
@@ -5383,6 +5418,18 @@ code {
   line-height: 1.45;
   color: var(--muted-2);
 }
+.bldTriggersPanel {
+  margin-top: -2px;
+}
+.bldTriggerLabel {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: calc(10px * var(--font-scale));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
 
 /* ── Reference section (below landing card) ── */
 
@@ -5453,6 +5500,9 @@ code {
   white-space: normal;
   word-break: break-all;
   line-height: 1.5;
+}
+.bldYpermTriggers {
+  margin: -6px 0 14px;
 }
 
 .bldRefTabs {
@@ -5603,9 +5653,12 @@ code {
 .speffzNetScroll {
   overflow-x: auto;
   padding: 14px 14px 12px;
-  background: #141c2a;            /* very dark, makes cube colours pop */
+  background:
+    radial-gradient(ellipse 120% 65% at 10% -25%, rgba(45, 139, 139, 0.12), transparent 65%),
+    radial-gradient(ellipse 95% 52% at 90% -15%, rgba(26, 35, 50, 0.06), transparent 60%),
+    var(--surface-1);
   border-radius: var(--radius-sm);
-  border: 1px solid var(--line-2);
+  border: 1px solid var(--line);
   margin-bottom: 10px;
 }
 
@@ -5635,9 +5688,9 @@ code {
   border-radius: 8px;
   background: var(--face-bg);
   box-shadow:
-    0 4px 14px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.18);
+    0 2px 8px rgba(26, 35, 50, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(26, 35, 50, 0.14);
 }
 .speffzFace--U { grid-area: u; }
 .speffzFace--L { grid-area: l; }
@@ -5655,9 +5708,9 @@ code {
   font-family: "IBM Plex Mono", monospace;
   font-size: calc(10.5px * var(--font-scale));
   font-weight: 700;
-  color: rgba(0, 0, 0, 0.82);
-  background: rgba(255, 255, 255, 0.28);
-  border: 0.5px solid rgba(0, 0, 0, 0.12);
+  color: rgba(12, 18, 24, 0.82);
+  background: rgba(255, 255, 255, 0.42);
+  border: 0.5px solid rgba(12, 18, 24, 0.12);
   cursor: default;
   user-select: none;
   position: relative;
@@ -5670,14 +5723,15 @@ code {
   border: none;
   font-size: calc(9px * var(--font-scale));
   font-weight: 800;
-  color: rgba(0, 0, 0, 0.22);
+  color: var(--face-fg);
+  opacity: 0.42;
   pointer-events: none;
 }
 
 /* Buffer sticker — faded + dot indicator */
 .speffzSt--buf {
-  background: rgba(0, 0, 0, 0.2);
-  color: rgba(0, 0, 0, 0.38);
+  background: rgba(12, 18, 24, 0.18);
+  color: rgba(12, 18, 24, 0.42);
   font-weight: 400;
   font-style: italic;
 }
@@ -5689,7 +5743,7 @@ code {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.32);
+  background: rgba(12, 18, 24, 0.32);
 }
 
 /* Highlighted sticker (hover) */
@@ -5717,8 +5771,8 @@ code {
   font-size: calc(10px * var(--font-scale));
   font-weight: 700;
   font-family: "Space Grotesk", sans-serif;
-  color: rgba(0, 0, 0, 0.7);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(12, 18, 24, 0.15);
+  box-shadow: 0 1px 4px rgba(26, 35, 50, 0.18);
   cursor: default;
 }
 .speffzFaceKeySep {

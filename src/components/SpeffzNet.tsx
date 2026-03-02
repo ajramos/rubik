@@ -94,7 +94,12 @@ export function SpeffzNet({ cubeScheme = "wca" }: { cubeScheme?: CubeScheme }) {
             <div
               key={face}
               className={`speffzFace speffzFace--${face}`}
-              style={{ "--face-bg": faceMeta?.bright ?? "#ccc" } as React.CSSProperties}
+              style={
+                {
+                  "--face-bg": faceMeta?.bright ?? "#ccc",
+                  "--face-fg": faceMeta?.brightText ?? "#111",
+                } as React.CSSProperties
+              }
               title={faceMeta?.label ?? face}
             >
               {GRIDS[face].map((row, r) =>
@@ -136,7 +141,12 @@ export function SpeffzNet({ cubeScheme = "wca" }: { cubeScheme?: CubeScheme }) {
           <span
             key={f}
             className="speffzFaceKeyChip"
-            style={{ background: scheme[f]?.bright ?? "#ccc" }}
+            style={
+              {
+                background: scheme[f]?.bright ?? "#ccc",
+                color: scheme[f]?.brightText ?? "#111",
+              } as React.CSSProperties
+            }
             title={scheme[f]?.label ?? f}
           >
             {f}

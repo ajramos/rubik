@@ -5,6 +5,7 @@ import type { BldTarget } from "../data/bld-data";
 import { Y_PERM } from "../data/bld-data";
 import type { CubeScheme } from "../utils/faceColors";
 import { getFaceScheme } from "../utils/faceColors";
+import { detectTriggers, injectNamedTokens, splitNamedTokenSegments } from "../utils/triggers";
 
 const SESSION_MAX = 20;
 
@@ -25,6 +26,23 @@ const RATING_CONFIG: { rating: SRSRating; label: string; mod: string }[] = [
   { rating: 3, label: "Good", mod: "good" },
   { rating: 4, label: "Easy", mod: "easy" },
 ];
+
+function renderNamedTokens(value: string): React.ReactNode {
+  return splitNamedTokenSegments(value).map((segment, i) => {
+    if (segment.type === "token") {
+      return (
+        <span
+          key={i}
+          className={`algNamedToken algNamedToken--${segment.info.color}`}
+          data-moves={segment.info.moves}
+        >
+          {segment.text}
+        </span>
+      );
+    }
+    return <React.Fragment key={i}>{segment.text}</React.Fragment>;
+  });
+}
 
 function buildQueue(targets: BldTarget[], srsData: Record<string, SRSCard>): BldTarget[] {
   const active = targets.filter((t) => !t.isBuffer);
@@ -60,6 +78,7 @@ export function BldDrillModal({ targets, label, bldSrsData, cubeScheme, onRate, 
   const isComplete = currentIndex >= queue.length;
   const countByRating = (r: SRSRating) => results.filter((x) => x.rating === r).length;
   const isCorner = current?.id.startsWith("corner_");
+  const fullAlgTriggers = current ? detectTriggers(current.fullAlg) : [];
 
   function handleRate(rating: SRSRating) {
     if (!current) return;
@@ -160,12 +179,12 @@ export function BldDrillModal({ targets, label, bldSrsData, cubeScheme, onRate, 
                       <>
                         <div className="bldAlgRow">
                           <span className="bldAlgRowLabel">Setup</span>
-                          <code className="bldAlgRowCode">{current.setupAlg}</code>
+                          <code className="bldAlgRowCode">{renderNamedTokens(injectNamedTokens(current.setupAlg))}</code>
                         </div>
                         <div className="bldAlgRow">
                           <span className="bldAlgRowLabel">{isCorner ? "Y-perm" : "M2"}</span>
                           <code className="bldAlgRowCode bldAlgRowCode--core">
-                            {isCorner ? Y_PERM : "M2"}
+                            {isCorner ? renderNamedTokens(injectNamedTokens(Y_PERM)) : "M2"}
                           </code>
                         </div>
                         <div className="bldAlgRow">
@@ -180,15 +199,27 @@ export function BldDrillModal({ targets, label, bldSrsData, cubeScheme, onRate, 
                       <div className="bldAlgRow">
                         <span className="bldAlgRowLabel">{isCorner ? "Y-perm" : "M2"}</span>
                         <code className="bldAlgRowCode bldAlgRowCode--core">
-                          {isCorner ? Y_PERM : "M2"}
+                          {isCorner ? renderNamedTokens(injectNamedTokens(Y_PERM)) : "M2"}
                         </code>
                       </div>
                     )}
                     <div className="bldAlgRow bldAlgRow--full">
                       <span className="bldAlgRowLabel">Full</span>
-                      <code className="drillAlg">{current.fullAlg}</code>
+                      <code className="drillAlg">{renderNamedTokens(injectNamedTokens(current.fullAlg))}</code>
                     </div>
                   </div>
+                  {fullAlgTriggers.length > 0 && (
+                    <section className="triggersPanel bldTriggersPanel">
+                      <div className="bldTriggerLabel">Detected Triggers</div>
+                      <div className="triggerChipRow">
+                        {fullAlgTriggers.map((t) => (
+                          <span key={t.name} className={`triggerChip triggerChip--${t.color}`} data-moves={t.moves}>
+                            {t.name}
+                          </span>
+                        ))}
+                      </div>
+                    </section>
+                  )}
 
                   <div className="ratingRow">
                     {RATING_CONFIG.map(({ rating, label: lbl, mod }) => (
