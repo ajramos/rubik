@@ -196,7 +196,7 @@ export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
           For example, the Ruwix OP tutorial uses a ULB corner buffer in its own convention.
         </p>
 
-        <div className="workspaceSectionGrid">
+        <div className="workspaceSectionGrid bldSectionGrid">
 
           {/* M2 Edges drill tile */}
           <article
@@ -265,12 +265,14 @@ export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
               Keep method and convention separate: method is the process, convention is the chosen
               buffer and letter map.
             </p>
-            <img
-              className="bldGuideImage"
-              src="/bld-method-flow.svg"
-              alt="Flow chart of memo and execution using setup plus M2 or Y-perm plus undo."
-              loading="lazy"
-            />
+            <div className="bldGuideImageWrap">
+              <img
+                className="bldGuideImage"
+                src="/bld-method-flow.svg"
+                alt="Flow chart of memo and execution using setup plus M2 or Y-perm plus undo."
+                loading="lazy"
+              />
+            </div>
             <ol className="bldGuideSteps">
               <li>
                 <strong>Memo:</strong> follow cycles from the buffer and convert targets into letters.
@@ -292,7 +294,7 @@ export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
           </article>
 
           {/* Reference toggle */}
-          <article className="workspaceTile">
+          <article className="workspaceTile bldReferenceTile">
             <h3>Algorithm Reference</h3>
             <p>
               Full Speffz net + face-grouped targets with letter, sticker position, setup, and SRS
