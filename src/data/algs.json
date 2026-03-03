@@ -135,7 +135,7 @@
     "id": "pll_na",
     "set": "PLL",
     "name": "Na-perm",
-    "alg": "[L U' R U2 R']x2 L' U U",
+    "alg": "[L U' R U2 L' U R']x2 U",
     "thumb": "/thumbs/generated/pll_na.svg?v11",
     "alts": [
       "(R U R' U) (R U R' F') (R U R' U') R' F R2 U' R' U2 (R U' R')",
@@ -146,7 +146,7 @@
     "id": "pll_nb",
     "set": "PLL",
     "name": "Nb-perm",
-    "alg": "[R' U L' U2 L]x2 R U' U'",
+    "alg": "[R' U L' U2 R U' L]x2 U'",
     "thumb": "/thumbs/generated/pll_nb.svg?v11",
     "alts": [
       "(R' U R U' R') (F' U' F) (R U R') (F R' F') (R U' R)",
