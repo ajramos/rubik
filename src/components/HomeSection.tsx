@@ -1,10 +1,9 @@
 import React from "react";
 
-type AppSection = "home" | "study" | "practice" | "progress" | "reference" | "bld";
+type AppSection = "home" | "study" | "practice" | "progress" | "reference";
 
 type Props = {
   totalDueCount: number;
-  bldDueCount: number;
   currentStreak: number;
   ollLearned: number;
   ollTotal: number;
@@ -23,13 +22,11 @@ const NAV_CARDS: Array<{
   { key: "study",     label: "Study",     desc: "OLL, PLL, F2L algorithm catalog with 3D interactive viewer.", mod: "study" },
   { key: "practice",  label: "Practice",  desc: "SRS recognition & execution drills, timed blocks, scramble timer.", mod: "practice" },
   { key: "progress",  label: "Progress",  desc: "Coverage stats, weak cases, streak tracking and review forecast.", mod: "progress" },
-  { key: "bld",       label: "Blindfolded Training", desc: "M2 edges + Old Pochmann corners. Speffz scheme with SRS drills.", mod: "bld" },
   { key: "reference", label: "Reference", desc: "Notation guide, trigger library, fingertricks and method notes.", mod: "reference" },
 ];
 
 export function HomeSection({
   totalDueCount,
-  bldDueCount,
   currentStreak,
   ollLearned,
   ollTotal,
@@ -81,12 +78,7 @@ export function HomeSection({
               className={`homeNavCard homeNavCard--${mod}`}
               onClick={() => onNavigate(key)}
             >
-              <div className="homeNavCardLabel">
-                {label}
-                {key === "bld" && bldDueCount > 0 && (
-                  <span className="homeNavCardBadge">{bldDueCount}</span>
-                )}
-              </div>
+              <div className="homeNavCardLabel">{label}</div>
               <div className="homeNavCardDesc">{desc}</div>
               <span className="homeNavCardArrow">→</span>
             </button>

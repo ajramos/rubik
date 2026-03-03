@@ -18,7 +18,6 @@ import type { StreakData } from "./utils/streaks";
 import { loadPrefs, setPreferredAlg, clearPreferredAlg, toggleOhMode, setCubeScheme } from "./utils/prefs";
 import type { PrefsData } from "./utils/prefs";
 import type { CubeScheme } from "./utils/faceColors";
-import { BldSection } from "./components/BldSection";
 import { HomeSection } from "./components/HomeSection";
 
 const algs = algsRaw as AlgItem[];
@@ -33,7 +32,7 @@ type CatalogGroup = {
 
 type WorkspaceMode = "full-ll" | "4lll";
 type CfopPhase = "f2l" | "last-layer";
-type AppSection = "home" | "study" | "practice" | "progress" | "reference" | "bld";
+type AppSection = "home" | "study" | "practice" | "progress" | "reference";
 
 type MethodCase = {
   name: string;
@@ -106,7 +105,6 @@ const APP_SECTION_LABELS: Record<AppSection, string> = {
   practice: "Practice",
   progress: "Progress",
   reference: "Reference",
-  bld: "Blindfolded Training",
 };
 
 const SET_META: Record<Exclude<AlgSet, "F2L">, { short: string; long: string; description: string }> = {
@@ -1356,12 +1354,6 @@ export default function App() {
     () => pllCases.filter((c) => { const card = srsData[c.id]; return !!card && isDue(card); }).length,
     [pllCases, srsData]
   );
-  const bldDueCount = useMemo(() => {
-    const allTargets = [...SPEFFZ_EDGES, ...SPEFFZ_CORNERS];
-    return allTargets.filter(
-      (t) => !t.isBuffer && (!bldSrsData[t.id] || isDue(getBldCard(t.id, bldSrsData)))
-    ).length;
-  }, [bldSrsData]);
   const todayDueCases = useMemo(() => {
     const due = [...ollCases, ...pllCases, ...f2lDrillCases].filter((c) => {
       const card = srsData[c.id];
@@ -1425,15 +1417,10 @@ export default function App() {
         if (!card) return false;
         return i === 0 ? card.dueDate <= todayStr : card.dueDate === dateStr;
       }).length;
-      const bldCount = bldTargets.filter((t) => {
-        const card = bldSrsData[t.id];
-        if (!card) return false;
-        return i === 0 ? card.dueDate <= todayStr : card.dueDate === dateStr;
-      }).length;
       const label = i === 0 ? "Today" : ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"][d.getDay()];
-      return { label, count: ollPllCount + bldCount, isToday: i === 0 };
+      return { label, count: ollPllCount, isToday: i === 0 };
     });
-  }, [ollCases, pllCases, srsData, bldTargets, bldSrsData]);
+  }, [ollCases, pllCases, srsData]);
 
   const weakCases = useMemo(() => {
     const ollPll = [...ollCases, ...pllCases]
@@ -1441,23 +1428,14 @@ export default function App() {
       .map((c) => ({
         id: c.id,
         label: formatCaseNameForDisplay(c),
-        set: c.set as "OLL" | "PLL" | "BLD",
+        set: c.set as "OLL" | "PLL",
         easeFactor: srsData[c.id]!.easeFactor,
         reps: srsData[c.id]!.reps,
       }));
-    const bld = bldTargets
-      .filter((t) => !!bldSrsData[t.id])
-      .map((t) => ({
-        id: t.id,
-        label: `${t.letter} · ${t.faceName}`,
-        set: "BLD" as const,
-        easeFactor: bldSrsData[t.id]!.easeFactor,
-        reps: bldSrsData[t.id]!.reps,
-      }));
-    return [...ollPll, ...bld]
+    return ollPll
       .sort((a, b) => a.easeFactor - b.easeFactor)
       .slice(0, 8);
-  }, [ollCases, pllCases, srsData, bldTargets, bldSrsData]);
+  }, [ollCases, pllCases, srsData]);
 
   function handleRate(id: string, rating: SRSRating) {
     const card = getSRSCard(id, srsData);
@@ -1817,9 +1795,7 @@ export default function App() {
           ? "3x3x3 Practice Workspace"
           : appSection === "progress"
             ? "3x3x3 Progress Tracking"
-            : appSection === "bld"
-              ? "3x3x3 Blindfolded Training"
-              : "3x3x3 Reference Desk";
+            : "3x3x3 Reference Desk";
   const breadcrumbParts = [
     appSection === "study" ? "Study" : activePrimaryLabel,
     ...(appSection === "study"
@@ -1887,7 +1863,6 @@ export default function App() {
             {appSection === "home" ? (
               <HomeSection
                 totalDueCount={ollDueCount + pllDueCount}
-                bldDueCount={bldDueCount}
                 currentStreak={streaks.currentStreak}
                 ollLearned={ollStats.learned}
                 ollTotal={ollStats.total}
@@ -1896,8 +1871,6 @@ export default function App() {
                 onNavigate={setAppSection}
                 onStartTodayQueue={ollDueCount + pllDueCount > 0 ? () => setDrillSet("TODAY") : undefined}
               />
-            ) : appSection === "bld" ? (
-              <BldSection bldSrsData={bldSrsData} cubeScheme={prefs.cubeScheme} onRate={handleBldRate} />
             ) : appSection !== "study" ? (
               <WorkspaceScaffold
                 appSection={appSection}
@@ -1910,7 +1883,6 @@ export default function App() {
                 pllDueCount={pllDueCount}
                 ollStats={ollStats}
                 pllStats={pllStats}
-                bldStats={bldStats}
                 weakCases={weakCases}
                 streaks={streaks}
                 reviewForecast={reviewForecast}

@@ -6,13 +6,15 @@ import { BldDrillModal } from "./BldDrillModal";
 import { SpeffzNet } from "./SpeffzNet";
 import type { CubeScheme } from "../utils/faceColors";
 import { getFaceScheme } from "../utils/faceColors";
-import { detectTriggers, injectNamedTokens, splitNamedTokenSegments } from "../utils/triggers";
+import { KNOWN_TRIGGERS, detectTriggers, injectNamedTokens, splitNamedTokenSegments } from "../utils/triggers";
 
 type Props = {
   bldSrsData: Record<string, SRSCard>;
   cubeScheme: CubeScheme;
   onRate: (id: string, rating: SRSRating) => void;
 };
+
+type BldMode = "beginner" | "advanced";
 
 function dueCount(targets: BldTarget[], srsData: Record<string, SRSCard>): number {
   return targets.filter(
@@ -42,6 +44,44 @@ function renderNamedTokens(value: string): React.ReactNode {
     }
     return <React.Fragment key={i}>{segment.text}</React.Fragment>;
   });
+}
+
+function DrillTile({
+  title,
+  description,
+  due,
+  doneSub,
+  startLabel,
+  onStart,
+}: {
+  title: string;
+  description: React.ReactNode;
+  due: number;
+  doneSub: string;
+  startLabel: string;
+  onStart: () => void;
+}) {
+  return (
+    <article className={`workspaceTile todayQueueTile ${due > 0 ? "todayQueueTile--due" : ""}`}>
+      <h3 className="todayQueueTitle">{title}</h3>
+      <p>{description}</p>
+      {due === 0 ? (
+        <div className="todayQueueDone">
+          <span className="todayQueueDoneIcon">✓</span>
+          <span className="todayQueueDoneText">All caught up!</span>
+          <span className="todayQueueDoneSub">{doneSub}</span>
+        </div>
+      ) : (
+        <div className="todayQueueHero">
+          <span className="todayQueueCount">{due}</span>
+          <span className="todayQueueCountLabel">positions due</span>
+        </div>
+      )}
+      <button type="button" className="todayQueueCTA" onClick={onStart}>
+        {startLabel}
+      </button>
+    </article>
+  );
 }
 
 function groupByFace(targets: BldTarget[]) {
@@ -121,19 +161,25 @@ function ReferenceSection({ srsData, cubeScheme }: { srsData: Record<string, SRS
   const cornerGroups = groupByFace(SPEFFZ_CORNERS);
   const scheme = getFaceScheme(cubeScheme);
   const yPermTriggers = detectTriggers(Y_PERM);
+  const triggerLegend = KNOWN_TRIGGERS.filter(
+    (t) => t.name === "Sexy Move" || t.name === "Sledgehammer"
+  );
 
   return (
     <section className="workspaceSectionCard workspaceSectionCard--bld bldRefSection">
       <div className="workspaceSectionKicker">Speffz Reference</div>
 
       {/* Cube net */}
-      <h3 className="workspaceSectionTitle" style={{ fontSize: 18, marginTop: 0 }}>
+      <h3 className="workspaceSectionTitle bldRefTitle">
         Letter Mapping — Cube Net
       </h3>
-      <p className="workspaceSectionLead" style={{ marginTop: 4, marginBottom: 12 }}>
-        Every non-center sticker gets a unique letter A–X. Each face has 4 edge stickers
-        and 4 corner stickers — the net below shows all 48 positions labeled. In this trainer,
-        UF (C/I) and URF (B/H/P) are the buffer stickers and appear faded.
+      <p className="workspaceSectionLead bldRefLead">
+        Ruwix-style base idea: every non-center sticker has one letter (A-X). Read letters in
+        sequence, then execute <strong>A-B-A&apos;</strong> for each target.
+      </p>
+      <p className="bldRefSubLead">
+        Trainer convention here: edge buffer <strong>UF (C/I)</strong>, corner buffer <strong>URF (B/H/P)</strong>.
+        Ruwix OP examples use a different buffer pair; method logic is still the same.
       </p>
       <SpeffzNet cubeScheme={cubeScheme} />
 
@@ -151,6 +197,16 @@ function ReferenceSection({ srsData, cubeScheme }: { srsData: Record<string, SRS
           ))}
         </div>
       )}
+      <div className="bldTriggerLegend">
+        <div className="bldTriggerLabel">Named Triggers Used In BLD</div>
+        <div className="triggerChipRow">
+          {triggerLegend.map((t) => (
+            <span key={t.name} className={`triggerChip triggerChip--${t.color}`} data-moves={t.moves}>
+              {t.name}
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* Tab switcher */}
       <div className="bldRefTabs">
@@ -198,6 +254,7 @@ function ReferenceSection({ srsData, cubeScheme }: { srsData: Record<string, SRS
 // ── Landing page ──────────────────────────────────────────────────────────────
 
 export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
+  const [mode, setMode] = useState<BldMode>("beginner");
   const [openDrill, setOpenDrill] = useState<null | "edges" | "corners">(null);
   const [showRef, setShowRef] = useState(false);
 
@@ -210,134 +267,196 @@ export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
         <div className="workspaceSectionKicker">BLD · Speffz Scheme</div>
         <h2 className="workspaceSectionTitle">Blindfolded Training</h2>
         <p className="workspaceSectionLead">
-          This module trains letter-to-algorithm recall for 3BLD using one fixed convention:
-          M2 for edges + Old Pochmann for corners, with Speffz lettering (A-X).
+          {mode === "beginner"
+            ? "Think of BLD as a simple game: read letters, do A-B-A', repeat."
+            : "This module trains letter-to-algorithm recall for 3BLD using one fixed convention: M2 for edges + Old Pochmann for corners, with Speffz lettering (A-X)."}
         </p>
-        <p className="bldBufferNote">
-          Trainer convention: edge buffer piece <strong>UF (C/I)</strong>
-          <span className="bldBufferSep">·</span>
-          corner buffer piece <strong>URF (B/H/P)</strong>
-        </p>
-        <p className="bldConventionNote">
-          If your tutorial uses a different corner buffer or lettering, that is normal.
-          The core method is the same; only the letter map and setup list change.
-          For example, the Ruwix OP tutorial uses a ULB corner buffer in its own convention.
-        </p>
-
-        <div className="workspaceSectionGrid bldSectionGrid">
-
-          {/* M2 Edges drill tile */}
-          <article
-            className={`workspaceTile todayQueueTile ${edgeDue > 0 ? "todayQueueTile--due" : ""}`}
+        <div className="bldModeSwitch" role="tablist" aria-label="BLD difficulty mode">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mode === "beginner"}
+            className={`bldModeBtn ${mode === "beginner" ? "bldModeBtn--active" : ""}`}
+            onClick={() => setMode("beginner")}
           >
-            <h3 className="todayQueueTitle">M2 Edges</h3>
-            <p>
-              22 non-buffer targets. Read the letter, recall setup, execute
-              <strong> setup · M2 · undo</strong>, then rate recall quality.
-            </p>
-            {edgeDue === 0 ? (
-              <div className="todayQueueDone">
-                <span className="todayQueueDoneIcon">✓</span>
-                <span className="todayQueueDoneText">All caught up!</span>
-                <span className="todayQueueDoneSub">No edge positions due today</span>
-              </div>
-            ) : (
-              <div className="todayQueueHero">
-                <span className="todayQueueCount">{edgeDue}</span>
-                <span className="todayQueueCountLabel">positions due</span>
-              </div>
-            )}
-            <button
-              type="button"
-              className="todayQueueCTA"
-              onClick={() => setOpenDrill("edges")}
-            >
-              Start Edge Drill →
-            </button>
-          </article>
-
-          {/* OP Corners drill tile */}
-          <article
-            className={`workspaceTile todayQueueTile ${cornerDue > 0 ? "todayQueueTile--due" : ""}`}
+            Simple (Ruwix)
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={mode === "advanced"}
+            className={`bldModeBtn ${mode === "advanced" ? "bldModeBtn--active" : ""}`}
+            onClick={() => setMode("advanced")}
           >
-            <h3 className="todayQueueTitle">OP Corners</h3>
-            <p>
-              21 non-buffer targets. Read the letter, recall setup, execute
-              <strong> setup · Y-perm · undo</strong>, then rate recall quality.
-            </p>
-            {cornerDue === 0 ? (
-              <div className="todayQueueDone">
-                <span className="todayQueueDoneIcon">✓</span>
-                <span className="todayQueueDoneText">All caught up!</span>
-                <span className="todayQueueDoneSub">No corner positions due today</span>
-              </div>
-            ) : (
-              <div className="todayQueueHero">
-                <span className="todayQueueCount">{cornerDue}</span>
-                <span className="todayQueueCountLabel">positions due</span>
-              </div>
-            )}
-            <button
-              type="button"
-              className="todayQueueCTA"
-              onClick={() => setOpenDrill("corners")}
-            >
-              Start Corner Drill →
-            </button>
-          </article>
-
-          {/* How it works */}
-          <article className="workspaceTile bldGuideTile">
-            <h3>How This M2/OP Setup Works</h3>
-            <p className="bldGuideLead">
-              Keep method and convention separate: method is the process, convention is the chosen
-              buffer and letter map.
-            </p>
-            <div className="bldGuideImageWrap">
-              <img
-                className="bldGuideImage"
-                src="/bld-method-flow.svg"
-                alt="Flow chart of memo and execution using setup plus M2 or Y-perm plus undo."
-                loading="lazy"
-              />
-            </div>
-            <ol className="bldGuideSteps">
-              <li>
-                <strong>Memo:</strong> follow cycles from the buffer and convert targets into letters.
-                Skip buffer stickers.
-              </li>
-              <li>
-                <strong>Execute:</strong> for each edge letter do <strong>setup · M2 · undo</strong>;
-                for each corner letter do <strong>setup · Y-perm · undo</strong>.
-              </li>
-              <li>
-                <strong>Drill goal:</strong> instant letter-to-setup recall with clean execution and
-                no hesitation.
-              </li>
-            </ol>
-            <p className="bldGuideFootnote">
-              Scope of this trainer: single-target recall. Full blind solves also involve memo order,
-              cycle breaks, and parity handling.
-            </p>
-          </article>
-
-          {/* Reference toggle */}
-          <article className="workspaceTile bldReferenceTile">
-            <h3>Algorithm Reference</h3>
-            <p>
-              Full Speffz net + face-grouped targets with letter, sticker position, setup, and SRS
-              status.
-            </p>
-            <button
-              type="button"
-              className="timedStartTileBtn"
-              onClick={() => setShowRef((v) => !v)}
-            >
-              {showRef ? "Hide Reference" : "Show Reference"}
-            </button>
-          </article>
-
+            Full View
+          </button>
         </div>
+        {mode === "beginner" ? (
+          <p className="bldBufferNote">
+            Keep one cube orientation and one buffer pair for the whole solve.
+          </p>
+        ) : (
+          <p className="bldBufferNote">
+            Trainer convention: edge buffer piece <strong>UF (C/I)</strong>
+            <span className="bldBufferSep">·</span>
+            corner buffer piece <strong>URF (B/H/P)</strong>
+          </p>
+        )}
+        {mode === "advanced" && (
+          <p className="bldConventionNote">
+            If your tutorial uses a different corner buffer or lettering, that is normal.
+            The core method is the same; only the letter map and setup list change.
+            For example, the Ruwix OP tutorial uses a ULB corner buffer in its own convention.
+          </p>
+        )}
+
+        {mode === "beginner" ? (
+          <div className="workspaceSectionGrid bldBeginnerGrid">
+            <article className="workspaceTile bldBeginnerSteps">
+              <h3>1) One Formula Only: A-B-A&apos;</h3>
+              <ol className="bldGuideSteps bldBeginnerStepsList">
+                <li>A = setup moves (put target in the working slot).</li>
+                <li>B = core swap move (M2 for edges, Y-perm for corners).</li>
+                <li>A&apos; = undo setup exactly.</li>
+              </ol>
+              <p className="bldGuideFootnote">
+                Say it aloud if needed: setup, core, undo.
+              </p>
+            </article>
+            <DrillTile
+              title="Start Here: M2 Edges"
+              description={
+                <>
+                  First edge sticker letters, then execute <strong>setup → M2 → undo</strong> for each one.
+                </>
+              }
+              due={edgeDue}
+              doneSub="No edge positions due today"
+              startLabel="Start Edge Drill →"
+              onStart={() => setOpenDrill("edges")}
+            />
+            <DrillTile
+              title="Then Add: OP Corners"
+              description={
+                <>
+                  Same formula, different core: <strong>setup → Y-perm → undo</strong>.
+                </>
+              }
+              due={cornerDue}
+              doneSub="No corner positions due today"
+              startLabel="Start Corner Drill →"
+              onStart={() => setOpenDrill("corners")}
+            />
+            <article className="workspaceTile bldReferenceTile">
+              <h3>2) Solve Order (Ruwix)</h3>
+              <ol className="bldGuideSteps bldBeginnerStepsList">
+                <li>Memo Edges</li>
+                <li>Memo Corners</li>
+                <li>Solve Corners</li>
+                <li>Fix parity (if edge targets were odd)</li>
+                <li>Solve Edges</li>
+              </ol>
+              <p className="bldGuideFootnote">
+                This order keeps corner memo short and reduces overload.
+              </p>
+            </article>
+            <article className="workspaceTile bldReferenceTile">
+              <h3>3) Letter Map (Only When Stuck)</h3>
+              <p>
+                Use the map to recover quickly, then go back to drilling. Speed comes from repetition.
+              </p>
+              <div className="bldBeginnerActions">
+                <button
+                  type="button"
+                  className="timedStartTileBtn"
+                  onClick={() => setShowRef((v) => !v)}
+                >
+                  {showRef ? "Hide Letter Map" : "Show Letter Map"}
+                </button>
+                <button
+                  type="button"
+                  className="timedStartTileBtn"
+                  onClick={() => setMode("advanced")}
+                >
+                  Open Full View
+                </button>
+              </div>
+            </article>
+          </div>
+        ) : (
+          <div className="workspaceSectionGrid bldSectionGrid">
+            <DrillTile
+              title="M2 Edges"
+              description={
+                <>
+                  22 non-buffer targets. Read the letter, recall setup, execute
+                  <strong> setup · M2 · undo</strong>, then rate recall quality.
+                </>
+              }
+              due={edgeDue}
+              doneSub="No edge positions due today"
+              startLabel="Start Edge Drill →"
+              onStart={() => setOpenDrill("edges")}
+            />
+            <DrillTile
+              title="OP Corners"
+              description={
+                <>
+                  21 non-buffer targets. Read the letter, recall setup, execute
+                  <strong> setup · Y-perm · undo</strong>, then rate recall quality.
+                </>
+              }
+              due={cornerDue}
+              doneSub="No corner positions due today"
+              startLabel="Start Corner Drill →"
+              onStart={() => setOpenDrill("corners")}
+            />
+            <article className="workspaceTile bldGuideTile">
+              <h3>Ruwix-Style Flow, Applied To This Trainer</h3>
+              <p className="bldGuideLead">
+                Same process as classic OP tutorials: fixed orientation, fixed buffers, memo letters,
+                then execute targets with <strong>A-B-A&apos;</strong>.
+              </p>
+              <ol className="bldGuideSteps">
+                <li>
+                  <strong>Orientation + letters:</strong> pick one view of the cube and never change it
+                  mid-solve.
+                </li>
+                <li>
+                  <strong>Memo in pairs:</strong> trace targets from the buffer and convert to letter pairs.
+                </li>
+                <li>
+                  <strong>Execute corners first:</strong> run each corner target as
+                  <strong> setup · Y-perm · undo</strong>.
+                </li>
+                <li>
+                  <strong>Parity check:</strong> if edge memo length was odd, apply parity fix after corners.
+                </li>
+                <li>
+                  <strong>Execute edges:</strong> run each edge target as <strong>setup · M2 · undo</strong>.
+                </li>
+              </ol>
+              <p className="bldGuideFootnote">
+                Convention note: Ruwix examples teach OP with different buffers. This app keeps one
+                fixed map (UF/URF) so your drills are consistent day to day.
+              </p>
+            </article>
+            <article className="workspaceTile bldReferenceTile">
+              <h3>Algorithm Reference</h3>
+              <p>
+                Full Speffz net + face-grouped targets with letter, sticker position, setup, and SRS
+                status.
+              </p>
+              <button
+                type="button"
+                className="timedStartTileBtn"
+                onClick={() => setShowRef((v) => !v)}
+              >
+                {showRef ? "Hide Reference" : "Show Reference"}
+              </button>
+            </article>
+          </div>
+        )}
       </section>
 
       {showRef && <ReferenceSection srsData={bldSrsData} cubeScheme={cubeScheme} />}

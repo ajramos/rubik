@@ -5202,6 +5202,38 @@ code {
 .bldSectionGrid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+.bldBeginnerGrid {
+  grid-template-columns: minmax(0, 1fr);
+}
+.bldModeSwitch {
+  margin-top: 10px;
+  display: inline-flex;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: var(--surface-1);
+}
+.bldModeBtn {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: calc(11px * var(--font-scale));
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+}
+.bldModeBtn:hover {
+  color: var(--ink);
+}
+.bldModeBtn--active {
+  border-color: var(--accent-ui-border);
+  background: var(--accent-ui-bg);
+  color: var(--accent-ui);
+}
 .bldBufferNote {
   margin: 10px 0 0;
   max-width: 70ch;
@@ -5223,10 +5255,24 @@ code {
   grid-column: 1 / -1;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 .bldGuideLead {
   margin-top: 0;
+}
+.bldRefTitle {
+  font-size: calc(18px * var(--font-scale));
+  margin-top: 0;
+}
+.bldRefLead {
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+.bldRefSubLead {
+  margin: 0 0 12px;
+  font-size: calc(13px * var(--font-scale));
+  line-height: 1.5;
+  color: var(--muted);
 }
 .bldGuideImageWrap {
   overflow: hidden;
@@ -5251,7 +5297,7 @@ code {
   gap: 7px;
 }
 .bldGuideSteps li {
-  font-size: calc(11.5px * var(--font-scale));
+  font-size: calc(13px * var(--font-scale));
   line-height: 1.45;
   color: var(--muted);
 }
@@ -5260,9 +5306,22 @@ code {
 }
 .bldGuideFootnote {
   margin: 0;
-  font-size: calc(11px * var(--font-scale));
+  font-size: calc(12px * var(--font-scale));
   color: var(--muted-2);
   line-height: 1.5;
+}
+.bldBeginnerSteps {
+  gap: 8px;
+}
+.bldBeginnerStepsList {
+  padding-left: 20px;
+  margin: 0;
+}
+.bldBeginnerActions {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .bldReferenceTile {
@@ -5277,6 +5336,22 @@ code {
   .bldGuideImage {
     min-width: 900px;
     max-width: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .bldModeSwitch {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .bldModeBtn {
+    flex: 1 1 0;
+    text-align: center;
+  }
+
+  .bldBeginnerActions {
+    flex-direction: column;
   }
 }
 
@@ -5503,6 +5578,11 @@ code {
 }
 .bldYpermTriggers {
   margin: -6px 0 14px;
+}
+.bldTriggerLegend {
+  display: grid;
+  gap: 6px;
+  margin: -2px 0 14px;
 }
 
 .bldRefTabs {

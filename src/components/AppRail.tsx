@@ -1,6 +1,6 @@
 import React from "react";
 
-type AppSection = "home" | "study" | "practice" | "progress" | "reference" | "bld";
+type AppSection = "home" | "study" | "practice" | "progress" | "reference";
 type CfopPhase = "f2l" | "last-layer";
 type WorkspaceMode = "full-ll" | "4lll";
 type LastLayerSet = "OLL" | "PLL";
@@ -11,7 +11,6 @@ const PRIMARY_MENU_ITEMS: Array<{ key: AppSection; label: string; status?: "beta
   { key: "practice", label: "Practice" },
   { key: "progress", label: "Progress" },
   { key: "reference", label: "Reference" },
-  { key: "bld", label: "Blindfolded Training" },
 ];
 
 const LEARNING_TRACKS = [
@@ -29,11 +28,6 @@ const LEARNING_TRACKS = [
     title: "One-Handed (OH)",
     state: "Planned",
     detail: "Ergonomic alg variants and fingertrick notes.",
-  },
-  {
-    title: "Blindfolded (BLD)",
-    state: "Active",
-    detail: "M2 edges, OP corners, Speffz scheme, SRS drills.",
   },
 ] as const;
 

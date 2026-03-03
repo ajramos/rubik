@@ -17,7 +17,7 @@ type SRSStats = {
 type WeakCase = {
   id: string;
   label: string;
-  set: "OLL" | "PLL" | "BLD";
+  set: "OLL" | "PLL";
   easeFactor: number;
   reps: number;
 };
@@ -35,7 +35,6 @@ type Props = {
   pllDueCount: number;
   ollStats: SRSStats;
   pllStats: SRSStats;
-  bldStats: SRSStats;
   weakCases: WeakCase[];
   streaks: StreakData;
   reviewForecast: DayForecast[];
@@ -79,7 +78,6 @@ export function WorkspaceScaffold({
   pllDueCount,
   ollStats,
   pllStats,
-  bldStats,
   weakCases,
   streaks,
   reviewForecast,
@@ -258,13 +256,6 @@ export function WorkspaceScaffold({
                 </div>
                 <SRSBar stats={pllStats} />
               </div>
-              <div className="progressSetRow">
-                <div className="progressSetLabel">
-                  <span className="progressSetName">BLD</span>
-                  <span className="progressSetCount">{bldStats.learned + bldStats.learning + bldStats.due}/{bldStats.total}</span>
-                </div>
-                <SRSBar stats={bldStats} />
-              </div>
               <div className="progressCatalogNote">
                 F2L: {totalF2LCaseCount}/{f2lCanonicalTotal} cases loaded
               </div>
@@ -352,25 +343,6 @@ export function WorkspaceScaffold({
                         </div>
                       </div>
                       <span className="phaseFraction">{pllStats.learned}/{pllStats.total}</span>
-                      <span className={`phaseReadiness phaseReadiness--${mod}`}>{label}</span>
-                    </div>
-                  );
-                })()}
-                {/* BLD */}
-                {(() => {
-                  const seen = bldStats.learned + bldStats.learning + bldStats.due;
-                  const pct = bldStats.total > 0 ? bldStats.learned / bldStats.total : 0;
-                  const label = seen === 0 ? "Not started" : pct < 0.25 ? "Learning" : pct < 0.6 ? "Developing" : pct < 0.9 ? "Proficient" : "Mastered";
-                  const mod = seen === 0 ? "none" : pct < 0.25 ? "learning" : pct < 0.6 ? "developing" : pct < 0.9 ? "proficient" : "mastered";
-                  return (
-                    <div className="phaseRow">
-                      <span className="phaseLabel phaseLabel--bld">BLD</span>
-                      <div className="phaseBarWrap">
-                        <div className="phaseBar">
-                          <div className="phaseBarFill phaseBarFill--bld" style={{ width: `${Math.round(pct * 100)}%` }} />
-                        </div>
-                      </div>
-                      <span className="phaseFraction">{bldStats.learned}/{bldStats.total}</span>
                       <span className={`phaseReadiness phaseReadiness--${mod}`}>{label}</span>
                     </div>
                   );
@@ -479,7 +451,7 @@ export function WorkspaceScaffold({
           </article>
           <article className="workspaceTile">
             <h3>Method Notes</h3>
-            <p>CFOP heuristics now, plus room for OH/BLD/other methods later.</p>
+            <p>CFOP heuristics now, plus room for OH and other methods later.</p>
             <span className="workspaceTileMeta">Planned</span>
           </article>
         </div>
