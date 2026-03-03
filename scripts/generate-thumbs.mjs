@@ -264,6 +264,12 @@ const PLL_ARROW_OVERRIDES = {
 };
 
 function injectPLLArrows(svg, pattern, solvedDisplayPattern, id) {
+  const isGPerm = /^pll_g[abcd]$/.test(id);
+  const redArrowWidth = isGPerm ? 5 : 4;
+  const blueArrowWidth = isGPerm ? 4 : 3;
+  const arrowInset = 9;
+  const haloExtraWidth = 1;
+
   const cornerPoints = {
     0: [192, 192], // BR
     1: [192, 64], // TR
@@ -298,19 +304,13 @@ function injectPLLArrows(svg, pattern, solvedDisplayPattern, id) {
     const dx = x2 - x1;
     const dy = y2 - y1;
     const len = Math.hypot(dx, dy) || 1;
-    const inset = 10;
+    const inset = arrowInset;
     const sx = x1 + (dx / len) * inset;
     const sy = y1 + (dy / len) * inset;
     const ex = x2 - (dx / len) * inset;
     const ey = y2 - (dy / len) * inset;
     const kind = color === "#d43b2d" ? "r" : "b";
-    const markerAttrs = double
-      ? `marker-start="url(#arrow-${kind})" marker-end="url(#arrow-${kind})"`
-      : `marker-end="url(#arrow-${kind})"`;
-    // Reverse visual direction so arrows match the training-sheet convention.
-    segments.push(
-      `<line x1="${ex}" y1="${ey}" x2="${sx}" y2="${sy}" stroke="${color}" stroke-width="${width}" stroke-linecap="square" stroke-linejoin="round" vector-effect="non-scaling-stroke" ${markerAttrs} opacity="0.95"/>`
-    );
+    segments.push({ sx, sy, ex, ey, color, width, kind, double });
   }
 
   function addArrowSet(rows) {
@@ -348,27 +348,49 @@ function injectPLLArrows(svg, pattern, solvedDisplayPattern, id) {
   const override = PLL_ARROW_OVERRIDES[id];
   if (override) {
     addArrowSet(
-      override.map((seg) => mk(seg, seg.color === "#d43b2d" ? 10 : 9))
+      override.map((seg) => mk(seg, seg.color === "#d43b2d" ? redArrowWidth : blueArrowWidth))
     );
   } else {
     const cornerMapping = curCorners.map((piece) => cornerTarget.get(piece));
     const edgeMapping = curEdges.map((piece) => edgeTarget.get(piece));
-    cycleArrows(cornerPoints, cornerMapping, "#d43b2d", 10);
-    cycleArrows(edgePoints, edgeMapping, "#3a5fd8", 9);
+    cycleArrows(cornerPoints, cornerMapping, "#d43b2d", redArrowWidth);
+    cycleArrows(edgePoints, edgeMapping, "#3a5fd8", blueArrowWidth);
   }
 
   if (segments.length === 0) return svg;
 
+  const renderedSegments = segments
+    .map((seg) => {
+      const markerAttrsHalo = seg.double
+        ? `marker-start="url(#arrow-${seg.kind}-halo)" marker-end="url(#arrow-${seg.kind}-halo)"`
+        : `marker-end="url(#arrow-${seg.kind}-halo)"`;
+      const markerAttrsColor = seg.double
+        ? `marker-start="url(#arrow-${seg.kind})" marker-end="url(#arrow-${seg.kind})"`
+        : `marker-end="url(#arrow-${seg.kind})"`;
+
+      // Draw a white underlay first so crossing arrows keep clear direction.
+      const halo = `<line x1="${seg.ex}" y1="${seg.ey}" x2="${seg.sx}" y2="${seg.sy}" stroke="#ffffff" stroke-width="${seg.width + haloExtraWidth}" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" ${markerAttrsHalo} opacity="0.9"/>`;
+      const color = `<line x1="${seg.ex}" y1="${seg.ey}" x2="${seg.sx}" y2="${seg.sy}" stroke="${seg.color}" stroke-width="${seg.width}" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" ${markerAttrsColor} opacity="0.86"/>`;
+      return `${halo}${color}`;
+    })
+    .join("");
+
   const overlay = `
   <defs>
-    <marker id="arrow-r" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L20,10 L0,20 z" fill="#d43b2d"/>
+    <marker id="arrow-r-halo" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 z" fill="#ffffff"/>
     </marker>
-    <marker id="arrow-b" markerWidth="20" markerHeight="20" refX="16" refY="10" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
-      <path d="M0,0 L20,10 L0,20 z" fill="#3a5fd8"/>
+    <marker id="arrow-b-halo" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 z" fill="#ffffff"/>
+    </marker>
+    <marker id="arrow-r" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 z" fill="#d43b2d"/>
+    </marker>
+    <marker id="arrow-b" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 z" fill="#3a5fd8"/>
     </marker>
   </defs>
-  <g id="pll-arrows">${segments.join("")}</g>`;
+  <g id="pll-arrows">${renderedSegments}</g>`;
 
   return svg.replace("</svg>", `${overlay}\n</svg>`);
 }
