@@ -33,6 +33,7 @@ type CatalogGroup = {
 type WorkspaceMode = "full-ll" | "4lll";
 type CfopPhase = "f2l" | "last-layer";
 type AppSection = "home" | "study" | "practice" | "progress" | "reference";
+type Language = "es" | "en";
 
 type MethodCase = {
   name: string;
@@ -99,12 +100,21 @@ type SelectedCase = AlgItem & {
   };
 };
 
-const APP_SECTION_LABELS: Record<AppSection, string> = {
-  home: "Home",
-  study: "Study",
-  practice: "Practice",
-  progress: "Progress",
-  reference: "Reference",
+const APP_SECTION_LABELS: Record<Language, Record<AppSection, string>> = {
+  es: {
+    home: "Inicio",
+    study: "Estudio",
+    practice: "Práctica",
+    progress: "Progreso",
+    reference: "Referencia",
+  },
+  en: {
+    home: "Home",
+    study: "Study",
+    practice: "Practice",
+    progress: "Progress",
+    reference: "Reference",
+  },
 };
 
 const SET_META: Record<Exclude<AlgSet, "F2L">, { short: string; long: string; description: string }> = {
@@ -1253,6 +1263,7 @@ function matchesF2LFilter(c: F2LCase, filter: F2LFilterKey) {
 
 export default function App() {
   const [appSection, setAppSection] = useState<AppSection>("home");
+  const [language, setLanguage] = useState<Language>("es");
   const [cfopPhase, setCfopPhase] = useState<CfopPhase>("last-layer");
   const [workspaceMode, setWorkspaceMode] = useState<WorkspaceMode>("full-ll");
   const [set, setSet] = useState<AlgSet>("OLL");
@@ -1785,19 +1796,19 @@ export default function App() {
   const selectedCanonical =
     selected?.canonicalCaseId ? algById.get(selected.canonicalCaseId) : undefined;
 
-  const activePrimaryLabel = APP_SECTION_LABELS[appSection];
+  const activePrimaryLabel = APP_SECTION_LABELS[language][appSection];
   const heroEyebrow =
     appSection === "home"
-      ? "3x3x3 Study System"
+      ? language === "es" ? "Sistema de estudio 3x3x3" : "3x3x3 Study System"
       : appSection === "study"
-        ? "3x3x3 Algorithm Catalog"
+        ? language === "es" ? "Catálogo de algoritmos 3x3x3" : "3x3x3 Algorithm Catalog"
         : appSection === "practice"
-          ? "3x3x3 Practice Workspace"
+          ? language === "es" ? "Espacio de práctica 3x3x3" : "3x3x3 Practice Workspace"
           : appSection === "progress"
-            ? "3x3x3 Progress Tracking"
-            : "3x3x3 Reference Desk";
+            ? language === "es" ? "Seguimiento de progreso 3x3x3" : "3x3x3 Progress Tracking"
+            : language === "es" ? "Mesa de referencia 3x3x3" : "3x3x3 Reference Desk";
   const breadcrumbParts = [
-    appSection === "study" ? "Study" : activePrimaryLabel,
+    appSection === "study" ? APP_SECTION_LABELS[language].study : activePrimaryLabel,
     ...(appSection === "study"
       ? [
           "3x3",
@@ -1837,14 +1848,17 @@ export default function App() {
       <main className="shell">
         <AppHero
           heroEyebrow={heroEyebrow}
+          language={language}
           ohMode={prefs.ohMode}
           cubeScheme={prefs.cubeScheme}
+          onToggleLanguage={() => setLanguage((l) => (l === "es" ? "en" : "es"))}
           onToggleOhMode={() => setPrefs((p) => toggleOhMode(p))}
           onSetCubeScheme={(s: CubeScheme) => setPrefs((p) => setCubeScheme(p, s))}
         />
 
         <div className="workspace">
           <AppRail
+            language={language}
             appSection={appSection}
             cfopPhase={cfopPhase}
             workspaceMode={workspaceMode}
@@ -1858,10 +1872,11 @@ export default function App() {
 
           <section
             className="catalogPanel"
-            aria-label={appSection === "study" ? "Algorithm catalog" : `${activePrimaryLabel} workspace`}
+            aria-label={appSection === "study" ? (language === "es" ? "Catálogo de algoritmos" : "Algorithm catalog") : `${activePrimaryLabel} ${language === "es" ? "espacio" : "workspace"}`}
           >
             {appSection === "home" ? (
               <HomeSection
+                language={language}
                 totalDueCount={ollDueCount + pllDueCount}
                 currentStreak={streaks.currentStreak}
                 ollLearned={ollStats.learned}
@@ -1873,6 +1888,7 @@ export default function App() {
               />
             ) : appSection !== "study" ? (
               <WorkspaceScaffold
+                language={language}
                 appSection={appSection}
                 activePrimaryLabel={activePrimaryLabel}
                 totalF2LCaseCount={totalF2LCaseCount}
@@ -2345,6 +2361,7 @@ export default function App() {
 
       {drillSet && (
         <DrillModal
+          language={language}
           cases={
             drillSet === "TODAY"
               ? todayDueCases

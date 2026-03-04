@@ -5080,6 +5080,28 @@ code {
 }
 
 /* ── OH Mode + Cube Scheme Controls ─────────────── */
+
+.langToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(168, 218, 220, 0.25);
+  background: transparent;
+  color: rgba(168, 218, 220, 0.8);
+  font-size: calc(11px * var(--font-scale));
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.langToggle:hover {
+  border-color: rgba(168, 218, 220, 0.5);
+  color: #a8dadc;
+}
+
 .workspacePracticeHeader {
   display: flex;
   align-items: flex-start;

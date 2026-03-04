@@ -7,7 +7,10 @@ import { invertAlg } from "../utils/alg";
 
 const SESSION_MAX = 20;
 
+type Language = "es" | "en";
+
 type Props = {
+  language?: Language;
   cases: AlgItem[];
   label: string;
   mode?: "recognition" | "execution";
@@ -50,7 +53,7 @@ const RATING_CONFIG: { rating: SRSRating; label: string; mod: string }[] = [
   { rating: 4, label: "Easy", mod: "easy" },
 ];
 
-export function DrillModal({ cases, label, mode = "recognition", srsData, preferredAlgs, ohMode = false, onRate, onClose }: Props) {
+export function DrillModal({ language = "en", cases, label, mode = "recognition", srsData, preferredAlgs, ohMode = false, onRate, onClose }: Props) {
   const queue = useMemo(() => buildQueue(cases, srsData), [cases, srsData]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [phase, setPhase] = useState<"question" | "answer">("question");
@@ -74,7 +77,7 @@ export function DrillModal({ cases, label, mode = "recognition", srsData, prefer
       <div className="drillModal" onClick={(e) => e.stopPropagation()}>
         <div className="drillHeader">
           <div className="drillHeaderTitle">
-            {mode === "execution" ? "Execution Drills" : "Recognition Drills"} · {label}
+            {mode === "execution" ? (language === "es" ? "Drills de ejecución" : "Execution Drills") : (language === "es" ? "Drills de reconocimiento" : "Recognition Drills")} · {label}
             {ohMode && <span className="ohBadge ohBadge--drill">🤚 OH</span>}
           </div>
           <button className="close" type="button" onClick={onClose}>✕</button>
@@ -83,15 +86,15 @@ export function DrillModal({ cases, label, mode = "recognition", srsData, prefer
         {queue.length === 0 ? (
           <div className="drillComplete">
             <div className="drillCompleteIcon">✓</div>
-            <h2 className="drillCompleteTitle">Nothing due</h2>
-            <p className="drillCompleteLead">All OLL cases are up to date. Come back tomorrow!</p>
-            <button className="drillDoneBtn" type="button" onClick={onClose}>Close</button>
+            <h2 className="drillCompleteTitle">{language === "es" ? "Nada pendiente" : "Nothing due"}</h2>
+            <p className="drillCompleteLead">{language === "es" ? "Todo al día. ¡Vuelve mañana!" : "All OLL cases are up to date. Come back tomorrow!"}</p>
+            <button className="drillDoneBtn" type="button" onClick={onClose}>{language === "es" ? "Cerrar" : "Close"}</button>
           </div>
         ) : isComplete ? (
           <div className="drillComplete">
             <div className="drillCompleteIcon">🎯</div>
-            <h2 className="drillCompleteTitle">Session Complete</h2>
-            <p className="drillCompleteLead">{results.length} cards reviewed</p>
+            <h2 className="drillCompleteTitle">{language === "es" ? "Sesión completada" : "Session Complete"}</h2>
+            <p className="drillCompleteLead">{results.length} {language === "es" ? "tarjetas repasadas" : "cards reviewed"}</p>
             <div className="drillSummaryRow">
               {RATING_CONFIG.map(({ rating, label, mod }) => (
                 <div key={rating} className={`drillSummaryChip drillSummaryChip--${mod}`}>
@@ -100,7 +103,7 @@ export function DrillModal({ cases, label, mode = "recognition", srsData, prefer
                 </div>
               ))}
             </div>
-            <button className="drillDoneBtn" type="button" onClick={onClose}>Done</button>
+            <button className="drillDoneBtn" type="button" onClick={onClose}>{language === "es" ? "Hecho" : "Done"}</button>
           </div>
         ) : (
           <>
