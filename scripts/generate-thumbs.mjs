@@ -10,7 +10,7 @@ const ROOT = path.resolve(__dirname, "..");
 const DATA_PATH = path.join(ROOT, "src", "data", "algs.json");
 const OUT_DIR = path.join(ROOT, "public", "thumbs", "generated");
 const DISPLAY_ORIENTATION = "z2";
-const THUMB_URL_VERSION = "v11";
+const THUMB_URL_VERSION = "v12";
 
 const MACROS = {
   SEXY: "R U R' U'",
@@ -369,8 +369,8 @@ function injectPLLArrows(svg, pattern, solvedDisplayPattern, id) {
         : `marker-end="url(#arrow-${seg.kind})"`;
 
       // Draw a white underlay first so crossing arrows keep clear direction.
-      const halo = `<line x1="${seg.ex}" y1="${seg.ey}" x2="${seg.sx}" y2="${seg.sy}" stroke="#ffffff" stroke-width="${seg.width + haloExtraWidth}" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" ${markerAttrsHalo} opacity="0.9"/>`;
-      const color = `<line x1="${seg.ex}" y1="${seg.ey}" x2="${seg.sx}" y2="${seg.sy}" stroke="${seg.color}" stroke-width="${seg.width}" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" ${markerAttrsColor} opacity="0.86"/>`;
+      const halo = `<line x1="${seg.ex}" y1="${seg.ey}" x2="${seg.sx}" y2="${seg.sy}" stroke="#ffffff" stroke-width="${seg.width + haloExtraWidth}" stroke-linecap="round" stroke-linejoin="round" ${markerAttrsHalo} opacity="0.9"/>`;
+      const color = `<line x1="${seg.ex}" y1="${seg.ey}" x2="${seg.sx}" y2="${seg.sy}" stroke="${seg.color}" stroke-width="${seg.width}" stroke-linecap="round" stroke-linejoin="round" ${markerAttrsColor} opacity="0.86"/>`;
       return `${halo}${color}`;
     })
     .join("");
