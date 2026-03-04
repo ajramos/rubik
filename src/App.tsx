@@ -120,13 +120,13 @@ const APP_SECTION_LABELS: Record<Language, Record<AppSection, string>> = {
 const SET_META: Record<Exclude<AlgSet, "F2L">, { short: string; long: string; description: string }> = {
   OLL: {
     short: "OLL",
-    long: "Orientation of Last Layer",
-    description: "Recognition patterns and algorithms for orienting the last layer.",
+    long: "Orientación de la última capa",
+    description: "Patrones de reconocimiento y algoritmos para orientar la última capa.",
   },
   PLL: {
     short: "PLL",
-    long: "Permutation of Last Layer",
-    description: "Recognition patterns and algorithms for permuting the last layer.",
+    long: "Permutación de la última capa",
+    description: "Patrones de reconocimiento y algoritmos para permutar la última capa.",
   },
 };
 
@@ -1142,29 +1142,29 @@ function formatCaseNameForDisplay(item: AlgItem) {
 const PLL_GROUPS: CatalogGroup[] = [
   {
     key: "edge-only",
-    title: "Edge Permutations Only",
-    description: "Only edges move. Corner pieces stay in place while you finish PLL with edge cycles.",
+    title: "Solo permutaciones de aristas",
+    description: "Solo se mueven las aristas. Las esquinas quedan fijas mientras completas PLL con ciclos de aristas.",
     tone: "sand",
     ids: ["pll_ua", "pll_ub", "pll_z", "pll_h"],
   },
   {
     key: "corner-only",
-    title: "Corner Permutations Only",
-    description: "Only corners move. Useful as the corner step in 2-Look PLL / 4LLL workflows.",
+    title: "Solo permutaciones de esquinas",
+    description: "Solo se mueven las esquinas. Útil como paso de esquinas en 2-Look PLL / 4LLL.",
     tone: "sage",
     ids: ["pll_aa", "pll_ab", "pll_e"],
   },
   {
     key: "swap",
-    title: "Corner & Edge Swap Permutations",
-    description: "Both corners and edges move with swaps. These are core full-PLL recognition cases.",
+    title: "Permutaciones con intercambio de esquinas y aristas",
+    description: "Se mueven esquinas y aristas con intercambios. Son casos clave de reconocimiento en PLL completo.",
     tone: "rose",
     ids: ["pll_t", "pll_ja", "pll_jb", "pll_ra", "pll_rb", "pll_na", "pll_nb", "pll_f", "pll_v", "pll_y"],
   },
   {
     key: "g-perms",
-    title: "Corner & Edge Cycle Permutations (G perms)",
-    description: "Complex corner-edge cycles. Recognition quality matters more than raw turning speed here.",
+    title: "Permutaciones de ciclos de esquinas y aristas (G perms)",
+    description: "Ciclos complejos de esquinas y aristas. Aquí importa más la calidad de reconocimiento que la velocidad bruta.",
     tone: "sky",
     ids: ["pll_ga", "pll_gb", "pll_gc", "pll_gd"],
   },
@@ -1173,71 +1173,71 @@ const PLL_GROUPS: CatalogGroup[] = [
 const OLL_GROUPS: CatalogGroup[] = [
   {
     key: "oll-no-edges",
-    title: "No Edges Solved",
-    description: "No top-layer edges are oriented yet. These are the most visually scrambled OLL starts.",
+    title: "Sin aristas orientadas",
+    description: "Aún no hay aristas de la capa superior orientadas. Son los inicios de OLL más desordenados visualmente.",
     tone: "rose",
     ids: ["oll_1", "oll_2", "oll_3", "oll_4", "oll_18", "oll_19", "oll_17", "oll_20"],
   },
   {
     key: "oll-l-no-corners",
-    title: "L-Shaped Edges Solved · No Corners Solved",
-    description: "L-shape edge orientation is already present, but corners still need full orientation work.",
+    title: "Aristas en L orientadas · Sin esquinas orientadas",
+    description: "La orientación en L de aristas ya está, pero las esquinas aún necesitan orientación completa.",
     tone: "sky",
     ids: ["oll_48", "oll_47", "oll_53", "oll_54", "oll_49", "oll_50"],
   },
   {
     key: "oll-l-1-corner",
-    title: "L-Shaped Edges Solved · 1 Corner Solved",
-    description: "L-shape edges plus one correctly oriented corner. Great recognition practice for partial patterns.",
+    title: "Aristas en L orientadas · 1 esquina orientada",
+    description: "Aristas en L más una esquina correctamente orientada. Muy útil para practicar reconocimiento parcial.",
     tone: "sand",
     ids: ["oll_5", "oll_6", "oll_7", "oll_8", "oll_11", "oll_12", "oll_9", "oll_10"],
   },
   {
     key: "oll-l-2-corners",
-    title: "L-Shaped Edges Solved · 2 Corners Solved",
-    description: "L-shape edge base with two oriented corners. Recognition depends on corner arrangement.",
+    title: "Aristas en L orientadas · 2 esquinas orientadas",
+    description: "Base de aristas en L con dos esquinas orientadas. El reconocimiento depende de la disposición de esquinas.",
     tone: "rose",
     ids: ["oll_44", "oll_43", "oll_31", "oll_32", "oll_35", "oll_37", "oll_36", "oll_38", "oll_29", "oll_30", "oll_41", "oll_42"],
   },
   {
     key: "oll-l-4-corners",
-    title: "L-Shaped Edges Solved · 4 Corners Solved",
-    description: "Corners are already oriented; only the remaining edge orientation pattern needs finishing.",
+    title: "Aristas en L orientadas · 4 esquinas orientadas",
+    description: "Las esquinas ya están orientadas; solo falta terminar el patrón de orientación de aristas.",
     tone: "sage",
     ids: ["oll_28"],
   },
   {
     key: "oll-bar-no-corners",
-    title: "Bar-Shaped Edges Solved · No Corners Solved",
-    description: "A bar edge pattern is present while corners are still fully unoriented.",
+    title: "Aristas en barra orientadas · Sin esquinas orientadas",
+    description: "Hay un patrón de barra en aristas mientras las esquinas siguen completamente sin orientar.",
     tone: "sky",
     ids: ["oll_51", "oll_56", "oll_52", "oll_55"],
   },
   {
     key: "oll-bar-1-corner",
-    title: "Bar-Shaped Edges Solved · 1 Corner Solved",
-    description: "Bar edge pattern plus one oriented corner. Focus on fast corner-recognition cues.",
+    title: "Aristas en barra orientadas · 1 esquina orientada",
+    description: "Patrón de barra en aristas más una esquina orientada. Enfócate en señales rápidas de reconocimiento de esquinas.",
     tone: "sand",
     ids: ["oll_15", "oll_16", "oll_13", "oll_14"],
   },
   {
     key: "oll-bar-2-corners",
-    title: "Bar-Shaped Edges Solved · 2 Corners Solved",
-    description: "Bar edge base with two corners oriented. Similar shapes split by corner placement.",
+    title: "Aristas en barra orientadas · 2 esquinas orientadas",
+    description: "Base de barra en aristas con dos esquinas orientadas. Formas parecidas que se distinguen por la posición de esquinas.",
     tone: "rose",
     ids: ["oll_33", "oll_45", "oll_34", "oll_46", "oll_40", "oll_39"],
   },
   {
     key: "oll-bar-4-corners",
-    title: "Bar-Shaped Edges Solved · 4 Corners Solved",
-    description: "Corners are solved and bar edges remain. Usually quick recognition and execution.",
+    title: "Aristas en barra orientadas · 4 esquinas orientadas",
+    description: "Las esquinas están resueltas y queda el patrón de barra en aristas. Suele ser de reconocimiento y ejecución rápidos.",
     tone: "sage",
     ids: ["oll_57"],
   },
   {
     key: "oll-4-edges",
-    title: "4 Edges Solved (2-Look OLL Corners)",
-    description: "All top edges are oriented. These are the corner-orientation cases used in 2-Look OLL / 4LLL.",
+    title: "4 aristas orientadas (esquinas de 2-Look OLL)",
+    description: "Todas las aristas superiores están orientadas. Estos son los casos de orientación de esquinas en 2-Look OLL / 4LLL.",
     tone: "sage",
     ids: ["oll_21", "oll_22", "oll_27", "oll_26", "oll_25", "oll_23", "oll_24"],
   },
@@ -1301,8 +1301,8 @@ export default function App() {
     if (remaining.length) {
       sections.push({
         key: "other",
-        title: "Other PLL",
-        description: "PLL cases outside the current grouped list or filtered remnants from the active search.",
+        title: "Otros PLL",
+        description: "Casos PLL fuera del agrupado actual o remanentes filtrados de la búsqueda activa.",
         tone: "sand",
         ids: [],
         items: remaining,
@@ -1326,8 +1326,8 @@ export default function App() {
     if (remaining.length) {
       sections.push({
         key: "other-oll",
-        title: "Other OLL",
-        description: "OLL cases outside the current grouped list or filtered remnants from the active search.",
+        title: "Otros OLL",
+        description: "Casos OLL fuera del agrupado actual o remanentes filtrados de la búsqueda activa.",
         tone: "sand",
         ids: [],
         items: remaining,
@@ -1813,32 +1813,32 @@ export default function App() {
       ? [
           "3x3",
           "CFOP",
-          cfopPhase === "f2l" ? "First 2 Layers (F2L)" : "Last Layer",
+          cfopPhase === "f2l" ? (language === "es" ? "Primeras 2 capas (F2L)" : "First 2 Layers (F2L)") : (language === "es" ? "Última capa" : "Last Layer"),
           ...(cfopPhase === "f2l"
             ? []
             : workspaceMode === "4lll"
               ? ["4-Look Last Layer"]
               : [
-                  "Full OLL+PLL",
-                  set === "OLL" ? "Orientation of Last Layer" : "Permutation of Last Layer",
+                  language === "es" ? "OLL + PLL completo" : "Full OLL+PLL",
+                  set === "OLL" ? (language === "es" ? "Orientación de la última capa" : "Orientation of Last Layer") : (language === "es" ? "Permutación de la última capa" : "Permutation of Last Layer"),
                 ]),
         ]
       : []),
   ];
   const fullLastLayerTitle =
     set === "OLL"
-      ? "Orientation of Last Layer (OLL)"
-      : "Permutation of Last Layer (PLL)";
+      ? (language === "es" ? "Orientación de la última capa (OLL)" : "Orientation of Last Layer (OLL)")
+      : (language === "es" ? "Permutación de la última capa (PLL)" : "Permutation of Last Layer (PLL)");
   const fullLastLayerDescription =
     set === "OLL"
-      ? "Canonical OLL library inside CFOP Last Layer. Browse recognition categories and drill exact orientation cases."
-      : "Canonical PLL library inside CFOP Last Layer. Browse recognition categories and drill exact permutation cases.";
+      ? (language === "es" ? "Biblioteca canónica de OLL dentro de la última capa de CFOP. Explora categorías de reconocimiento y practica casos exactos de orientación." : "Canonical OLL library inside CFOP Last Layer. Browse recognition categories and drill exact orientation cases.")
+      : (language === "es" ? "Biblioteca canónica de PLL dentro de la última capa de CFOP. Explora categorías de reconocimiento y practica casos exactos de permutación." : "Canonical PLL library inside CFOP Last Layer. Browse recognition categories and drill exact permutation cases.");
   const catalogDescriptionText =
     cfopPhase === "f2l"
-      ? "CFOP First 2 Layers case library. Complete canonical 41-case set: Free, Disconnected, Connected, Corner-in-Slot, Edge-in-Slot, and Both-in-Slot."
+      ? (language === "es" ? "Biblioteca de casos de las primeras 2 capas de CFOP. Incluye los 41 casos canónicos completos: pares libres, desconectados, conectados, esquina-en-slot, arista-en-slot y ambos-en-slot." : "CFOP First 2 Layers case library. Complete canonical 41-case set: Free, Disconnected, Connected, Corner-in-Slot, Edge-in-Slot, and Both-in-Slot.")
       : workspaceMode === "full-ll"
         ? fullLastLayerDescription
-        : "Simplified CFOP Last Layer path: 2-Look OLL + 2-Look PLL solved in four looks.";
+        : (language === "es" ? "Ruta simplificada de última capa en CFOP: 2-Look OLL + 2-Look PLL resuelto en cuatro miradas." : "Simplified CFOP Last Layer path: 2-Look OLL + 2-Look PLL solved in four looks.");
   return (
     <div className="app">
       <div className="appGlow appGlow--a" aria-hidden="true" />
@@ -1931,10 +1931,10 @@ export default function App() {
                     </div>
                     <h2 className="catalogTitle">
                       {cfopPhase === "f2l"
-                        ? "First 2 Layers Cases"
+                        ? (language === "es" ? "Casos de primeras 2 capas" : "First 2 Layers Cases")
                         : workspaceMode === "full-ll"
                           ? fullLastLayerTitle
-                          : "4-Look Last Layer (4LLL)"}
+                          : (language === "es" ? "Última capa en 4 miradas (4LLL)" : "4-Look Last Layer (4LLL)")}
                     </h2>
                     {catalogDescriptionText && (
                       <p className="catalogDescription">{catalogDescriptionText}</p>
@@ -1947,7 +1947,7 @@ export default function App() {
                     <input
                       value={q}
                       onChange={(e) => setQ(e.target.value)}
-                      placeholder="Search canonical F2L (e.g. F2L 1, free pairs, U R U' R')..."
+                      placeholder={language === "es" ? "Buscar F2L canónico (ej. F2L 1, pares libres, U R U' R')..." : "Search canonical F2L (e.g. F2L 1, free pairs, U R U' R')..."}
                     />
                     {SHOW_F2L_DRILLS && (
                       <div className="f2lFilterRow" role="toolbar" aria-label="F2L quick filters">
@@ -1970,7 +1970,7 @@ export default function App() {
                     <input
                       value={q}
                       onChange={(e) => setQ(e.target.value)}
-                      placeholder={`Search ${set} (e.g. ${set === "PLL" ? "Ga, T-perm" : "OLL 27, Sune"})...`}
+                      placeholder={language === "es" ? `Buscar ${set} (ej. ${set === "PLL" ? "Ga, T-perm" : "OLL 27, Sune"})...` : `Search ${set} (e.g. ${set === "PLL" ? "Ga, T-perm" : "OLL 27, Sune"})...`}
                     />
                   </div>
                 ) : (
@@ -1978,7 +1978,7 @@ export default function App() {
                     <input
                       value={q}
                       onChange={(e) => setQ(e.target.value)}
-                      placeholder="Search 4LLL (e.g. Sune, H-perm, OLL corners)..."
+                      placeholder={language === "es" ? "Buscar 4LLL (ej. Sune, H-perm, esquinas OLL)..." : "Search 4LLL (e.g. Sune, H-perm, OLL corners)..."}
                     />
                   </div>
                 )}
@@ -1986,25 +1986,25 @@ export default function App() {
                 <div className="catalogSubRow">
                   {cfopPhase === "f2l" ? (
                     <div className="subtleNote">
-                      F2L: {visibleF2LCaseCount}/{F2L_CANONICAL_TOTAL} cases
+                      F2L: {visibleF2LCaseCount}/{F2L_CANONICAL_TOTAL} {language === "es" ? "casos" : "cases"}
                     </div>
                   ) : workspaceMode === "full-ll" ? (
                     set === "OLL" ? (
-                      <div className="subtleNote">OLL loaded: {ollCount}/57 cases</div>
+                      <div className="subtleNote">{language === "es" ? "OLL cargados" : "OLL loaded"}: {ollCount}/57 {language === "es" ? "casos" : "cases"}</div>
                     ) : (
-                      <div className="subtleNote">PLL loaded: {pllCount}/21 cases</div>
+                      <div className="subtleNote">{language === "es" ? "PLL cargados" : "PLL loaded"}: {pllCount}/21 {language === "es" ? "casos" : "cases"}</div>
                     )
                   ) : (
                     <div className="subtleNote">
-                      4LLL loaded: {visibleFourLookCaseCount}
-                      {q.trim() ? `/${fourLookCaseCount}` : ""} cases
+                      {language === "es" ? "4LLL cargados" : "4LLL loaded"}: {visibleFourLookCaseCount}
+                      {q.trim() ? `/${fourLookCaseCount}` : ""} {language === "es" ? "casos" : "cases"}
                     </div>
                   )}
                   {!!q.trim() && (
-                    <div className="searchEcho">Filter: “{q.trim()}”</div>
+                    <div className="searchEcho">{language === "es" ? "Filtro" : "Filter"}: “{q.trim()}”</div>
                   )}
                   {cfopPhase === "f2l" && SHOW_F2L_DRILLS && f2lFilter !== "all" && (
-                    <div className="searchEcho">Focus: {F2L_FILTERS.find((f) => f.key === f2lFilter)?.label}</div>
+                    <div className="searchEcho">{language === "es" ? "Enfoque" : "Focus"}: {F2L_FILTERS.find((f) => f.key === f2lFilter)?.label}</div>
                   )}
                 </div>
               </header>
@@ -2014,10 +2014,10 @@ export default function App() {
                   className="sectionNav"
                   aria-label={
                     cfopPhase === "f2l"
-                      ? "F2L categories"
+                      ? (language === "es" ? "Categorías F2L" : "F2L categories")
                       : workspaceMode === "full-ll"
                       ? `${SET_META[lastLayerSet].short} categories`
-                      : "4-Look stages"
+                      : (language === "es" ? "Etapas de 4-Look" : "4-Look stages")
                   }
                 >
                 <button
@@ -2028,7 +2028,7 @@ export default function App() {
                   onClick={() => scrollToSection("catalog-top")}
                   aria-pressed={activeSectionAnchor === "all"}
                 >
-                  All
+                  {language === "es" ? "Todo" : "All"}
                 </button>
                   {navSections.map((section) => {
                     const sectionId =
@@ -2162,7 +2162,7 @@ export default function App() {
                 <div className="modalSubtitle">
                   {selected.sourceMethod === "4LLL" && selectedCanonical
                     ? `4LLL method case · maps to ${formatCaseNameForDisplay(selectedCanonical)}`
-                    : "Recognition + execution viewer"}
+                    : language === "es" ? "Visor de reconocimiento + ejecución" : "Recognition + execution viewer"}
                 </div>
               </div>
               <div className="modalHeaderRight">
@@ -2173,7 +2173,7 @@ export default function App() {
                       type="button"
                       disabled={navIdx === 0}
                       onClick={() => setSelected(catalogNavList[navIdx - 1])}
-                      title="Previous case (←)"
+                      title={language === "es" ? "Caso anterior (←)" : "Previous case (←)"}
                     >←</button>
                     <span className="modalNavCount">{navIdx + 1} / {catalogNavList.length}</span>
                     <button
@@ -2181,7 +2181,7 @@ export default function App() {
                       type="button"
                       disabled={navIdx === catalogNavList.length - 1}
                       onClick={() => setSelected(catalogNavList[navIdx + 1])}
-                      title="Next case (→)"
+                      title={language === "es" ? "Caso siguiente (→)" : "Next case (→)"}
                     >→</button>
                   </div>
                 )}
@@ -2194,9 +2194,9 @@ export default function App() {
             <div className="modalLayout">
               <section className="viewerPanel">
                 <div className="viewerPanelBar">
-                  <span>Case Viewer</span>
+                  <span>{language === "es" ? "Visor del caso" : "Case Viewer"}</span>
                   <span className="viewerPanelHint">
-                    {selected.set === "F2L" ? "CFOP F2L stickering · U-top" : "Yellow top · z2"}
+                    {selected.set === "F2L" ? (language === "es" ? "Pegatinas CFOP F2L · U arriba" : "CFOP F2L stickering · U-top") : (language === "es" ? "Amarillo arriba · z2" : "Yellow top · z2")}
                   </span>
                 </div>
                 <div className="viewerPanelStage">
@@ -2214,7 +2214,7 @@ export default function App() {
 
               <aside className="modalSide">
                 <section className="recognitionPanel">
-                  <div className="label">Recognition</div>
+                  <div className="label">{language === "es" ? "Reconocimiento" : "Recognition"}</div>
                   <div className="recognitionThumbWrap">
                     {selected.set === "F2L" && selected.f2lMeta ? (
                       <MiniTwisty
@@ -2256,8 +2256,8 @@ export default function App() {
                     {prefs.ohMode && (
                       <span className="ohAlgHint">
                         {prefs.preferredAlgs[selected.id]
-                          ? "🤚 OH alg set"
-                          : "🤚 OH mode — pick your OH alg below"}
+                          ? (language === "es" ? "🤚 Alg de OH configurado" : "🤚 OH alg set")
+                          : (language === "es" ? "🤚 Modo OH — elige tu alg de OH abajo" : "🤚 OH mode — pick your OH alg below")}
                       </span>
                     )}
                   </div>
@@ -2268,7 +2268,7 @@ export default function App() {
                         className={`algAltBtn${!prefs.preferredAlgs[selected.id] ? " algAltBtn--active" : ""}`}
                         onClick={() => setPrefs((p) => clearPreferredAlg(p, selected.id))}
                       >
-                        Default
+                        {language === "es" ? "Por defecto" : "Default"}
                       </button>
                       {selected.alts.map((alt, i) => (
                         <button
@@ -2277,7 +2277,7 @@ export default function App() {
                           className={`algAltBtn${prefs.preferredAlgs[selected.id] === alt ? " algAltBtn--active" : ""}`}
                           onClick={() => setPrefs((p) => setPreferredAlg(p, selected.id, alt))}
                         >
-                          Alt {i + 1}
+                          {language === "es" ? `Alternativa ${i + 1}` : `Alt ${i + 1}`}
                         </button>
                       ))}
                     </div>
@@ -2289,14 +2289,14 @@ export default function App() {
 
                 {selected.set !== "F2L" && (
                   <section className="setupBlock">
-                    <div className="label">Setup from solved</div>
+                    <div className="label">{language === "es" ? "Setup desde resuelto" : "Setup from solved"}</div>
                     <code className="setupDisplay">{invertAlg(prefs.preferredAlgs[selected.id] ?? selected.alg)}</code>
                   </section>
                 )}
 
                 {detectTriggers(selected.alg).length > 0 && (
                   <section className="triggersPanel">
-                    <div className="label">Triggers</div>
+                    <div className="label">{language === "es" ? "Triggers" : "Triggers"}</div>
                     <div className="triggerChipRow">
                       {detectTriggers(selected.alg).map((t) => (
                         <span
@@ -2313,7 +2313,7 @@ export default function App() {
 
                 {selected.sourceMethod === "4LLL" && selectedCanonical && (
                   <section className="canonicalPanel">
-                    <div className="label">Canonical CFOP Case</div>
+                    <div className="label">{language === "es" ? "Caso canónico de CFOP" : "Canonical CFOP Case"}</div>
                     <div className="canonicalPanelRow">
                       <div className="canonicalPanelText">
                         <div className="canonicalPanelTitle">
@@ -2326,7 +2326,7 @@ export default function App() {
                         className="canonicalOpenButton"
                         onClick={() => openCanonicalCase(selectedCanonical)}
                       >
-                        Open Case
+                        {language === "es" ? "Abrir caso" : "Open Case"}
                       </button>
                     </div>
                   </section>
@@ -2334,21 +2334,20 @@ export default function App() {
 
                 <section className="modalNoteCard">
                   <div className="modalNoteTitle">
-                    {selected.set === "F2L" ? "Case Notes" : "Study Notes (next)"}
+                    {selected.set === "F2L" ? (language === "es" ? "Notas del caso" : "Case Notes") : (language === "es" ? "Notas de estudio (próx.)" : "Study Notes (next)")}
                   </div>
                   {selected.set === "F2L" && selected.f2lMeta ? (
                     <>
-                      <p>Recognition preview matches the viewer start state for this case setup.</p>
+                      <p>{language === "es" ? "La vista previa de reconocimiento coincide con el estado inicial del visor para este setup." : "Recognition preview matches the viewer start state for this case setup."}</p>
                       <p>{selected.f2lMeta.note}</p>
                       {selected.f2lMeta.caseSetupAlg && (
-                        <p><strong>Recognition setup (pilot):</strong> {selected.f2lMeta.caseSetupAlg}</p>
+                        <p><strong>{language === "es" ? "Setup de reconocimiento (piloto):" : "Recognition setup (pilot):"}</strong> {selected.f2lMeta.caseSetupAlg}</p>
                       )}
-                      {selected.f2lMeta.setup && <p><strong>Setup:</strong> {selected.f2lMeta.setup}</p>}
+                      {selected.f2lMeta.setup && <p><strong>{language === "es" ? "Setup:" : "Setup:"}</strong> {selected.f2lMeta.setup}</p>}
                     </>
                   ) : (
                     <p>
-                      This is where OH variants, fingertricks, triggers, and per-case SRS scoring
-                      will fit next.
+                      {language === "es" ? "Aquí se mostrarán después variantes OH, fingertricks, triggers y puntuación SRS por caso." : "This is where OH variants, fingertricks, triggers, and per-case SRS scoring will fit next."}
                     </p>
                   )}
                 </section>
@@ -2372,7 +2371,7 @@ export default function App() {
                   : pllCases
           }
           label={
-            drillSet === "TODAY" ? "Today's Queue" :
+            drillSet === "TODAY" ? (language === "es" ? "Cola de hoy" : "Today's Queue") :
             drillSet === "OLL_EXEC" ? "OLL" :
             drillSet === "PLL_EXEC" ? "PLL" :
             drillSet === "F2L_EXEC" ? "F2L" :
