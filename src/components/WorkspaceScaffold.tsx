@@ -24,7 +24,10 @@ type WeakCase = {
 
 type DayForecast = { label: string; count: number; isToday: boolean };
 
+type Language = "es" | "en";
+
 type Props = {
+  language: Language;
   appSection: AppSection;
   activePrimaryLabel: string;
   totalF2LCaseCount: number;
@@ -46,7 +49,7 @@ type Props = {
   onStartScrambleTimer?: () => void;
 };
 
-function SRSBar({ stats }: { stats: SRSStats }) {
+function SRSBar({ stats, language }: { stats: SRSStats; language: Language }) {
   const { new: newCount, due, learning, learned, total } = stats;
   const pct = (n: number) => `${((n / total) * 100).toFixed(1)}%`;
   return (
@@ -58,16 +61,17 @@ function SRSBar({ stats }: { stats: SRSStats }) {
         {newCount > 0 && <div className="srsBarSeg srsBarSeg--new" style={{ width: pct(newCount) }} />}
       </div>
       <div className="srsLegend">
-        {learned > 0 && <span className="srsLegendItem srsLegendItem--learned"><span className="srsLegendDot" />Learned <strong>{learned}</strong></span>}
-        {learning > 0 && <span className="srsLegendItem srsLegendItem--learning"><span className="srsLegendDot" />Learning <strong>{learning}</strong></span>}
-        {due > 0 && <span className="srsLegendItem srsLegendItem--due"><span className="srsLegendDot" />Due <strong>{due}</strong></span>}
-        <span className="srsLegendItem srsLegendItem--new"><span className="srsLegendDot" />New <strong>{newCount}</strong></span>
+        {learned > 0 && <span className="srsLegendItem srsLegendItem--learned"><span className="srsLegendDot" />{language === "es" ? "Aprendidas" : "Learned"} <strong>{learned}</strong></span>}
+        {learning > 0 && <span className="srsLegendItem srsLegendItem--learning"><span className="srsLegendDot" />{language === "es" ? "Aprendiendo" : "Learning"} <strong>{learning}</strong></span>}
+        {due > 0 && <span className="srsLegendItem srsLegendItem--due"><span className="srsLegendDot" />{language === "es" ? "Pendientes" : "Due"} <strong>{due}</strong></span>}
+        <span className="srsLegendItem srsLegendItem--new"><span className="srsLegendDot" />{language === "es" ? "Nuevas" : "New"} <strong>{newCount}</strong></span>
       </div>
     </div>
   );
 }
 
 export function WorkspaceScaffold({
+  language,
   appSection,
   activePrimaryLabel,
   totalF2LCaseCount,
@@ -94,8 +98,8 @@ export function WorkspaceScaffold({
         <section className="workspaceSectionCard workspaceSectionCard--warm">
           <div className="workspacePracticeHeader">
             <div>
-              <div className="workspaceSectionKicker">Practice</div>
-              <h2 className="workspaceSectionTitle">Session Modes</h2>
+              <div className="workspaceSectionKicker">{language === "es" ? "Práctica" : "Practice"}</div>
+              <h2 className="workspaceSectionTitle">{language === "es" ? "Modos de sesión" : "Session Modes"}</h2>
             </div>
             {ohMode && (
               <span className="ohBadge ohBadge--header">🤚 OH</span>
@@ -103,18 +107,18 @@ export function WorkspaceScaffold({
           </div>
           <div className="workspaceSectionGrid">
             <article className={`workspaceTile todayQueueTile ${ollDueCount + pllDueCount === 0 ? "todayQueueTile--empty" : "todayQueueTile--due"}`}>
-              <h3 className="todayQueueTitle">Today Queue</h3>
+              <h3 className="todayQueueTitle">{language === "es" ? "Cola de hoy" : "Today Queue"}</h3>
               {ollDueCount + pllDueCount === 0 ? (
                 <div className="todayQueueDone">
                   <span className="todayQueueDoneIcon">✓</span>
-                  <span className="todayQueueDoneText">All caught up!</span>
-                  <span className="todayQueueDoneSub">No cards due today</span>
+                  <span className="todayQueueDoneText">{language === "es" ? "¡Todo al día!" : "All caught up!"}</span>
+                  <span className="todayQueueDoneSub">{language === "es" ? "No hay tarjetas pendientes hoy" : "No cards due today"}</span>
                 </div>
               ) : (
                 <>
                   <div className="todayQueueHero">
                     <span className="todayQueueCount">{ollDueCount + pllDueCount}</span>
-                    <span className="todayQueueCountLabel">cards due</span>
+                    <span className="todayQueueCountLabel">{language === "es" ? "tarjetas pendientes" : "cards due"}</span>
                   </div>
                   <div className="todayQueueBreakdown">
                     <span className="todayQueueBreakdownItem todayQueueBreakdownItem--oll">
@@ -131,7 +135,7 @@ export function WorkspaceScaffold({
                     onClick={onStartTodayQueue}
                     disabled={!onStartTodayQueue}
                   >
-                    Start Review →
+                    {language === "es" ? "Empezar repaso →" : "Start Review →"}
                   </button>
                 </>
               )}
@@ -232,10 +236,10 @@ export function WorkspaceScaffold({
     return (
       <div className="workspaceSectionShell">
         <section className="workspaceSectionCard workspaceSectionCard--cool">
-          <div className="workspaceSectionKicker">Progress</div>
-          <h2 className="workspaceSectionTitle">Coverage & Confidence</h2>
+          <div className="workspaceSectionKicker">{language === "es" ? "Progreso" : "Progress"}</div>
+          <h2 className="workspaceSectionTitle">{language === "es" ? "Cobertura y confianza" : "Coverage & Confidence"}</h2>
           <p className="workspaceSectionLead">
-            What you've learned, what's due, and where to focus next.
+            {language === "es" ? "Lo que ya sabes, lo pendiente y dónde enfocarte ahora." : "What you've learned, what's due, and where to focus next."}
           </p>
           <div className="workspaceSectionGrid">
 
@@ -247,14 +251,14 @@ export function WorkspaceScaffold({
                   <span className="progressSetName">OLL</span>
                   <span className="progressSetCount">{ollCount}/57</span>
                 </div>
-                <SRSBar stats={ollStats} />
+                <SRSBar stats={ollStats} language={language} />
               </div>
               <div className="progressSetRow">
                 <div className="progressSetLabel">
                   <span className="progressSetName">PLL</span>
                   <span className="progressSetCount">{pllCount}/21</span>
                 </div>
-                <SRSBar stats={pllStats} />
+                <SRSBar stats={pllStats} language={language} />
               </div>
               <div className="progressCatalogNote">
                 F2L: {totalF2LCaseCount}/{f2lCanonicalTotal} cases loaded
@@ -265,7 +269,7 @@ export function WorkspaceScaffold({
             <article className="workspaceTile">
               <h3 className="progressTileTitle">Weak Cases</h3>
               {weakCases.length === 0 ? (
-                <p className="progressEmpty">Practice some drills to see your weakest cases here.</p>
+                <p className="progressEmpty">{language === "es" ? "Haz algunos drills para ver aquí tus casos más flojos." : "Practice some drills to see your weakest cases here."}</p>
               ) : (
                 <div className="weakCaseList">
                   {weakCases.map((c) => (
@@ -352,21 +356,21 @@ export function WorkspaceScaffold({
             <article className="workspaceTile streakTile">
               <h3 className="progressTileTitle">Streaks</h3>
               {streaks.totalDays === 0 ? (
-                <p className="progressEmpty">Complete your first review session to start tracking your streak.</p>
+                <p className="progressEmpty">{language === "es" ? "Completa tu primera sesión para empezar a registrar la racha." : "Complete your first review session to start tracking your streak."}</p>
               ) : (
                 <>
                   <div className="streakHeroRow">
                     <div className="streakHeroBlock">
                       <span className="streakHeroNum">{streaks.currentStreak}</span>
-                      <span className="streakHeroLabel">day streak</span>
+                      <span className="streakHeroLabel">{language === "es" ? "días de racha" : "day streak"}</span>
                     </div>
                     <div className="streakSecondary">
                       <div className="streakStatRow">
-                        <span className="streakStatLabel">Longest</span>
+                        <span className="streakStatLabel">{language === "es" ? "Más larga" : "Longest"}</span>
                         <span className="streakStatVal">{streaks.longestStreak}d</span>
                       </div>
                       <div className="streakStatRow">
-                        <span className="streakStatLabel">Total days</span>
+                        <span className="streakStatLabel">{language === "es" ? "Días totales" : "Total days"}</span>
                         <span className="streakStatVal">{streaks.totalDays}</span>
                       </div>
                     </div>
@@ -416,8 +420,8 @@ export function WorkspaceScaffold({
                     </div>
                     <p className="forecastNote">
                       {totalNext7 > 0
-                        ? `${totalNext7} card${totalNext7 === 1 ? "" : "s"} due in the next 6 days`
-                        : "No upcoming reviews scheduled"}
+                        ? `${totalNext7} card${totalNext7 === 1 ? "" : "s"} pendientes en los próximos 6 días`
+                        : language === "es" ? "No hay repasos próximos programados" : "No upcoming reviews scheduled"}
                     </p>
                   </>
                 );
@@ -434,9 +438,9 @@ export function WorkspaceScaffold({
     <div className="workspaceSectionShell">
       <section className="workspaceSectionCard workspaceSectionCard--neutral">
         <div className="workspaceSectionKicker">{activePrimaryLabel}</div>
-        <h2 className="workspaceSectionTitle">Reference</h2>
+        <h2 className="workspaceSectionTitle">{language === "es" ? "Referencia" : "Reference"}</h2>
         <p className="workspaceSectionLead">
-          Notation, triggers, fingertricks, and method notes for quick lookup.
+          {language === "es" ? "Notación, triggers, fingertricks y notas de método para consulta rápida." : "Notation, triggers, fingertricks, and method notes for quick lookup."}
         </p>
 
         <NotationReference cubeScheme={cubeScheme} />
