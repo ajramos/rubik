@@ -190,7 +190,7 @@
     "id": "pll_ga",
     "set": "PLL",
     "name": "Ga-perm",
-    "alg": "[R2 u] [R' U R' U'] [R u'] F] [R2 F' U",
+    "alg": "R2 (U R' U R' U' R U') R2 D (U' R' U R) D'",
     "thumb": "/thumbs/generated/pll_ga.svg?v11",
     "alts": [
       "R2 (U R' U R' U' R U') R2 D (U' R' U R) D'",
@@ -201,7 +201,7 @@
     "id": "pll_gb",
     "set": "PLL",
     "name": "Gb-perm",
-    "alg": "[L' U' L y' ] [R2 u R' U] [R U' R u' ] R2",
+    "alg": "(R' U' R U) D' R2 (U R' U R U' R U') R2 D",
     "thumb": "/thumbs/generated/pll_gb.svg?v11",
     "alts": [
       "(R' U' R U) D' R2 (U R' U R U' R U') R2 D",
@@ -212,7 +212,7 @@
     "id": "pll_gc",
     "set": "PLL",
     "name": "Gc-perm",
-    "alg": "[R2 u'] [R U' R U] [R' u R2 y] [R U' R']",
+    "alg": "R2 (U' R U' R U R' U) R2 D' (U R U' R') D",
     "thumb": "/thumbs/generated/pll_gc.svg?v11",
     "alts": [
       "R2 (U' R U' R U R' U) R2 D' (U R U' R') D",
@@ -223,7 +223,7 @@
     "id": "pll_gd",
     "set": "PLL",
     "name": "Gd-perm",
-    "alg": "[R U R' y'] [R2 u' R U'] [R' U R' u ] [R2]",
+    "alg": "(R U R' U') D R2 (U' R U' R' U R' U) R2 D'",
     "thumb": "/thumbs/generated/pll_gd.svg?v11",
     "alts": [
       "(R U R' U') D R2 (U' R U' R' U R' U) R2 D'",
