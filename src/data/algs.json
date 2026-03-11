@@ -5,7 +5,7 @@
       "set": "PLL",
       "name": "Ua-perm",
       "alg": "F2 [U' L R'] F2 [L' R U'] F2",
-      "thumb": "/thumbs/generated/pll_ua.svg?v12",
+      "thumb": "/thumbs/generated/pll_ua.svg?v13",
       "alts": [
         "y2 (M2 U M) U2 (M' U M2)",
         "R U R' U R' U' R2 U' R' U R' U R"
@@ -16,7 +16,7 @@
       "set": "PLL",
       "name": "Ub-perm",
       "alg": "F2 [U L R'] F2 [L' R U] F2",
-      "thumb": "/thumbs/generated/pll_ub.svg?v12",
+      "thumb": "/thumbs/generated/pll_ub.svg?v13",
       "alts": [
         "y2 (M2 U' M) U2 (M' U' M2)",
         "R' U R' U' R' U' R' U R U R2"
@@ -27,7 +27,7 @@
       "set": "PLL",
       "name": "Z-perm",
       "alg": "[M2 U M2 U] [M' U2] [M2 U2] [M' U2]",
-      "thumb": "/thumbs/generated/pll_z.svg?v12",
+      "thumb": "/thumbs/generated/pll_z.svg?v13",
       "alts": [
         "(M2 U) (M2 U) (M' U2) M2 (U2 M')",
         "M' U' M2 U' M2 U' M' U2 M2"
@@ -38,7 +38,7 @@
       "set": "PLL",
       "name": "H-perm",
       "alg": "[M2 U] [M2 U2] [M2 U] M2",
-      "thumb": "/thumbs/generated/pll_h.svg?v12",
+      "thumb": "/thumbs/generated/pll_h.svg?v13",
       "alts": [
         "(M2 U' M2) U2 (M2 U' M2)",
         "R2 S2 R2 U' R2 S2 R2"
@@ -49,7 +49,7 @@
       "set": "PLL",
       "name": "Aa-perm",
       "alg": "[l' U R' D2] [R U' R' D2] R2",
-      "thumb": "/thumbs/generated/pll_aa.svg?v12",
+      "thumb": "/thumbs/generated/pll_aa.svg?v13",
       "alts": [
         "x (R' U R') D2 (R U' R') D2 R2 x'",
         "y' x L2 D2 L' U' L D2 L' U L'"
@@ -60,7 +60,7 @@
       "set": "PLL",
       "name": "Ab-perm",
       "alg": "[l U' R D2] [R' U R D2] R2",
-      "thumb": "/thumbs/generated/pll_ab.svg?v12",
+      "thumb": "/thumbs/generated/pll_ab.svg?v13",
       "alts": [
         "x R2 D2 (R U R') D2 (R U' R) x'",
         "y' x L U' L D2 L' U L D2 L2"
@@ -71,7 +71,7 @@
       "set": "PLL",
       "name": "E-perm",
       "alg": "x' [R U' R' D ] [R U R' D' ] [R U R' D ] [R U' R' D']",
-      "thumb": "/thumbs/generated/pll_e.svg?v12",
+      "thumb": "/thumbs/generated/pll_e.svg?v13",
       "alts": [
         "y x' (R U' R' D) (R U R' D') (R U R' D) (R U' R' D') x",
         "y R' U' R' D' R U' R' D R U R' D' R U R' D R2"
@@ -82,7 +82,7 @@
       "set": "PLL",
       "name": "T-perm",
       "alg": "[SEXY] [R' F R2] [U' R' U' ] [R U R' F']",
-      "thumb": "/thumbs/generated/pll_t.svg?v12",
+      "thumb": "/thumbs/generated/pll_t.svg?v13",
       "alts": [
         "(R U R' U') (R' F R2) (U' R' U') (R U R' F')",
         "R U R' U' R' F R2 U' R' U F' L' U L"
@@ -93,7 +93,7 @@
       "set": "PLL",
       "name": "Ja-perm",
       "alg": "[R' U L'] U2 [R U' R' U2] [L R U']",
-      "thumb": "/thumbs/generated/pll_ja.svg?v12",
+      "thumb": "/thumbs/generated/pll_ja.svg?v13",
       "alts": [
         "y (R' U L') U2 (R U' R') U2 R L",
         "y2 x R2 F R F' R U2 r' U r U2 x'"
@@ -104,7 +104,7 @@
       "set": "PLL",
       "name": "Jb-perm",
       "alg": "[R U R' F'] [SEXY] [R' F R2] [U' R' U']",
-      "thumb": "/thumbs/generated/pll_jb.svg?v12",
+      "thumb": "/thumbs/generated/pll_jb.svg?v13",
       "alts": [
         "(R U R' F') (R U R' U') R' F R2 U' R'",
         "R U2 R' U' R U2 L' U R' U' L"
@@ -115,7 +115,7 @@
       "set": "PLL",
       "name": "Ra-perm",
       "alg": "[L U2' L' U2'] [L F' L' U'] [L U L F ] [L2' U]",
-      "thumb": "/thumbs/generated/pll_ra.svg?v12",
+      "thumb": "/thumbs/generated/pll_ra.svg?v13",
       "alts": [
         "y (R U' R' U') (R U R D) (R' U' R D') (R' U2 R')",
         "y R U R' F' R U2 R' U2 R' F R U R U2 R'"
@@ -126,7 +126,7 @@
       "set": "PLL",
       "name": "Rb-perm",
       "alg": "[R' U2 R U2] [R' F R U] [R' U' R' F'] [R2 U']",
-      "thumb": "/thumbs/generated/pll_rb.svg?v12",
+      "thumb": "/thumbs/generated/pll_rb.svg?v13",
       "alts": [
         "(R' U2) (R U2) (R' F R) (U R' U' R') F' R2",
         "y R2 F R U R U' R' F' R U2 R' U2 R"
@@ -137,7 +137,7 @@
       "set": "PLL",
       "name": "Na-perm",
       "alg": "[L U' R U2 L' U R']x2 U",
-      "thumb": "/thumbs/generated/pll_na.svg?v12",
+      "thumb": "/thumbs/generated/pll_na.svg?v13",
       "alts": [
         "(R U R' U) (R U R' F') (R U R' U') R' F R2 U' R' U2 (R U' R')",
         "F' R U R' U' R' F R2 F U' R' U' R U F' R'"
@@ -148,7 +148,7 @@
       "set": "PLL",
       "name": "Nb-perm",
       "alg": "[R' U L' U2 R U' L]x2 U'",
-      "thumb": "/thumbs/generated/pll_nb.svg?v12",
+      "thumb": "/thumbs/generated/pll_nb.svg?v13",
       "alts": [
         "(R' U R U' R') (F' U' F) (R U R') (F R' F') (R U' R)",
         "r' D' F r U' r' F' D r2 U r' U' r' F r F'"
@@ -159,7 +159,7 @@
       "set": "PLL",
       "name": "F-perm",
       "alg": "[R' U R U'] R2 [F' U' F U] [R F R' F'] [R2 U']",
-      "thumb": "/thumbs/generated/pll_f.svg?v12",
+      "thumb": "/thumbs/generated/pll_f.svg?v13",
       "alts": [
         "y (R' U' F') (R U R' U') R' F R2 (U' R' U') (R U R' U) R",
         "y R' F R f' R' F R2 U R' U' R' F' R2 U R' S"
@@ -170,7 +170,7 @@
       "set": "PLL",
       "name": "V-perm",
       "alg": "[R' U R' d'] [R' F' R2] [U' R' U] [R' F R F]",
-      "thumb": "/thumbs/generated/pll_v.svg?v12",
+      "thumb": "/thumbs/generated/pll_v.svg?v13",
       "alts": [
         "(R' U R' U') (R D' R' D) (R' U D') (R2 U' R2) D R2",
         "R' U R U' R' f' U' R U2 R' U' R U' R' f R"
@@ -181,7 +181,7 @@
       "set": "PLL",
       "name": "Y-perm",
       "alg": "F [R U' R' U'] [R U R' F'] [SEXY] [SLEDGEHMR]",
-      "thumb": "/thumbs/generated/pll_y.svg?v12",
+      "thumb": "/thumbs/generated/pll_y.svg?v13",
       "alts": [
         "F R (U' R' U') (R U R' F') (R U R' U') (R' F R F')",
         "F R' F R2 U' R' U' R U R' F' R U R' U' F'"
@@ -240,7 +240,7 @@
       "set": "OLL",
       "name": "OLL 5 (Square)",
       "alg": "r' U2 R U R' U r",
-      "thumb": "/thumbs/generated/oll_5.svg?v12",
+      "thumb": "/thumbs/generated/oll_5.svg?v13",
       "alts": [
         "r' U2 (R U R' U) r",
         "y2 l' U2 L U L' U l"
@@ -251,7 +251,7 @@
       "set": "OLL",
       "name": "OLL 6 (Square)",
       "alg": "r U2 R' U' R U' r'",
-      "thumb": "/thumbs/generated/oll_6.svg?v12",
+      "thumb": "/thumbs/generated/oll_6.svg?v13",
       "alts": [
         "r U2 (R' U' R U') r'",
         "F U' R2 D R' U' R D' R2 U F'"
@@ -262,7 +262,7 @@
       "set": "OLL",
       "name": "OLL 7 (Lightning)",
       "alg": "r U R' U R U2 r'",
-      "thumb": "/thumbs/generated/oll_7.svg?v12",
+      "thumb": "/thumbs/generated/oll_7.svg?v13",
       "alts": [
         "r (U R' U R) U2 r'",
         "S' R U R' U R U2 R' U S"
@@ -273,7 +273,7 @@
       "set": "OLL",
       "name": "OLL 8 (Lightning)",
       "alg": "r' U' R U' R' U2 r",
-      "thumb": "/thumbs/generated/oll_8.svg?v12",
+      "thumb": "/thumbs/generated/oll_8.svg?v13",
       "alts": [
         "y2 r' (U' R U' R') U2 r",
         "l' U' L U' L' U2 l"
@@ -284,7 +284,7 @@
       "set": "OLL",
       "name": "OLL 9 (Kite)",
       "alg": "[SEXY] R' F R2 U R' U' F'",
-      "thumb": "/thumbs/generated/oll_9.svg?v12",
+      "thumb": "/thumbs/generated/oll_9.svg?v13",
       "alts": [
         "y (R U R' U') (R' F R) (R U R' U') F'",
         "y R U R' U' R' F R2 U R' U' F'"
@@ -295,7 +295,7 @@
       "set": "OLL",
       "name": "OLL 10 (Anti-Kite)",
       "alg": "R U R' U [SLEDGEHMR] R U2 R'",
-      "thumb": "/thumbs/generated/oll_10.svg?v12",
+      "thumb": "/thumbs/generated/oll_10.svg?v13",
       "alts": [
         "(R U R' U) (R' F R F') (R U2 R')",
         "y F U F' R' F R U' R' F' R"
@@ -306,7 +306,7 @@
       "set": "OLL",
       "name": "OLL 11 (Downstairs)",
       "alg": "S R U R' U R U2 R' U2 S'",
-      "thumb": "/thumbs/generated/oll_11.svg?v12",
+      "thumb": "/thumbs/generated/oll_11.svg?v13",
       "alts": [
         "M (R U R' U R U2 R') U M'",
         "r' R2 U R' U R U2 R' U M'"
@@ -317,7 +317,7 @@
       "set": "OLL",
       "name": "OLL 12 (Upstairs)",
       "alg": "S R' U' R U' R' U2 R U2 S'",
-      "thumb": "/thumbs/generated/oll_12.svg?v12",
+      "thumb": "/thumbs/generated/oll_12.svg?v13",
       "alts": [
         "y' M' (R' U' R U' R' U2 R) U' M",
         "F R U R' U' F' U F R U R' U' F'"
@@ -328,7 +328,7 @@
       "set": "OLL",
       "name": "OLL 22 (Pi)",
       "alg": "R U2 R2 U' R2 U' R2 U2 R",
-      "thumb": "/thumbs/generated/oll_22.svg?v12",
+      "thumb": "/thumbs/generated/oll_22.svg?v13",
       "alts": [
         "R U2 (R2' U') (R2 U') (R2' U') U' R",
         "R' U2 R2 U R2 U R2 U2 R'"
@@ -339,7 +339,7 @@
       "set": "OLL",
       "name": "OLL 23 (Headlights)",
       "alg": "R2 D R' U2 R D' R' U2 R'",
-      "thumb": "/thumbs/generated/oll_23.svg?v12",
+      "thumb": "/thumbs/generated/oll_23.svg?v13",
       "alts": [
         "R2 D (R' U2 R) D' (R' U2 R')",
         "y2 R2 D' R U2 R' D R U2 R"
@@ -350,7 +350,7 @@
       "set": "OLL",
       "name": "OLL 25 (Bowtie)",
       "alg": "F' r U R' U' r' F R",
-      "thumb": "/thumbs/generated/oll_25.svg?v12",
+      "thumb": "/thumbs/generated/oll_25.svg?v13",
       "alts": [
         "y (F' r U R') (U' r' F R)",
         "R U2 R D R' U2 R D' R2"
@@ -361,7 +361,7 @@
       "set": "OLL",
       "name": "OLL 28 (Arrow)",
       "alg": "r U R' U' M U R U' R'",
-      "thumb": "/thumbs/generated/oll_28.svg?v12",
+      "thumb": "/thumbs/generated/oll_28.svg?v13",
       "alts": [
         "M' U' M U2 M' U' M",
         "(r U R' U') M (U R U' R')",
@@ -373,7 +373,7 @@
       "set": "OLL",
       "name": "OLL 35 (Fish Salad)",
       "alg": "R U2 R2 F R F' R U2 R'",
-      "thumb": "/thumbs/generated/oll_35.svg?v12",
+      "thumb": "/thumbs/generated/oll_35.svg?v13",
       "alts": [
         "(R U2 R') (R' F R F') (R U2 R')",
         "f R U R' U' f' R U R' U R U2 R'"
@@ -384,7 +384,7 @@
       "set": "OLL",
       "name": "OLL 37 (Mounted Fish)",
       "alg": "F R U' R' U' R U R' F'",
-      "thumb": "/thumbs/generated/oll_37.svg?v12",
+      "thumb": "/thumbs/generated/oll_37.svg?v13",
       "alts": [
         "F R (U' R' U') (R U R') F'",
         "F R' F' R U R U' R'"
@@ -395,7 +395,7 @@
       "set": "OLL",
       "name": "OLL 39 (Fung)",
       "alg": "f' r U r' U' r' F r S",
-      "thumb": "/thumbs/generated/oll_39.svg?v12",
+      "thumb": "/thumbs/generated/oll_39.svg?v13",
       "alts": [
         "y L F' (L' U' L U) F U' L'",
         "y' R U R' F' U' F U R U2 R'"
@@ -406,7 +406,7 @@
       "set": "OLL",
       "name": "OLL 40 (Anti-Fung)",
       "alg": "R' F [SEXY] F' U R",
-      "thumb": "/thumbs/generated/oll_40.svg?v12",
+      "thumb": "/thumbs/generated/oll_40.svg?v13",
       "alts": [
         "y R' F (R U R' U') F' U R",
         "y' f R' F' R U R U' R' S'"
@@ -417,7 +417,7 @@
       "set": "OLL",
       "name": "OLL 51 (Ant)",
       "alg": "F U R U' R' U R U' R' F'",
-      "thumb": "/thumbs/generated/oll_51.svg?v12",
+      "thumb": "/thumbs/generated/oll_51.svg?v13",
       "alts": [
         "f (R U R' U') (R U R' U') f'",
         "y2 F U R U' R' U R U' R' F'"
@@ -428,7 +428,7 @@
       "set": "OLL",
       "name": "OLL 52 (Rice Cooker)",
       "alg": "R' F' U' F U' R U R' U R",
-      "thumb": "/thumbs/generated/oll_52.svg?v12",
+      "thumb": "/thumbs/generated/oll_52.svg?v13",
       "alts": [
         "y2 R' (F' U' F U') (R U R' U) R",
         "R U R' U R U' B U' B' R'"
@@ -439,7 +439,7 @@
       "set": "OLL",
       "name": "OLL 55 (Highway)",
       "alg": "R U2 R2 U' R U' R' U2 F R F'",
-      "thumb": "/thumbs/generated/oll_55.svg?v12",
+      "thumb": "/thumbs/generated/oll_55.svg?v13",
       "alts": [
         "R U2 R2 (U' R U' R') U2 (F R F')",
         "y R' F U R U' R2 F' R2 U R' U' R"
@@ -450,7 +450,7 @@
       "set": "OLL",
       "name": "OLL 56 (Streetlights)",
       "alg": "r U r' U R U' R' U R U' R' r U' r'",
-      "thumb": "/thumbs/generated/oll_56.svg?v12",
+      "thumb": "/thumbs/generated/oll_56.svg?v13",
       "alts": [
         "(r U r') (U R U' R') (U R U' R') (r U' r')",
         "r U r' U R U' R' M' U R U2 r'"
@@ -461,7 +461,7 @@
       "set": "OLL",
       "name": "OLL 57 (H)",
       "alg": "[SEXY] M' U R U' r'",
-      "thumb": "/thumbs/generated/oll_57.svg?v12",
+      "thumb": "/thumbs/generated/oll_57.svg?v13",
       "alts": [
         "(R U R' U') M' (U R U' r')",
         "y R U' R' S' R U R' S"
@@ -472,7 +472,7 @@
       "set": "OLL",
       "name": "OLL 24 (Chameleon)",
       "alg": "r U R' U' r' F R F'",
-      "thumb": "/thumbs/generated/oll_24.svg?v12",
+      "thumb": "/thumbs/generated/oll_24.svg?v13",
       "alts": [
         "(r U R' U') (r' F R F')",
         "y' x' R U R' D R U' R' D' x"
@@ -483,7 +483,7 @@
       "set": "OLL",
       "name": "OLL 1 (Runway)",
       "alg": "R U2 R2' F R F' U2' [SLEDGEHMR]",
-      "thumb": "/thumbs/generated/oll_1.svg?v12",
+      "thumb": "/thumbs/generated/oll_1.svg?v13",
       "alts": [
         "(R U2 R') (R' F R F') U2 (R' F R F')",
         "R U2 R2 F R F' U2 R' F R F'"
@@ -494,7 +494,7 @@
       "set": "OLL",
       "name": "OLL 2 (Zamboni)",
       "alg": "y' R U' R2 D' r U r' D R2 U R'",
-      "thumb": "/thumbs/generated/oll_2.svg?v12",
+      "thumb": "/thumbs/generated/oll_2.svg?v13",
       "alts": [
         "F [SEXY] S [SEXY] B",
         "F (R U R' U') F' f (R U R' U') f'",
@@ -506,7 +506,7 @@
       "set": "OLL",
       "name": "OLL 3 (Anti-Pinwheel)",
       "alg": "f [SEXY] f' U' F [SEXY] F'",
-      "thumb": "/thumbs/generated/oll_3.svg?v12",
+      "thumb": "/thumbs/generated/oll_3.svg?v13",
       "alts": [
         "y' f (R U R' U') f' (U') F (R U R' U') F'",
         "y R' F2 R2 U2 R' F R U2 R2 F2 R"
@@ -517,7 +517,7 @@
       "set": "OLL",
       "name": "OLL 4 (Pinwheel)",
       "alg": "f [SEXY] f' U F [SEXY] F'",
-      "thumb": "/thumbs/generated/oll_4.svg?v12",
+      "thumb": "/thumbs/generated/oll_4.svg?v13",
       "alts": [
         "y' f (R U R' U') f' (U) F (R U R' U') F'",
         "y' R' F2 R2 U2 R' F' R U2 R2 F2 R"
@@ -528,7 +528,7 @@
       "set": "OLL",
       "name": "OLL 13 (Gun)",
       "alg": "F U R U2 R' U' R U R' F'",
-      "thumb": "/thumbs/generated/oll_13.svg?v12",
+      "thumb": "/thumbs/generated/oll_13.svg?v13",
       "alts": [
         "r' U' r U' r' U r y' x' R U' R' F",
         "(r U' r') U' (r U r') (F' U F)",
@@ -540,7 +540,7 @@
       "set": "OLL",
       "name": "OLL 14 (Anti-Gun)",
       "alg": "R' F R U R' F' R F U' F'",
-      "thumb": "/thumbs/generated/oll_14.svg?v12",
+      "thumb": "/thumbs/generated/oll_14.svg?v13",
       "alts": [
         "r U r' U r U' r' y x' R' U R F'",
         "R' F (R U R') F' R (F U' F')",
@@ -552,7 +552,7 @@
       "set": "OLL",
       "name": "OLL 15 (Squeegee)",
       "alg": "r' U' r R' U' R U r' U r",
-      "thumb": "/thumbs/generated/oll_15.svg?v12",
+      "thumb": "/thumbs/generated/oll_15.svg?v13",
       "alts": [
         "r' U' r' D' r U' r' D r2",
         "(r' U' r) (R' U' R U) (r' U r)",
@@ -564,7 +564,7 @@
       "set": "OLL",
       "name": "OLL 16 (Anti-Squeegee)",
       "alg": "r U r' R U R' U' r U' r'",
-      "thumb": "/thumbs/generated/oll_16.svg?v12",
+      "thumb": "/thumbs/generated/oll_16.svg?v13",
       "alts": [
         "r U r D r' U r D' r2'",
         "(r U r') (R U R' U') (r U' r')",
@@ -576,7 +576,7 @@
       "set": "OLL",
       "name": "OLL 17 (Slash)",
       "alg": "F R' F' R2 r' U R U' R' U' M'",
-      "thumb": "/thumbs/generated/oll_17.svg?v12",
+      "thumb": "/thumbs/generated/oll_17.svg?v13",
       "alts": [
         "(R U R' U) (R' F R F') U2 (R' F R F')",
         "y2 F R' F' R U S' R U' R' S"
@@ -587,7 +587,7 @@
       "set": "OLL",
       "name": "OLL 18 (Crown)",
       "alg": "r U R' U R U2 r2' U' R U' R' U2 r",
-      "thumb": "/thumbs/generated/oll_18.svg?v12",
+      "thumb": "/thumbs/generated/oll_18.svg?v13",
       "alts": [
         "y (R U2 R') (R' F R F') U2 M' (U R U' r')",
         "y R U2 R2 F R F' U2 M' U R U' r'"
@@ -598,7 +598,7 @@
       "set": "OLL",
       "name": "OLL 19 (Bunny)",
       "alg": "y S' R U R' S U' R' F R F'",
-      "thumb": "/thumbs/generated/oll_19.svg?v12",
+      "thumb": "/thumbs/generated/oll_19.svg?v13",
       "alts": [
         "M U [SEXY] M2 U R U' r'",
         "M U (R U R' U') M' (R' F R F')",
@@ -610,7 +610,7 @@
       "set": "OLL",
       "name": "OLL 20 (Checkers)",
       "alg": "r U R' U' M2 U R U' R' U' M'",
-      "thumb": "/thumbs/generated/oll_20.svg?v12",
+      "thumb": "/thumbs/generated/oll_20.svg?v13",
       "alts": [
         "(r U R' U') M2 (U R U' R') U' M'",
         "M' U2 M U2 M' U M U2 M' U2 M"
@@ -621,7 +621,7 @@
       "set": "OLL",
       "name": "OLL 21 (H-shape)",
       "alg": "R U2 R' U' [SEXY] R U' R'",
-      "thumb": "/thumbs/generated/oll_21.svg?v12",
+      "thumb": "/thumbs/generated/oll_21.svg?v13",
       "alts": [
         "(R U R' U) (R U' R' U) (R U2 R')",
         "y R U2 R' U' R U R' U' R U' R'"
@@ -632,7 +632,7 @@
       "set": "OLL",
       "name": "OLL 26 (Anti-Sune)",
       "alg": "y R U2 R' U' R U' R'",
-      "thumb": "/thumbs/generated/oll_26.svg?v12",
+      "thumb": "/thumbs/generated/oll_26.svg?v13",
       "alts": [
         "R U2' R2' U' R U' R' U2' F R F'",
         "y R U2 (R' U' R U') R'",
@@ -644,7 +644,7 @@
       "set": "OLL",
       "name": "OLL 27 (Sune)",
       "alg": "R U R' U R U2 R'",
-      "thumb": "/thumbs/generated/oll_27.svg?v12",
+      "thumb": "/thumbs/generated/oll_27.svg?v13",
       "alts": [
         "(R U R' U) (R U2 R')",
         "y' R' U2 R U R' U R"
@@ -655,7 +655,7 @@
       "set": "OLL",
       "name": "OLL 29 (Spotted Chameleon)",
       "alg": "[SEXY] R U' R' F' U' F R U R'",
-      "thumb": "/thumbs/generated/oll_29.svg?v12",
+      "thumb": "/thumbs/generated/oll_29.svg?v13",
       "alts": [
         "y (R U R') U' (R U' R') (F' U' F) (R U R')",
         "r2 D' r U r' D r2 U' r' U' r"
@@ -666,7 +666,7 @@
       "set": "OLL",
       "name": "OLL 30 (Anti-Spotted Chameleon)",
       "alg": "F R' F R2 U' R' U' R U R' F2",
-      "thumb": "/thumbs/generated/oll_30.svg?v12",
+      "thumb": "/thumbs/generated/oll_30.svg?v13",
       "alts": [
         "y2 F U (R U2 R') U' (R U2 R') U' F'",
         "y' r' D' r U' r' D r2 U' r' U r U r'"
@@ -677,7 +677,7 @@
       "set": "OLL",
       "name": "OLL 31 (Couch)",
       "alg": "R' U' F U R U' R' F' R",
-      "thumb": "/thumbs/generated/oll_31.svg?v12",
+      "thumb": "/thumbs/generated/oll_31.svg?v13",
       "alts": [
         "(R' U' F) (U R U' R') F' R",
         "y2 S' L' U' L U L F' L' f"
@@ -688,7 +688,7 @@
       "set": "OLL",
       "name": "OLL 32 (Anti-Couch)",
       "alg": "L U F' U' L' U L F L'",
-      "thumb": "/thumbs/generated/oll_32.svg?v12",
+      "thumb": "/thumbs/generated/oll_32.svg?v13",
       "alts": [
         "S (R U R' U') (R' F R f')",
         "y2 L U F' U' L' U L F L'"
@@ -699,7 +699,7 @@
       "set": "OLL",
       "name": "OLL 33 (Key)",
       "alg": "[SEXY] [SLEDGEHMR]",
-      "thumb": "/thumbs/generated/oll_33.svg?v12",
+      "thumb": "/thumbs/generated/oll_33.svg?v13",
       "alts": [
         "(R U R' U') (R' F R F')",
         "y2 L' U' L U L F' L' F"
@@ -710,7 +710,7 @@
       "set": "OLL",
       "name": "OLL 34 (City)",
       "alg": "R U R2' U' R' F R U R U' F'",
-      "thumb": "/thumbs/generated/oll_34.svg?v12",
+      "thumb": "/thumbs/generated/oll_34.svg?v13",
       "alts": [
         "y2 R U R2 U' R' F (R U R U') F'",
         "y f R f' U' r' U' R U M'"
@@ -721,7 +721,7 @@
       "set": "OLL",
       "name": "OLL 36 (Wario)",
       "alg": "y R U R2 F' U' F U R2 U2 R'",
-      "thumb": "/thumbs/generated/oll_36.svg?v12",
+      "thumb": "/thumbs/generated/oll_36.svg?v13",
       "alts": [
         "R U R' F' [SEXY] R' F R2 U' R'",
         "y2 (L' U' L U') (L' U L U) (L F' L' F)",
@@ -733,7 +733,7 @@
       "set": "OLL",
       "name": "OLL 38 (Moustache)",
       "alg": "R U R' U R U' R' U' [SLEDGEHMR]",
-      "thumb": "/thumbs/generated/oll_38.svg?v12",
+      "thumb": "/thumbs/generated/oll_38.svg?v13",
       "alts": [
         "(R U R' U) (R U' R' U') (R' F R F')",
         "y F R U' R' S U' R U R' f'"
@@ -744,7 +744,7 @@
       "set": "OLL",
       "name": "OLL 41 (Awkward Fish)",
       "alg": "R U R' U R U2 R' F [SEXY] F'",
-      "thumb": "/thumbs/generated/oll_41.svg?v12",
+      "thumb": "/thumbs/generated/oll_41.svg?v13",
       "alts": [
         "y2 (R U R' U) (R U2 R') F (R U R' U') F'",
         "y2 F U R2 D R' U' R D' R2 F'"
@@ -755,7 +755,7 @@
       "set": "OLL",
       "name": "OLL 42 (Anti-Awkward Fish)",
       "alg": "R' U' R U' R' U2' R F [SEXY] F'",
-      "thumb": "/thumbs/generated/oll_42.svg?v12",
+      "thumb": "/thumbs/generated/oll_42.svg?v13",
       "alts": [
         "(R' U' R U') (R' U2 R) F (R U R' U') F'",
         "y F S' R U R' U' F' U S"
@@ -766,7 +766,7 @@
       "set": "OLL",
       "name": "OLL 43 (Anti-P)",
       "alg": "f' L' U' L U f",
-      "thumb": "/thumbs/generated/oll_43.svg?v12",
+      "thumb": "/thumbs/generated/oll_43.svg?v13",
       "alts": [
         "y R' U' (F' U F) R",
         "y2 F' U' L' U L F"
@@ -777,7 +777,7 @@
       "set": "OLL",
       "name": "OLL 44 (P)",
       "alg": "f [SEXY] f'",
-      "thumb": "/thumbs/generated/oll_44.svg?v12",
+      "thumb": "/thumbs/generated/oll_44.svg?v13",
       "alts": [
         "f (R U R' U') f'",
         "y2 F U R U' R' F'"
@@ -788,7 +788,7 @@
       "set": "OLL",
       "name": "OLL 45 (T-shape)",
       "alg": "F [SEXY] F'",
-      "thumb": "/thumbs/generated/oll_45.svg?v12",
+      "thumb": "/thumbs/generated/oll_45.svg?v13",
       "alts": [
         "F (R U R' U') F'",
         "y R' F' U' F U R"
@@ -799,7 +799,7 @@
       "set": "OLL",
       "name": "OLL 46 (Seein' Headlights)",
       "alg": "R' U' [SLEDGEHMR] U R",
-      "thumb": "/thumbs/generated/oll_46.svg?v12",
+      "thumb": "/thumbs/generated/oll_46.svg?v13",
       "alts": [
         "R' U' (R' F R F') U R",
         "R' F' U' F R U' R' U2 R"
@@ -810,7 +810,7 @@
       "set": "OLL",
       "name": "OLL 47 (Hook)",
       "alg": "F' L' U' L U L' U' L U F",
-      "thumb": "/thumbs/generated/oll_47.svg?v12",
+      "thumb": "/thumbs/generated/oll_47.svg?v13",
       "alts": [
         "F' (L' U' L U) (L' U' L U) F",
         "y' F R' F' R U2 R U' R' U R U2 R'"
@@ -821,7 +821,7 @@
       "set": "OLL",
       "name": "OLL 48 (Anti-Hook)",
       "alg": "F [SEXY] [SEXY] F'",
-      "thumb": "/thumbs/generated/oll_48.svg?v12",
+      "thumb": "/thumbs/generated/oll_48.svg?v13",
       "alts": [
         "F (R U R' U') (R U R' U') F'",
         "y2 f U R U' R' U R U' R' f'"
@@ -832,7 +832,7 @@
       "set": "OLL",
       "name": "OLL 49 (Squeezy)",
       "alg": "r U' r2' U r2 U r2' U' r",
-      "thumb": "/thumbs/generated/oll_49.svg?v12",
+      "thumb": "/thumbs/generated/oll_49.svg?v13",
       "alts": [
         "y2 r U' (r2 U) (r2 U) (r2) U' r",
         "l U' l2 U l2 U l2 U' l"
@@ -843,7 +843,7 @@
       "set": "OLL",
       "name": "OLL 50 (Anti-Squeezy)",
       "alg": "r' U r2 U' r2' U' r2 U r'",
-      "thumb": "/thumbs/generated/oll_50.svg?v12",
+      "thumb": "/thumbs/generated/oll_50.svg?v13",
       "alts": [
         "r' U (r2 U') (r2 U') (r2) U r'",
         "y2 R' F R2 B' R2 F' R2 B R'"
@@ -854,7 +854,7 @@
       "set": "OLL",
       "name": "OLL 53 (Frying Pan)",
       "alg": "r' U' R U' R' U R U' R' U2 r",
-      "thumb": "/thumbs/generated/oll_53.svg?v12",
+      "thumb": "/thumbs/generated/oll_53.svg?v13",
       "alts": [
         "r' U2' [SEXY] r",
         "(r' U' R U') (R' U R U') (R' U2 r)",
@@ -866,7 +866,7 @@
       "set": "OLL",
       "name": "OLL 54 (Anti-Frying Pan)",
       "alg": "r U R' U R U' R' U R U2 r'",
-      "thumb": "/thumbs/generated/oll_54.svg?v12",
+      "thumb": "/thumbs/generated/oll_54.svg?v13",
       "alts": [
         "r U2 R' U' R U r'",
         "(r U R' U) (R U' R' U) (R U2 r')",

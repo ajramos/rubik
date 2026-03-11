@@ -10,7 +10,7 @@ const ROOT = path.resolve(__dirname, "..");
 const DATA_PATH = path.join(ROOT, "src", "data", "algs.json");
 const OUT_DIR = path.join(ROOT, "public", "thumbs", "generated");
 const DISPLAY_ORIENTATION = "z2";
-const THUMB_URL_VERSION = "v12";
+const THUMB_URL_VERSION = "v13";
 
 const MACROS = {
   SEXY: "R U R' U'",
@@ -425,7 +425,10 @@ async function main() {
     cube3x3x3.kpuzzle(),
   ]);
 
-  const algs = JSON.parse(rawJson);
+  const parsed = JSON.parse(rawJson);
+  const algs = Array.isArray(parsed)
+    ? parsed
+    : [...(parsed.pll ?? []), ...(parsed.oll ?? [])];
   const llFaceColors = extractOriginalColors(llFaceTemplate);
   const solvedDisplayPattern = kp.defaultPattern().applyAlg(DISPLAY_ORIENTATION);
 
@@ -466,7 +469,7 @@ async function main() {
     }
   }
 
-  await fs.writeFile(DATA_PATH, `${JSON.stringify(algs, null, 2)}\n`, "utf8");
+  await fs.writeFile(DATA_PATH, `${JSON.stringify(parsed, null, 2)}\n`, "utf8");
   console.log(`Generated ${generated} thumbnails (${failed} failed).`);
 }
 
