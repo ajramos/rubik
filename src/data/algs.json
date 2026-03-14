@@ -223,7 +223,7 @@
       "id": "pll_gd",
       "set": "PLL",
       "name": "Gd-perm",
-      "alg": "f R' F R2 f' U F' R' L' U2 L R",
+      "alg": "R U R' F2 D' L U' L' U L' D F2",
       "thumb": "/thumbs/generated/pll_gd.svg?v13",
       "alts": [
         "(R U R' U') D R2 (U' R U' R' U R' U) R2 D'",
