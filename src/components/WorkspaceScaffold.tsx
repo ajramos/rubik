@@ -146,6 +146,14 @@ export function WorkspaceScaffold({
               <div className="drillSetRow">
                 <button
                   type="button"
+                  className="drillSetBtn drillSetBtn--f2l"
+                  onClick={() => onStartDrill?.("F2L")}
+                  disabled={!onStartDrill}
+                >
+                  F2L
+                </button>
+                <button
+                  type="button"
                   className="drillSetBtn drillSetBtn--oll"
                   onClick={() => onStartDrill?.("OLL")}
                   disabled={!onStartDrill}
@@ -160,20 +168,20 @@ export function WorkspaceScaffold({
                 >
                   PLL
                 </button>
-                <button
-                  type="button"
-                  className="drillSetBtn drillSetBtn--f2l"
-                  onClick={() => onStartDrill?.("F2L")}
-                  disabled={!onStartDrill}
-                >
-                  F2L
-                </button>
               </div>
             </article>
             <article className="workspaceTile">
               <h3>Execution Drills {ohMode && <span className="ohBadge">🤚 OH</span>}</h3>
               <p>Recall and execute each algorithm from memory — then reveal to verify.</p>
               <div className="drillSetRow">
+                <button
+                  type="button"
+                  className="drillSetBtn drillSetBtn--f2l"
+                  onClick={() => onStartDrill?.("F2L_EXEC")}
+                  disabled={!onStartDrill}
+                >
+                  F2L
+                </button>
                 <button
                   type="button"
                   className="drillSetBtn drillSetBtn--oll"
@@ -189,14 +197,6 @@ export function WorkspaceScaffold({
                   disabled={!onStartDrill}
                 >
                   PLL
-                </button>
-                <button
-                  type="button"
-                  className="drillSetBtn drillSetBtn--f2l"
-                  onClick={() => onStartDrill?.("F2L_EXEC")}
-                  disabled={!onStartDrill}
-                >
-                  F2L
                 </button>
               </div>
             </article>
