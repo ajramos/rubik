@@ -63,6 +63,9 @@ export function DrillModal({ language = "en", cases, label, mode = "recognition"
   const isComplete = currentIndex >= queue.length;
   const isF2LCase = current?.set === "F2L";
   const resolvedAlg = current ? (preferredAlgs?.[current.id] ?? current.alg) : "";
+  const f2lRecognitionSetupAlg = current && current.set === "F2L"
+    ? `x2 ${invertAlg(resolvedAlg)}`
+    : undefined;
   const f2lExecutionSetupAlg = current && current.set === "F2L"
     ? `x2 ${invertAlg(resolvedAlg)}`
     : undefined;
@@ -132,7 +135,7 @@ export function DrillModal({ language = "en", cases, label, mode = "recognition"
                   setupAlg={
                     mode === "execution"
                       ? (f2lExecutionSetupAlg ?? invertAlg(resolvedAlg))
-                      : (current.set === "F2L" ? current.caseSetupAlg : invertAlg(resolvedAlg))
+                      : (f2lRecognitionSetupAlg ?? invertAlg(resolvedAlg))
                   }
                   exactF2L={isF2LCase && mode !== "execution"}
                   experimentalStickering={isF2LCase && mode !== "execution" ? "F2L" : undefined}
