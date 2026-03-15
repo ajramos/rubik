@@ -61,6 +61,7 @@ export function DrillModal({ language = "en", cases, label, mode = "recognition"
 
   const current = queue[currentIndex];
   const isComplete = currentIndex >= queue.length;
+  const isF2LCase = current?.set === "F2L";
 
   function handleRate(rating: SRSRating) {
     if (!current) return;
@@ -125,7 +126,9 @@ export function DrillModal({ language = "en", cases, label, mode = "recognition"
                   thumb={current.thumb}
                   alg={current.alg}
                   setupAlg={current.set === "F2L" ? current.caseSetupAlg : invertAlg(current.alg)}
-                  preferRuntime={current.set !== "F2L"}
+                  exactF2L={isF2LCase}
+                  experimentalStickering={isF2LCase ? "F2L" : undefined}
+                  preferRuntime={isF2LCase ? true : current.set !== "F2L"}
                 />
               </div>
 
@@ -164,12 +167,13 @@ export function DrillModal({ language = "en", cases, label, mode = "recognition"
                   {mode === "execution" && (
                     <div className="drillExecPlayer">
                       <twisty-player
+                        className="drillExecTwisty"
                         puzzle="3x3x3"
                         alg={preferredAlgs?.[current.id] ?? current.alg}
                         experimental-setup-anchor="end"
                         background="none"
                         hint-facelets="none"
-                        style={{ width: "180px", height: "180px", display: "block", margin: "0 auto" }}
+                        style={{ width: "220px", height: "260px", display: "block", margin: "0 auto" }}
                       ></twisty-player>
                     </div>
                   )}

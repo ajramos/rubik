@@ -3258,7 +3258,11 @@ code {
   width: 100%;
   display: flex;
   justify-content: center;
-  min-height: 180px;
+  min-height: 260px;
+}
+
+.drillExecTwisty {
+  max-width: 100%;
 }
 
 /* ── Timed Block ─────────────────────────────────────────────── */
