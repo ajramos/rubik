@@ -62,6 +62,10 @@ export function DrillModal({ language = "en", cases, label, mode = "recognition"
   const current = queue[currentIndex];
   const isComplete = currentIndex >= queue.length;
   const isF2LCase = current?.set === "F2L";
+  const resolvedAlg = current ? (preferredAlgs?.[current.id] ?? current.alg) : "";
+  const f2lExecutionSetupAlg = current && current.set === "F2L"
+    ? `x2 ${invertAlg(resolvedAlg)}`
+    : undefined;
 
   function handleRate(rating: SRSRating) {
     if (!current) return;
@@ -124,10 +128,14 @@ export function DrillModal({ language = "en", cases, label, mode = "recognition"
                   set={current.set}
                   size={200}
                   thumb={current.thumb}
-                  alg={current.alg}
-                  setupAlg={current.set === "F2L" ? current.caseSetupAlg : invertAlg(current.alg)}
-                  exactF2L={isF2LCase}
-                  experimentalStickering={isF2LCase ? "F2L" : undefined}
+                  alg={resolvedAlg}
+                  setupAlg={
+                    mode === "execution"
+                      ? (f2lExecutionSetupAlg ?? invertAlg(resolvedAlg))
+                      : (current.set === "F2L" ? current.caseSetupAlg : invertAlg(resolvedAlg))
+                  }
+                  exactF2L={isF2LCase && mode !== "execution"}
+                  experimentalStickering={isF2LCase && mode !== "execution" ? "F2L" : undefined}
                   preferRuntime={isF2LCase ? true : current.set !== "F2L"}
                 />
               </div>
@@ -169,11 +177,12 @@ export function DrillModal({ language = "en", cases, label, mode = "recognition"
                       <twisty-player
                         className="drillExecTwisty"
                         puzzle="3x3x3"
-                        alg={preferredAlgs?.[current.id] ?? current.alg}
+                        alg={resolvedAlg}
+                        experimental-setup-alg={current.set === "F2L" ? "x2" : undefined}
                         experimental-setup-anchor="end"
                         background="none"
                         hint-facelets="none"
-                        style={{ width: "220px", height: "260px", display: "block", margin: "0 auto" }}
+                        style={{ width: "220px", height: "330px", display: "block", margin: "0 auto" }}
                       ></twisty-player>
                     </div>
                   )}

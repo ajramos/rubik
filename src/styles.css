@@ -3258,7 +3258,7 @@ code {
   width: 100%;
   display: flex;
   justify-content: center;
-  min-height: 260px;
+  min-height: 330px;
 }
 
 .drillExecTwisty {
