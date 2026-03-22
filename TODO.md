@@ -11,6 +11,7 @@
 - [ ] **Trigger labels** — Annotate known sub-sequences inside algorithms: Sexy Move, Sledgehammer, Sune, Anti-Sune, etc.
 - [ ] **Algorithm variants** — Many cases have a main alg + backup; let users pick and save their preferred version.
 - [ ] **Fingertrick annotations** — Execution notes: grip changes, regrips, efficient trigger suggestions.
+- [ ] **F2L multislotting** — New learning section focused on solving multiple F2L slots/blocks at once (planning and pair tracking).
 - [ ] **OH (One-Handed)** — Dedicated section for one-handed algorithms and technique.
 - [ ] **BLD (Blindfolded)** — Blindfolded methods: M2/OP, commutators, memorisation approach.
 - [ ] **Advanced LL subsets** — ZBLL, COLL, OLLCP for users who have outgrown standard CFOP.
