@@ -493,11 +493,10 @@
       "id": "oll_2",
       "set": "OLL",
       "name": "OLL 2 (Zamboni)",
-      "alg": "y' R U' R2 D' r U r' D R2 U R'",
+      "alg": "F (R U R' U') F' f (R U R' U') f'",
       "thumb": "/thumbs/generated/oll_2.svg?v13",
       "alts": [
         "F [SEXY] S [SEXY] B",
-        "F (R U R' U') F' f (R U R' U') f'",
         "y' R U' R2 D' r U r' D R2 U R'"
       ]
     },
