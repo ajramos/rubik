@@ -15,6 +15,7 @@ type Props = {
 };
 
 type BldMode = "beginner" | "advanced";
+const M2_EDGE_PARITY = "(M' U' M' U' M' U2) (M U' M U' M U2)";
 
 function dueCount(targets: BldTarget[], srsData: Record<string, SRSCard>): number {
   return targets.filter(
@@ -80,6 +81,32 @@ function DrillTile({
       <button type="button" className="todayQueueCTA" onClick={onStart}>
         {startLabel}
       </button>
+    </article>
+  );
+}
+
+function ParityTile() {
+  const parityTriggers = detectTriggers(M2_EDGE_PARITY);
+  return (
+    <article className="workspaceTile bldReferenceTile">
+      <h3>Parity de aristas (M2)</h3>
+      <p>
+        Si el memo de aristas tiene longitud impar, añade esta corrección después de corners y
+        antes de empezar edges.
+      </p>
+      <code className="bldYpermCode">{renderNamedTokens(injectNamedTokens(M2_EDGE_PARITY))}</code>
+      {parityTriggers.length > 0 && (
+        <div className="triggerChipRow bldYpermTriggers">
+          {parityTriggers.map((t) => (
+            <span key={t.name} className={`triggerChip triggerChip--${t.color}`} data-moves={t.moves}>
+              {t.name}
+            </span>
+          ))}
+        </div>
+      )}
+      <p className="bldGuideFootnote">
+        Consejo: practícalo como bloque aislado para no perder ritmo durante la ejecución BLD.
+      </p>
     </article>
   );
 }
@@ -360,6 +387,7 @@ export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
                 This order keeps corner memo short and reduces overload.
               </p>
             </article>
+            <ParityTile />
             <article className="workspaceTile bldReferenceTile">
               <h3>3) Letter Map (Only When Stuck)</h3>
               <p>
@@ -441,6 +469,7 @@ export function BldSection({ bldSrsData, cubeScheme, onRate }: Props) {
                 fixed map (UF/URF) so your drills are consistent day to day.
               </p>
             </article>
+            <ParityTile />
             <article className="workspaceTile bldReferenceTile">
               <h3>Algorithm Reference</h3>
               <p>
